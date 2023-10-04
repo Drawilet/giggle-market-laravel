@@ -18,7 +18,7 @@ Giggle Market is an online marketplace application developed using Laravel, Live
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/yourusername/giggle-market.git`
+1. Clone the repository: `git clone https://github.com/Drawilet/giggle-market-laravel`
 2. Change to the project directory: `cd giggle-market`
 3. Install dependencies using Yarn: `yarn install`
 4. Set up the Laravel environment and database.
