@@ -1,4 +1,7 @@
-# Giggle Market
+<div style="display: flex; align-items: center;">
+    <img src="./public/icon.svg" style="width: 180px; margin-right: 50px">
+  <h1>Giggle Market</h1>
+</div>
 
 Giggle Market is an online marketplace application developed using Laravel, Livewire, and PHP. It provides a platform for sellers to list their products and for customers to browse, shop, and make purchases.
 
