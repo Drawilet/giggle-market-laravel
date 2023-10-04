@@ -31,19 +31,37 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get("/products", ProductComponent::class)->name('products');
-    Route::get("/products/catalog", CatalogComponent::class)->name('products.catalog');
-    Route::get("/categories", CategoryComponent::class)->name('categories');
-    Route::get("/taxes", TaxComponent::class)->name('taxes');
-
-    Route::get("/checkout", CheckoutComponent::class)->name("checkout");
-
-    Route::get("/sales", SalesComponent::class)->name("sales");
-    Route::get("/purchases", PurchasesComponent::class)->name("purchases");
-
     Route::get('/dashboard', DashboardComponent::class)->name('dashboard');
 });
 
+/*<──  ───────    CUSTOMER   ───────  ──>*/
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+    "customer"
+])->group(function () {
+    Route::get("/products/catalog", CatalogComponent::class)->name('products.catalog');
+
+    Route::get("/checkout", CheckoutComponent::class)->name("checkout");
+    Route::get("/purchases", PurchasesComponent::class)->name("purchases");
+});
+
+/*<──  ───────    SELLER   ───────  ──>*/
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+    "seller"
+])->group(function () {
+    Route::get("/products", ProductComponent::class)->name('products');
+    Route::get("/categories", CategoryComponent::class)->name('categories');
+    Route::get("/taxes", TaxComponent::class)->name('taxes');
+
+    Route::get("/sales", SalesComponent::class)->name("sales");
+});
+
+/*<──  ───────    ADMIN   ───────  ──>*/
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
