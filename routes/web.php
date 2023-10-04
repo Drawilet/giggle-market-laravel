@@ -41,7 +41,7 @@ Route::middleware([
     'verified',
     "customer"
 ])->group(function () {
-    Route::get("/products/catalog", CatalogComponent::class)->name('products.catalog');
+    Route::get("/catalog", CatalogComponent::class)->name('catalog');
 
     Route::get("/checkout", CheckoutComponent::class)->name("checkout");
     Route::get("/purchases", PurchasesComponent::class)->name("purchases");

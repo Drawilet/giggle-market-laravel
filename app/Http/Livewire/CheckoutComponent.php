@@ -77,6 +77,6 @@ class CheckoutComponent extends Component
             $item->delete();
         }
 
-        $this->redirect("/products/catalog");
+        $this->redirect("/catalog");
     }
 }

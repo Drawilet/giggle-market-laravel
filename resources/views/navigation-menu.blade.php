@@ -17,7 +17,7 @@
                     </x-nav-link>
 
                     @if (Auth::user()->isCustomer)
-                        <x-nav-link href="{{ route('products.catalog') }}" :active="request()->routeIs('products.catalog')">
+                        <x-nav-link href="{{ route('catalog') }}" :active="request()->routeIs('catalog')">
                             {{ __('Catalog') }}
                         </x-nav-link>
                     @else
