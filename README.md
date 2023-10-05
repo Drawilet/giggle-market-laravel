@@ -1,15 +1,3 @@
-<style>
-.development-banner {
-  background-color: #f44336; 
-  color: white; 
-  padding: 10px; 
-  text-align: center; 
-  font-size: 16px; 
-  font-weight: bold; 
-  border-radius: 5px; 
-}
-</style>
-
 <div style="display: flex; align-items: center;">
     <img src="./public/icon.svg" style="width: 180px; margin-right: 50px">
   <h1>Giggle Market</h1>
@@ -17,7 +5,7 @@
 
 Giggle Market is an online marketplace application developed using Laravel, Livewire, and PHP. It provides a platform for sellers to list their products and for customers to browse, shop, and make purchases.
 
-<div class="development-banner">
+<div style=" background-color: #f44336; color: white;  padding: 5px; padding-top:15px;  text-align: center;   font-size: 16px; font-weight: bold; border-radius: 5px;">
   <p><strong>Warning:</strong> This project is currently under development and is not recommended for production use.</p>
 </div>
 
