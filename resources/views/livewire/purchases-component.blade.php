@@ -11,7 +11,7 @@
                 <div class="flex items-center">
                     <h4 class="text-gray-300 text-xl ml-2 flex">
                         #{{ $purchase->id }}
-                        <span class="ml-2 text-slate-300">({{ $purchase->payment_status }})</span>
+                        <span class="ml-2 text-slate-300">()</span>
                     </h4>
 
                     <span
@@ -39,7 +39,38 @@
                     <div class="mb-2 border-t border-gray-200 dark:border-gray-600"></div>
                 @endforeach
 
-                <span class="text-gray-400 text-right block text-lg">${{ $purchase->amount }}</span>
+
+
+
+
+
+                <div class="flex flex-col pl-3 mb-3 relative">
+                    <span
+                        class="top-0 right-0 absolute text-gray-400 text-right block text-lg">${{ $purchase->amount }}</span>
+
+                    <h3 class="text-xl text-slate-500">Payment</h3>
+
+                    <span class="text-sm text-slate-400">
+                        Method: {{ $purchase->payment_method }}
+                    </span>
+                    <span class="text-sm -mt-1 text-slate-400">
+                        Status: {{ $purchase->payment_status }}
+                    </span>
+                </div>
+
+                @if ($purchase->payment_status == 'pending')
+                    @switch($purchase->payment_method)
+                        @case('paypal')
+                            <button wire:click="payAgain('{{ $purchase->payment_method }}', '{{ $purchase->payment_id }}')"
+                                class="w-full bg-yellow-300 hover:bg-yellow-400 p-2 rounded-sm flex items-center justify-center ">
+                                <img src="paypal.png" alt="Buy now" class="w-32 ">
+                            </button>
+                        @break
+
+                        @default
+                    @endswitch
+                @endif
+
             </div>
         @endforeach
     </div>

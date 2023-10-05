@@ -102,4 +102,12 @@ class PayPalController extends Controller
     {
         return redirect()->route('payment.cancel')->with('info', 'Payment was canceled.');
     }
+
+    public function payAgain($paymentId)
+    {
+        $apiContext = $this->getApiContext();
+        $payment = Payment::get($paymentId, $apiContext);
+
+        return redirect($payment->getApprovalLink());
+    }
 }
