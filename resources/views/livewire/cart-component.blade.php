@@ -1,4 +1,4 @@
-<div class="flex justify-end items-center w-full">
+<div class="flex justify-end items-center ml-auto">
     <div class="ml-3 relative">
         <x-dropdown align="right" width="w-80">
             <x-slot name="trigger">

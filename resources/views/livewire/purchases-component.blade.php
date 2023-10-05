@@ -9,7 +9,11 @@
         @foreach ($purchases as $purchase)
             <div class="bg-slate-800 p-2 mb-2 rounded">
                 <div class="flex items-center">
-                    <h4 class="text-gray-300 text-xl ml-2">#{{ $purchase->id }}</h4>
+                    <h4 class="text-gray-300 text-xl ml-2 flex">
+                        #{{ $purchase->id }}
+                        <span class="ml-2 text-slate-300">({{ $purchase->payment_status }})</span>
+                    </h4>
+
                     <span
                         class="block w-full text-gray-500 text-sm text-right">{{ $purchase->created_at->format('d M Y, H:i') }}</span>
 

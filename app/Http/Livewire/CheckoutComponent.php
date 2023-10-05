@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\PayPalController;
 use App\Models\Cart;
 use App\Models\Sale;
 use App\Models\SaleDescription;
@@ -52,15 +53,34 @@ class CheckoutComponent extends Component
         return $amount;
     }
 
-    public function checkout()
+    /*<──  ───────    D   ───────  ──>*/
+    public function startPayPalPayment(Sale $sale)
     {
-        $sale = Sale::create(["user_id" => Auth::user()->id, "amount" => $this->getAmount()],);
+        $paypalController = new PayPalController();
+        return $paypalController->createPayment($sale);
+    }
+
+
+    public function checkout($payment_method)
+    {
+
+        $amount = $this->getAmount();
+
+        $sale = Sale::create(
+            [
+                "user_id" => Auth::user()->id,
+                "amount" => $amount,
+
+                "payment_method" => $payment_method,
+                "payment_status" => "pending",
+            ],
+        );
 
         foreach ($this->cart as $item) {
             SaleDescription::create([
                 "sale_id" => $sale->id,
 
-                "tenant_id"=> $item->product->tenant->id,
+                "tenant_id" => $item->product->tenant->id,
                 "tenant_name" => $item->product->tenant->name,
 
                 "description" => $item->product->description,
@@ -77,6 +97,6 @@ class CheckoutComponent extends Component
             $item->delete();
         }
 
-        $this->redirect("/catalog");
+        if ($payment_method == "paypal") return $this->startPayPalPayment($sale);
     }
 }

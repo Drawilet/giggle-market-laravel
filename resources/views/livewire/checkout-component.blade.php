@@ -37,13 +37,19 @@
         <div class="block ">
             <span class="block w-full text-right text-white text-3xl">${{ $this->getAmount() }}</span>
 
-            <button wire:click="checkout()"
-                class="w-full bg-blue-500 hover:bg-blue-600 text-white text-sm py-2  rounded-sm">
-                <i class="fa-solid fa-cart-shopping mr-1"></i>
-                Checkout
+            <button wire:click="checkout('paypal')"
+                class="w-full bg-yellow-300 hover:bg-yellow-400 p-2 rounded-sm flex items-center justify-center ">
+                <img src="paypal.png" alt="Buy now" class="w-32 ">
             </button>
         </div>
     @else
         <p>No</p>
     @endif
+
+
+    <!--  <button wire:click="checkout()"
+                class="w-full bg-blue-500 hover:bg-blue-600 text-white text-sm py-2  rounded-sm">
+                <i class="fa-solid fa-cart-shopping mr-1"></i>
+                Checkout
+            </button>-->
 </div>

@@ -32,9 +32,6 @@
                             {{ __('Taxes') }}
                         </x-nav-link>
                     @endif
-
-
-
                 </div>
             </div>
 

@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\PayPalController;
 use App\Http\Livewire\CatalogComponent;
 use App\Http\Livewire\CategoryComponent;
 use App\Http\Livewire\CheckoutComponent;
 use App\Http\Livewire\DashboardComponent;
+use App\Http\Livewire\PaymentCancelComponent;
+use App\Http\Livewire\PaymentSuccessComponent;
 use App\Http\Livewire\ProductComponent;
 use App\Http\Livewire\PurchasesComponent;
 use App\Http\Livewire\SalesComponent;
@@ -45,6 +48,16 @@ Route::middleware([
 
     Route::get("/checkout", CheckoutComponent::class)->name("checkout");
     Route::get("/purchases", PurchasesComponent::class)->name("purchases");
+
+    /*<──  ───────    PAYMENT   ───────  ──>*/
+    Route::get('/payment/cancel', PaymentCancelComponent::class)->name('payment.cancel');
+    Route::get('/payment/success', PaymentSuccessComponent::class)->name('payment.success');
+
+    //Paypal
+    Route::get('/payment/paypal/execute', [PayPalController::class, "executePayment"]);
+    Route::get('/payment/paypal/cancel', [PayPalController::class, "cancelPayment"]);
+
+
 });
 
 /*<──  ───────    SELLER   ───────  ──>*/

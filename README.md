@@ -1,3 +1,15 @@
+<style>
+.development-banner {
+  background-color: #f44336; 
+  color: white; 
+  padding: 10px; 
+  text-align: center; 
+  font-size: 16px; 
+  font-weight: bold; 
+  border-radius: 5px; 
+}
+</style>
+
 <div style="display: flex; align-items: center;">
     <img src="./public/icon.svg" style="width: 180px; margin-right: 50px">
   <h1>Giggle Market</h1>
@@ -5,19 +17,23 @@
 
 Giggle Market is an online marketplace application developed using Laravel, Livewire, and PHP. It provides a platform for sellers to list their products and for customers to browse, shop, and make purchases.
 
+<div class="development-banner">
+  <p><strong>Warning:</strong> This project is currently under development and is not recommended for production use.</p>
+</div>
+
 ## Features
 
 ### Seller View
 
-- **CRUD Operations**: Sellers can manage taxes, categories, products, and users.
-- **Sales Tracking**: Sellers can view their sales.
+-   **CRUD Operations**: Sellers can manage taxes, categories, products, and users.
+-   **Sales Tracking**: Sellers can view their sales.
 
 ### Customer View
 
-- Customers can browse all sellers' products.
-- They can add products to their cart and modify quantities.
-- Checkout displays the final price and allows purchases.
-- Customers can view their purchase history.
+-   Customers can browse all sellers' products.
+-   They can add products to their cart and modify quantities.
+-   Checkout displays the final price and allows purchases.
+-   Customers can view their purchase history.
 
 ## Installation
 
@@ -33,14 +49,14 @@ Giggle Market is an online marketplace application developed using Laravel, Live
 
 ### Seller Account
 
-- Create or log in to your seller account.
-- Manage products, categories, taxes, and track sales.
+-   Create or log in to your seller account.
+-   Manage products, categories, taxes, and track sales.
 
 ### Customer Account
 
-- Browse products from various sellers.
-- Add products to your cart and proceed to checkout.
-- Complete purchases and view your purchase history.
+-   Browse products from various sellers.
+-   Add products to your cart and proceed to checkout.
+-   Complete purchases and view your purchase history.
 
 ## Contributing
 
