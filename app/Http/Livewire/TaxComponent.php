@@ -17,8 +17,8 @@ class TaxComponent extends Component
 
     public function render()
     {
-        $this->taxes = Tax::all();
         $this->user = Auth::user();
+        $this->taxes = Tax::where("tenant_id", $this->user->tenant_id)->get();
 
         return view('livewire.tax-component');
     }

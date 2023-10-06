@@ -15,7 +15,7 @@ class CategoryComponent extends Component
 
     public function render()
     {
-        $this->categories = Category::all();
+        $this->categories = Category::where("tenant_id", Auth::user()->tenant_id)->get();
         return view('livewire.category-component');
     }
 

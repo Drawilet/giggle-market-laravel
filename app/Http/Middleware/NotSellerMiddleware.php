@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class IsCustomerMiddleware
+class NotSellerMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,10 +17,10 @@ class IsCustomerMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = Auth::user();
-        if ($user->isCustomer)
-            return $next($request);
 
+        $user = Auth::user();
+        if (!$user->tenant)
+            return $next($request);
 
         return abort(403);
     }

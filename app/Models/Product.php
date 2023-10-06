@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Product extends Base
+class Product extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -24,5 +25,10 @@ class Product extends Base
     public function product_taxes()
     {
         return $this->hasMany(ProductTax::class);
+    }
+
+    public function tenant()
+    {
+        return  $this->belongsTo(Tenant::class);
     }
 }

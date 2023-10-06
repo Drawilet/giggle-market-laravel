@@ -16,11 +16,14 @@
                         {{ __('Home') }}
                     </x-nav-link>
 
-                    @if (Auth::user()->isCustomer)
-                        <x-nav-link href="{{ route('catalog') }}" :active="request()->routeIs('catalog')">
-                            {{ __('Catalog') }}
-                        </x-nav-link>
-                    @else
+
+                    <x-nav-link href="{{ route('catalog') }}" :active="request()->routeIs('catalog')">
+                        {{ __('Catalog') }}
+                    </x-nav-link>
+
+                    @if (Auth::user()->tenant)
+                        <span></span>
+
                         <x-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
                             {{ __('Products') }}
                         </x-nav-link>
@@ -35,7 +38,7 @@
                 </div>
             </div>
 
-            @if (Auth::user()->isCustomer && !request()->routeIs('checkout'))
+            @if (!request()->routeIs('checkout'))
                 @livewire('cart-component')
             @endif
 
@@ -113,7 +116,7 @@
                                             </span>
                                             @if (!Auth::user()->isCustomer)
                                                 <span class="text-xs text-gray-600">
-                                                    {{ Auth::user()->tenant->name }}
+                                                    {{ Auth::user()->tenant?->name }}
                                                 </span>
                                             @endif
                                         </p>
@@ -151,16 +154,21 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
+                            <x-dropdown-link href="{{ route('purchases') }}">
+                                {{ __('Purchases') }}
+                            </x-dropdown-link>
 
-                            @if (Auth::user()->isCustomer)
-                                <x-dropdown-link href="{{ route('purchases') }}">
-                                    {{ __('Purchases') }}
-                                </x-dropdown-link>
-                            @else
+                            @if (Auth::user()->tenant)
                                 <x-dropdown-link href="{{ route('sales') }}">
                                     {{ __('Sales') }}
                                 </x-dropdown-link>
+                            @else
+                                <x-dropdown-link href="{{ route('tenant.new') }}" class="">
+                                    {{ __('¡Become a seller!') }} <i class="fa-solid fa-dollar-sign"></i>
+                                </x-dropdown-link>
                             @endif
+
+
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                 <x-dropdown-link href="{{ route('api-tokens.index') }}">

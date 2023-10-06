@@ -68,7 +68,6 @@
                 </div>
             @endif
 
-
             <x-is-admin>
                 <button wire:click="openSaveModal()"
                     class="rounded-sm bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 my-3">

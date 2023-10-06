@@ -17,6 +17,7 @@ class ProductComponent extends Component
 {
     use WithFileUploads;
 
+    public $user;
     public $products, $categories, $taxes;
 
     public  $product_id, $tax_id;
@@ -29,8 +30,11 @@ class ProductComponent extends Component
 
     public function render()
     {
+        $this->user = Auth::user();
+
         /*<──  ───────    PRODUCTS   ───────  ──>*/
         $this->products = Product::where(function ($query) {
+            $query->where("tenant_id", $this->user->tenant_id);
             $query->where("category_id", "like", "%" . $this->filter_category . "%");
 
             if (!empty($this->filter_description)) {
@@ -47,11 +51,11 @@ class ProductComponent extends Component
         })->get();
 
         /*<──  ───────    TAXES   ───────  ──>*/
-        $this->taxes = Tax::all();
+        $this->taxes = Tax::where("tenant_id", $this->user->tenant_id)->get();
         //   $this->taxes = Tax::whereNotIn("id", $this->taxes_id)->get();
 
         /*<──  ───────    CATEGORIES   ───────  ──>*/
-        $this->categories = Category::all();
+        $this->categories = Category::where("tenant_id", $this->user->tenant_id)->get();
 
         return view('livewire.product-component');
     }

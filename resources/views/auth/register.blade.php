@@ -9,16 +9,6 @@
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
-            <div class="flex">
-                <x-label for="isCustomer" value="{{ __('Are you a customer?: ') }}" />
-                <x-checkbox id="isCustomer" name="isCustomer" class="ml-2" />
-            </div>
-
-            <div class="mt-4">
-                <x-label for="company_name" value="{{ __('Company name') }}" />
-                <x-input id="company_name" class="block mt-1 w-full" type="text" name="company_name"
-                    :value="old('company_name')" autofocus autocomplete="company_name" />
-            </div>
 
             <div class="mt-4">
                 <x-label for="name" value="{{ __('Name') }}" />

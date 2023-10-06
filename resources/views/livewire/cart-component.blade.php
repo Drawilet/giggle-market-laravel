@@ -22,8 +22,8 @@
 
                                     <div class="p-2 flex items-center flex-col">
                                         <div>
-                                            <p class="text-slate-800 text-xl">{{ $item->product->description }}</p>
-                                            <p class="text-slate-500 -mt-2">{{ $item->product->tenant->name }} /
+                                            <p class="text-slate-800 text-xl leading-none">{{ $item->product->description }}</p>
+                                            <p class="text-slate-500 ">{{ $item->product->tenant->name }} /
                                                 {{ $item->product->category->name }}</p>
                                         </div>
 
@@ -41,7 +41,7 @@
                                 <section class="flex">
                                     <button wire:click.stop="handleItem({{ $item }}, 'remove')"
                                         class="block bg-red-500 hover:bg-red-700 text-white text-xs py-1 w-full rounded-sm">Remove</button>
-                                    <button wire:click.stop="buy({{ $item["id"] }})"
+                                    <button wire:click.stop="buy({{ $item['id'] }})"
                                         class="block bg-green-500 hover:bg-green-600 text-white text-xs py-1 w-full rounded-sm">Buy
                                         now</button>
                                 </section>

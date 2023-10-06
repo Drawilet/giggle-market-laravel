@@ -4,13 +4,11 @@ namespace App\Http\Livewire;
 
 use App\Models\Tenant;
 use App\Models\User;
-use Dotenv\Validator;
-use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
-class TenantComponent extends Component
+class ManageTenantComponent extends Component
 {
 
     public $users;
@@ -30,7 +28,7 @@ class TenantComponent extends Component
             ->where("id", "!=", Auth::user()->id)
             ->get();
 
-        return view('livewire.tenant-component');
+        return view('livewire.manage-tenant-component');
     }
     public function updateTenantInformation()
     {

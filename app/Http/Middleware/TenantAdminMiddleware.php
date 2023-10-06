@@ -19,7 +19,7 @@ class TenantAdminMiddleware
     {
         $user = Auth::user();
 
-        if ($user && $user->tenant_id == $request->route("id") && $user->tenant_role == 'admin')
+        if ($user && $user->tenant && $user->tenant_role == 'admin')
             return $next($request);
 
         return abort(403);
