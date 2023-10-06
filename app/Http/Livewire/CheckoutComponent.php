@@ -38,6 +38,15 @@ class CheckoutComponent extends Component
     {
         return $this->getPrice($item) * ($tax->percentage / 100);
     }
+    public function getTaxes(Cart $item){
+        $taxes = 0;
+
+        foreach ($item->product->product_taxes as $product_tax) {
+            $taxes += $this->getTax($item, $product_tax->tax);
+        }
+
+        return $taxes;
+    }
 
     public function getAmount()
     {
@@ -85,10 +94,7 @@ class CheckoutComponent extends Component
 
                 "description" => $item->product->description,
                 "quantity" => $item->quantity,
-                "price" => $item->product->price,
-
-                // TODO: Add taxes
-                "amount" => $this->getPrice($item),
+                "price" => $item->product->price + $this->getTaxes($item),
             ]);
 
             $item->product->stock -= $item->quantity;

@@ -11,7 +11,7 @@
                 <div class="flex items-center">
                     <h4 class="text-gray-300 text-xl ml-2 flex">
                         #{{ $purchase->id }}
-                        <span class="ml-2 text-slate-300">()</span>
+                        <span class="ml-2 text-slate-300"></span>
                     </h4>
 
                     <span
@@ -31,7 +31,7 @@
 
                         <div class="flex text-right flex-col w-full">
                             <span class="text-lg text-slate-500">{{ $item->quantity }} X ${{ $item->price }} =
-                                ${{ $item->amount }}</span>
+                                ${{ $item->quantity * $item->price }}</span>
                         </div>
 
                     </div>

@@ -18,7 +18,7 @@
 
                         <div class="flex text-right flex-col w-full">
                             <span class="text-lg text-slate-500">{{ $sale->quantity }} X ${{ $sale->price }} =
-                                ${{ $sale->amount }}</span>
+                                ${{ $item->quantity * $item->price }}</span>
                         </div>
                     </div>
 

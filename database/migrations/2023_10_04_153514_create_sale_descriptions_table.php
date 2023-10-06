@@ -27,8 +27,6 @@ return new class extends Migration
             $table->integer("quantity");
             $table->decimal("price");
 
-            $table->decimal("amount");
-
             $table->timestamps();
         });
     }
