@@ -5,6 +5,7 @@ use App\Http\Livewire\CatalogComponent;
 use App\Http\Livewire\CategoryComponent;
 use App\Http\Livewire\CheckoutComponent;
 use App\Http\Livewire\DashboardComponent;
+use App\Http\Livewire\HomeComponent;
 use App\Http\Livewire\PaymentCancelComponent;
 use App\Http\Livewire\PaymentSuccessComponent;
 use App\Http\Livewire\ProductComponent;
@@ -26,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    if (auth()->check()) return redirect("/home");
     return view('welcome');
 });
 
@@ -34,6 +36,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
+    Route::get('/home', HomeComponent::class)->name('home');
     Route::get('/dashboard', DashboardComponent::class)->name('dashboard');
 });
 
@@ -56,8 +59,6 @@ Route::middleware([
     //Paypal
     Route::get('/payment/paypal/execute', [PayPalController::class, "executePayment"]);
     Route::get('/payment/paypal/cancel', [PayPalController::class, "cancelPayment"]);
-
-
 });
 
 /*<──  ───────    SELLER   ───────  ──>*/

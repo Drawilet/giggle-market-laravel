@@ -411,9 +411,9 @@
 
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-                <img src="/icon.svg" alt="Giggle market" class="max-w-sm">
+                <img src="/icon.svg" alt="Giggle market" class="max-w-xs">
             </div>
-            <h1 class="text-white text-center">Welcome to Giggle Market</h1>
+            <h1 class="text-center text-white">Welcome to Giggle Market</h1>
         </div>
     </div>
 </body>
