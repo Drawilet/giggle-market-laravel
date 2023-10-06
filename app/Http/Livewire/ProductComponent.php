@@ -110,8 +110,11 @@ class ProductComponent extends Component
             $filename = "photo" . "." . $this->photo->extension();
         }
 
+        $user = Auth::user();
+
         $data = [
-            "tenant_id" => Auth::user()->tenant_id,
+            "tenant_id" => $user->tenant_id,
+            "user_id" => $user->id,
             "description" => $this->description,
             "price" => $this->price,
             "stock" => $this->stock,

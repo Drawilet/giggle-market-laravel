@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class SaleDescription extends Model
+class SaleDescription extends Base
 {
     protected $fillable = [
         "tenant_id",
@@ -16,7 +15,6 @@ class SaleDescription extends Model
         "sale_id"
     ];
     use HasFactory;
-
 
     public function sale()
     {

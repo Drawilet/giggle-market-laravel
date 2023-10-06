@@ -19,6 +19,9 @@ return new class extends Migration
             $table->unsignedBigInteger("tenant_id");
             $table->foreign("tenant_id")->references("id")->on("tenants");
 
+            $table->unsignedBigInteger("user_id");
+            $table->foreign("user_id")->references("id")->on("users");
+
             $table->string("photo");
 
             $table->string("description", 50);

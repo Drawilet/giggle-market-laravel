@@ -10,6 +10,7 @@ class Product extends Model
     use HasFactory;
     protected $fillable = [
         "tenant_id",
+        "user_id",
         "description",
         "price",
         "stock",
@@ -30,5 +31,10 @@ class Product extends Model
     public function tenant()
     {
         return  $this->belongsTo(Tenant::class);
+    }
+
+    public function user()
+    {
+        return  $this->belongsTo(User::class);
     }
 }

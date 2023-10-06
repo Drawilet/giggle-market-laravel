@@ -12,10 +12,9 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
-                        {{ __('Home') }}
+                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                        {{ __('Dashboard') }}
                     </x-nav-link>
-
 
                     <x-nav-link href="{{ route('catalog') }}" :active="request()->routeIs('catalog')">
                         {{ __('Catalog') }}
@@ -33,6 +32,10 @@
 
                         <x-nav-link href="{{ route('taxes') }}" :active="request()->routeIs('taxes')">
                             {{ __('Taxes') }}
+                        </x-nav-link>
+                    @else
+                        <x-nav-link href="{{ route('tenant.new') }}" :active="request()->routeIs('tenant.new')">
+                            {{ __('¡Become a seller!') }} <i class="fa-solid fa-dollar-sign"></i>
                         </x-nav-link>
                     @endif
                 </div>
@@ -141,8 +144,11 @@
                                 <x-dropdown-link href="{{ route('tenant.manage') }}">
                                     {{ __('Manage') }}
                                 </x-dropdown-link>
-                            @endif
 
+                                <x-dropdown-link href="{{ route('tenant.dashboard') }}">
+                                    {{ __('Dashboard') }}
+                                </x-dropdown-link>
+                            @endif
 
                             <!-- Account Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
@@ -156,18 +162,6 @@
                             <x-dropdown-link href="{{ route('purchases') }}">
                                 {{ __('Purchases') }}
                             </x-dropdown-link>
-
-                            @if (Auth::user()->tenant)
-                                <x-dropdown-link href="{{ route('sales') }}">
-                                    {{ __('Sales') }}
-                                </x-dropdown-link>
-                            @else
-                                <x-dropdown-link href="{{ route('tenant.new') }}" class="">
-                                    {{ __('¡Become a seller!') }} <i class="fa-solid fa-dollar-sign"></i>
-                                </x-dropdown-link>
-                            @endif
-
-
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                 <x-dropdown-link href="{{ route('api-tokens.index') }}">
@@ -210,8 +204,8 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
-                {{ __('Home') }}
+            <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
             <x-responsive-nav-link href="{{ route('catalog') }}" :active="request()->routeIs('catalog')">
@@ -271,16 +265,6 @@
                 <x-responsive-nav-link href="{{ route('purchases') }}">
                     {{ __('Purchases') }}
                 </x-responsive-nav-link>
-
-                @if (Auth::user()->tenant)
-                    <x-responsive-nav-link href="{{ route('sales') }}">
-                        {{ __('Sales') }}
-                    </x-responsive-nav-link>
-                @else
-                    <x-responsive-nav-link href="{{ route('tenant.new') }}" class="">
-                        {{ __('¡Become a seller!') }} <i class="fa-solid fa-dollar-sign"></i>
-                    </x-responsive-nav-link>
-                @endif
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                     <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">

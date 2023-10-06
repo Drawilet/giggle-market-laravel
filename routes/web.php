@@ -15,6 +15,7 @@ use App\Http\Livewire\PurchasesComponent;
 use App\Http\Livewire\SalesComponent;
 use App\Http\Livewire\TaxComponent;
 use App\Http\Livewire\TenantComponent;
+use App\Http\Livewire\TenantDashboard;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,8 +63,6 @@ Route::middleware([
     Route::get("/products", ProductComponent::class)->name('products');
     Route::get("/categories", CategoryComponent::class)->name('categories');
     Route::get("/taxes", TaxComponent::class)->name('taxes');
-
-    Route::get("/sales", SalesComponent::class)->name("sales");
 });
 
 /*<──  ───────    NOT SELLER   ───────  ──>*/
@@ -85,5 +84,7 @@ Route::middleware([
     "tenant.admin"
 ])->group(function () {
     Route::get("/tenants/manage", ManageTenantComponent::class)->name('tenant.manage');
+    Route::get("/tenants/dashboard", TenantDashboard::class)->name('tenant.dashboard');
+
 });
 

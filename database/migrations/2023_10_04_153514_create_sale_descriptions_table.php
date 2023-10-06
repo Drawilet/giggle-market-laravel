@@ -21,7 +21,6 @@ return new class extends Migration
 
             $table->unsignedBigInteger("tenant_id");
             $table->foreign("tenant_id")->references("id")->on("tenants");
-            $table->string("tenant_name");
 
             $table->string("description");
             $table->integer("quantity");

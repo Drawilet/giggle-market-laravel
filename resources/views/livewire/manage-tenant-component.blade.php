@@ -21,7 +21,7 @@
                 <select id="tenant_role" wire:model="tenant_role" required
                     class="block w-full mt-1 p-2 border border-gray-300 bg-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white focus:outline-none">
                     <option value="{{ null }}">Select a role</option>
-                    <option value="user">User</option>
+                    <option value="seller">Seller</option>
                     <option value="admin">Admin</option>
                 </select>
                 @error('tenant_role')

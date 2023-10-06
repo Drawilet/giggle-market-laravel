@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
+use App\Models\User;
 use Illuminate\Http\Request;
 use PayPal\Api\Transaction;
 use PayPal\Rest\ApiContext;
@@ -88,6 +89,13 @@ class PayPalController extends Controller
             if ($result->getState() == "approved") {
                 $sale->payment_status = "approved";
                 $sale->save();
+
+                foreach ($sale->descriptions as $description) {
+                   $tenant =  $description->tenant;
+                   $tenant->balance += $description->quantity * $description->price;;
+
+                   $tenant->save();
+                }
 
                 return redirect()->route("purchases")->with("success", "Purchase successful! Thank you for your order.");
             } else {

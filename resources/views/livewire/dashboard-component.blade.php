@@ -1,12 +1,7 @@
-<div>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Dashboard
-        </h2>
-    </x-slot>
+<div class="p-5">
+    <div class="bg-slate-700 py-3 px-5 flex flex-col w-72 rounded shadow-lg">
+        <span class="text-gray-300">Balance</span>
+        <span class="text-gray-100 text-3xl">${{ $user->balance }}</span>
+    </div>
 
-
-    @if (Auth::user()->tenant_role == "admin")
-        @livewire("tenant-analytics-component")
-    @endif
 </div>

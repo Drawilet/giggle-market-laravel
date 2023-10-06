@@ -97,9 +97,7 @@ class CheckoutComponent extends Component
         foreach ($this->cart as $item) {
             SaleDescription::create([
                 "sale_id" => $sale->id,
-
                 "tenant_id" => $item->product->tenant->id,
-                "tenant_name" => $item->product->tenant->name,
 
                 "description" => $item->product->description,
                 "quantity" => $item->quantity,

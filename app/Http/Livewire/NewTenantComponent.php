@@ -31,6 +31,6 @@ class NewTenantComponent extends Component
 
         $user->save();
 
-        redirect("/tenants/manage");
+        return redirect("/tenants/manage");
     }
 }
