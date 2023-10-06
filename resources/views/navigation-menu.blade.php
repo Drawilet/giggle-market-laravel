@@ -35,7 +35,7 @@
                 </div>
             </div>
 
-            @if (Auth::user()->isCustomer)
+            @if (Auth::user()->isCustomer && !request()->routeIs('checkout'))
                 @livewire('cart-component')
             @endif
 

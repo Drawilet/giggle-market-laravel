@@ -19,9 +19,17 @@ class CheckoutComponent extends Component
     {
         $items = Auth::user()->user_carts;
 
-        $arg = $request->input("arg");
-        if ($arg == "all") $this->cart = $items;
-        else  $this->cart = $items->where("id", $arg);
+        $item = $request->input("item");
+        if ($item)  $this->cart = $items->where("id", $item);
+        else  $this->cart = $items;
+
+        foreach ($items as $item) {
+            $calc = $item->product->stock - $item->quantity;
+            if ($calc < 0) {
+                $item->quantity -= abs($calc);
+                $item->save();
+            }
+        }
     }
 
     public function render()
@@ -38,7 +46,8 @@ class CheckoutComponent extends Component
     {
         return $this->getPrice($item) * ($tax->percentage / 100);
     }
-    public function getTaxes(Cart $item){
+    public function getTaxes(Cart $item)
+    {
         $taxes = 0;
 
         foreach ($item->product->product_taxes as $product_tax) {

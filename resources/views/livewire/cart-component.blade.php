@@ -50,8 +50,8 @@
                             <div class="mb-2 border-t border-gray-200 dark:border-gray-600"></div>
                         @endforeach
                     </div>
-                    <button wire:click="buy('all')"
-                        class="block bg-green-500 hover:bg-green-600 text-white text-sm py-2 w-3/4 mx-auto mb-2 rounded-sm">
+                    <button wire:click="buy()"
+                        class="block bg-green-500 hover:bg-green-600 text-white text-sm py-2 w-11/12 mx-auto mb-2 rounded-sm">
                         <i class="fa-solid fa-cart-shopping mr-1"></i>
                         Continue shopping
                     </button>

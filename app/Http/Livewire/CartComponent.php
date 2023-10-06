@@ -21,6 +21,14 @@ class CartComponent extends Component
         $this->cart = $user->user_carts;
         $this->totalQuantity = array_sum(array_column($this->cart->toArray(), "quantity"));
 
+        foreach ($this->cart as $item) {
+            $calc = $item->product->stock - $item->quantity;
+            if ($calc < 0) {
+                $item->quantity -= abs($calc);
+                $item->save();
+            }
+        }
+
         return view('livewire.cart-component');
     }
 
@@ -58,8 +66,8 @@ class CartComponent extends Component
         $this->emit("cart:update");
     }
 
-    public function buy($arg)
+    public function buy($item = null)
     {
-        $this->redirect("/checkout?arg=$arg");
+        $this->redirect("/checkout?item=$item");
     }
 }
