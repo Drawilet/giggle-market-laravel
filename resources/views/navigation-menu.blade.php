@@ -138,8 +138,7 @@
                                     {{ __('Tenant') }}
                                 </div>
 
-                                <x-dropdown-link
-                                    href="{{ route('tenant.manage', ['id' => Auth::user()->tenant->id]) }}">
+                                <x-dropdown-link href="{{ route('tenant.manage') }}">
                                     {{ __('Manage') }}
                                 </x-dropdown-link>
                             @endif
@@ -211,9 +210,29 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
+                {{ __('Home') }}
             </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="{{ route('catalog') }}" :active="request()->routeIs('catalog')">
+                {{ __('Catalog') }}
+            </x-responsive-nav-link>
+
+            @if (Auth::user()->tenant)
+                <span></span>
+
+                <x-responsive-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
+                    {{ __('Products') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('categories') }}" :active="request()->routeIs('categories')">
+                    {{ __('Categories') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link href="{{ route('taxes') }}" :active="request()->routeIs('taxes')">
+                    {{ __('Taxes') }}
+                </x-responsive-nav-link>
+            @endif
+
         </div>
 
         <!-- Responsive Settings Options -->
@@ -237,6 +256,31 @@
                 <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
+
+                <!-- Tenant Management -->
+                @if (Auth::user()->tenant_role == 'admin')
+                    <x-responsive-nav-link href="{{ route('tenant.manage') }}">
+                        {{ __('Manage tenant') }}
+                    </x-responsive-nav-link>
+                @endif
+
+                <x-responsive-nav-link href="{{ route('profile.show') }}">
+                    {{ __('Profile') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link href="{{ route('purchases') }}">
+                    {{ __('Purchases') }}
+                </x-responsive-nav-link>
+
+                @if (Auth::user()->tenant)
+                    <x-responsive-nav-link href="{{ route('sales') }}">
+                        {{ __('Sales') }}
+                    </x-responsive-nav-link>
+                @else
+                    <x-responsive-nav-link href="{{ route('tenant.new') }}" class="">
+                        {{ __('¡Become a seller!') }} <i class="fa-solid fa-dollar-sign"></i>
+                    </x-responsive-nav-link>
+                @endif
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                     <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
