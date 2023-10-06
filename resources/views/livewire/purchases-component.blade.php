@@ -3,7 +3,18 @@
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             Purchases
         </h2>
+
+        @if (session()->has('success'))
+            <h3 class="text-green-500 mt-2">{{ session('success') }}</h2>
+        @endif
+
+        @if (session()->has('error'))
+            <h3 class="text-red-500 mt-2">{{ session('error') }}</h2>
+        @endif
     </x-slot>
+
+
+
 
     <div class="w-4/5 lg:w-1/2 block mx-auto py-5">
         @foreach ($purchases as $purchase)

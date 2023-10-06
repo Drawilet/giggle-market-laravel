@@ -53,9 +53,6 @@ Route::middleware([
     Route::get("/purchases", PurchasesComponent::class)->name("purchases");
 
     /*<──  ───────    PAYMENT   ───────  ──>*/
-    Route::get('/payment/cancel', PaymentCancelComponent::class)->name('payment.cancel');
-    Route::get('/payment/success', PaymentSuccessComponent::class)->name('payment.success');
-
     //Paypal
     Route::get('/payment/paypal/execute', [PayPalController::class, "executePayment"]);
     Route::get('/payment/paypal/cancel', [PayPalController::class, "cancelPayment"]);

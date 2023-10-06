@@ -56,7 +56,7 @@ class PayPalController extends Controller
 
             return redirect($payment->getApprovalLink());
         } catch (\Exception $ex) {
-            return redirect()->back()->with("error", "[Paypal] There was an error creating the payment.");
+            return redirect()->back()->with("error", "There was an error creating the payment.");
         }
     }
 
@@ -67,12 +67,12 @@ class PayPalController extends Controller
 
         $payerId = $request->input('PayerID');
         if (empty($payerId) || !is_string($payerId)) {
-            return redirect()->route("payment.cancel")->with("error", "[Paypal] Invalid or missing PayerID");
+            return redirect()->route("purchases")->with("error", "Invalid or missing PayerID");
         }
 
         $paymentId = $request->input("paymentId");
         if (empty($paymentId) || !is_string($paymentId)) {
-            return redirect()->route("payment.cancel")->with("error", "[Paypal]  Invalid or missing PaymentID");
+            return redirect()->route("purchases")->with("error", " Invalid or missing PaymentID");
         }
 
         try {
@@ -89,18 +89,18 @@ class PayPalController extends Controller
                 $sale->payment_status = "approved";
                 $sale->save();
 
-                return redirect()->route("payment.success");
+                return redirect()->route("purchases")->with("success", "Purchase successful! Thank you for your order.");
             } else {
-                return redirect()->route("payment.cancel")->with("error", "[Paypal] Payment was not successful.");
+                return redirect()->route("purchases")->with("error", "Payment was not successful.");
             }
         } catch (\Exception $ex) {
-            return redirect()->route('payment.cancel')->with('error', '[Paypal] Error getting payment details.');
+            return redirect()->route('purchases')->with('error', 'Error getting payment details.');
         }
     }
 
     public function cancelPayment()
     {
-        return redirect()->route('payment.cancel')->with('info', 'Payment was canceled.');
+        return redirect()->route('purchases')->with('info', 'Payment was canceled.');
     }
 
     public function payAgain($paymentId)
