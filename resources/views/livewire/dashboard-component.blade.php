@@ -3,5 +3,4 @@
         <span class="text-gray-300">Balance</span>
         <span class="text-gray-100 text-3xl">${{ $user->balance }}</span>
     </div>
-
 </div>

@@ -13,10 +13,7 @@
         @endif
     </x-slot>
 
-
-
-
-    <div class="w-4/5 lg:w-1/2 block mx-auto py-5">
+    <div class="w-4/5 lg:w-1/2 mx-auto py-5 flex flex-col-reverse">
         @foreach ($purchases as $purchase)
             <div class="bg-slate-800 p-2 mb-2 rounded">
                 <div class="flex items-center">

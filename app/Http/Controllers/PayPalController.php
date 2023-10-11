@@ -76,33 +76,34 @@ class PayPalController extends Controller
             return redirect()->route("purchases")->with("error", " Invalid or missing PaymentID");
         }
 
-        try {
-            $payment = Payment::get($paymentId, $apiContext);
+        $payment = Payment::get($paymentId, $apiContext);
 
-            $sale = Sale::where("payment_id", $paymentId)->first();
+        $sale = Sale::where("payment_id", $paymentId)->first();
 
-            $execution = new PaymentExecution();
-            $execution->setPayerId($payerId);
+        $execution = new PaymentExecution();
+        $execution->setPayerId($payerId);
 
-            $result = $payment->execute($execution, $apiContext);
+        $result = $payment->execute($execution, $apiContext);
 
-            if ($result->getState() == "approved") {
-                $sale->payment_status = "approved";
-                $sale->save();
+        if ($result->getState() == "approved") {
+            $sale->payment_status = "approved";
+            $sale->save();
 
-                foreach ($sale->descriptions as $description) {
-                   $tenant =  $description->tenant;
-                   $tenant->balance += $description->quantity * $description->price;;
+            foreach ($sale->descriptions as $description) {
+                $transaction = new TransactionController();
 
-                   $tenant->save();
-                }
+                $transaction->setPayer("Giggle Market", "system");
+                $transaction->setRecepient($description->tenant, "tenant");
 
-                return redirect()->route("purchases")->with("success", "Purchase successful! Thank you for your order.");
-            } else {
-                return redirect()->route("purchases")->with("error", "Payment was not successful.");
+                $transaction->setDescription("Sale of $description->description");
+                $transaction->setAmount($description->quantity * $description->price);
+
+                $transaction->execute();
             }
-        } catch (\Exception $ex) {
-            return redirect()->route('purchases')->with('error', 'Error getting payment details.');
+
+            return redirect()->route("purchases")->with("success", "Purchase successful! Thank you for your order.");
+        } else {
+            return redirect()->route("purchases")->with("error", "Payment was not successful.");
         }
     }
 

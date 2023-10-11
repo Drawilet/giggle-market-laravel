@@ -141,12 +141,12 @@
                                     {{ __('Tenant') }}
                                 </div>
 
-                                <x-dropdown-link href="{{ route('tenant.manage') }}">
-                                    {{ __('Manage') }}
-                                </x-dropdown-link>
-
                                 <x-dropdown-link href="{{ route('tenant.dashboard') }}">
                                     {{ __('Dashboard') }}
+                                </x-dropdown-link>
+
+                                <x-dropdown-link href="{{ route('tenant.manage') }}">
+                                    {{ __('Manage') }}
                                 </x-dropdown-link>
                             @endif
 
