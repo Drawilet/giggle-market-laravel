@@ -37,24 +37,17 @@
         <div class="block ">
             <span class="block w-full text-right text-white text-3xl">${{ $this->getAmount() }}</span>
 
-            <button wire:click="checkout('paypal')"
-                class="w-full bg-yellow-300 hover:bg-yellow-400 p-2 rounded-sm flex items-center justify-center mb-2 ">
-                <img src="paypal.png" alt="PayPal checkout" class="w-32 ">
-            </button>
-
-            <button wire:click="checkout('mercadopago')"
-                class="w-full bg-sky-400 hover:bg-sky-500 p-2 rounded-sm flex items-center justify-center ">
-                <img src="mercadopago.webp" alt="MercadoPago checkout" class="w-32 ">
-            </button>
+            @foreach ($methods as $key => $method)
+                @if ($method['allowPayments'])
+                    <button wire:click="checkout('{{ $key }}')"
+                        style="background-color: {{ $method['button']['bg'] }}"
+                        class="w-full p-2 rounded-sm flex items-center justify-center mb-2 ">
+                        <img src="{{ $method['button']['logo'] }}" alt="{{ $key }} checkout" class="w-32 ">
+                    </button>
+                @endif
+            @endforeach
         </div>
     @else
         <p>No</p>
     @endif
-
-
-    <!--  <button wire:click="checkout()"
-                class="w-full bg-blue-500 hover:bg-blue-600 text-white text-sm py-2  rounded-sm">
-                <i class="fa-solid fa-cart-shopping mr-1"></i>
-                Checkout
-            </button>-->
 </div>

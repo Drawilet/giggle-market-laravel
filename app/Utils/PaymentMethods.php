@@ -19,6 +19,7 @@ class PaymentMethods
                     "bg" => "rgb(253 224 71)",
                     "logo" => "paypal.png",
                 ],
+                "allowPayments" => true
             ],
             "mercadopago" => [
                 "controller" => MercadoPagoController::class,
@@ -26,6 +27,7 @@ class PaymentMethods
                     "bg" => " rgb(56 189 248)",
                     "logo" => "mercadopago.webp",
                 ],
+                "allowPayments" => true
             ]
         ];
     }

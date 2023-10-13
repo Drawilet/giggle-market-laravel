@@ -17,8 +17,12 @@ class CheckoutComponent extends Component
 {
     public $cart = [];
 
+    public $methods;
+
     public function mount(Request $request)
     {
+        $this->methods = PaymentMethods::get();
+
         $items = Auth::user()->user_carts;
 
         $item = $request->input("item");
@@ -108,7 +112,7 @@ class CheckoutComponent extends Component
             $item->delete();
         }
 
-        $method = PaymentMethods::get()[$payment_method];
+        $method = $this->methods[$payment_method];
         $controller = new $method["controller"];
 
         $controller->createPayment($sale);
