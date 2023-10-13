@@ -11,6 +11,7 @@ use App\Models\Tax;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use App\Utils\PaymentMethods;
 
 class CheckoutComponent extends Component
 {
@@ -74,16 +75,11 @@ class CheckoutComponent extends Component
         return $amount;
     }
 
-    /*<──  ───────    D   ───────  ──>*/
-    public function startPayPalPayment(Sale $sale)
-    {
-        $paypalController = new PayPalController();
-        return $paypalController->createPayment($sale);
-    }
-
-
+    /*<──  ───────    CHECKOUT   ───────  ──>*/
     public function checkout($payment_method)
     {
+
+
         $amount = $this->getAmount();
 
         $sale = Sale::create(
@@ -112,10 +108,9 @@ class CheckoutComponent extends Component
             $item->delete();
         }
 
-        if ($payment_method == "paypal") return $this->startPayPalPayment($sale);
-        else if ($payment_method == "mercadopago") {
-            $controller = new MercadoPagoController();
-            $controller->createPayment($sale);
-        }
+        $method = PaymentMethods::get()[$payment_method];
+        $controller = new $method["controller"];
+
+        $controller->createPayment($sale);
     }
 }
