@@ -13,6 +13,7 @@
         "laravel/telescope": "^4.16",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.11",
+        "mercadopago/dx-php": "3.0.0",
         "paypal/rest-api-sdk-php": "^1.6"
     },
     "require-dev": {

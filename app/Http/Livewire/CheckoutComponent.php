@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\MercadoPagoController;
 use App\Http\Controllers\PayPalController;
 use App\Models\Cart;
 use App\Models\Sale;
@@ -112,9 +113,9 @@ class CheckoutComponent extends Component
         }
 
         if ($payment_method == "paypal") return $this->startPayPalPayment($sale);
-      /**  else if($payment_method == "mercadopago"){
+        else if ($payment_method == "mercadopago") {
             $controller = new MercadoPagoController();
             $controller->createPayment($sale);
-        } */
+        }
     }
 }

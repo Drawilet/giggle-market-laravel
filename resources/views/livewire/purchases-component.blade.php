@@ -11,6 +11,10 @@
         @if (session()->has('error'))
             <h3 class="text-red-500 mt-2">{{ session('error') }}</h2>
         @endif
+
+        @if (session()->has('info'))
+            <h3 class="text-gray-900 mt-2">{{ session('info') }}</h2>
+        @endif
     </x-slot>
 
     <div class="w-4/5 lg:w-1/2 mx-auto py-5 flex flex-col-reverse">

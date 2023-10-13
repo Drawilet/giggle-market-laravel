@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MercadoPagoController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Livewire\BillingComponent;
 use App\Http\Livewire\CatalogComponent;
@@ -50,6 +51,11 @@ Route::middleware([
     // -> PayPal
     Route::get('/payment/paypal/execute', [PayPalController::class, "executePayment"]);
     Route::get('/payment/paypal/cancel', [PayPalController::class, "cancelPayment"]);
+
+    // -> MercadoPago
+    Route::get('/payment/mercadopago/execute', [MercadoPagoController::class, "executePayment"]);
+    Route::get('/payment/mercadopago/pending', [MercadoPagoController::class, "waitingPayment"]);
+    Route::get('/payment/mercadopago/cancel', [MercadoPagoController::class, "cancelPayment"]);
 });
 
 /*<──  ───────    SELLER   ───────  ──>*/

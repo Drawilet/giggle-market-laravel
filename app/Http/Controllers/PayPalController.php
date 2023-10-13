@@ -83,6 +83,9 @@ class PayPalController extends Controller
         $payment = Payment::get($paymentId, $apiContext);
 
         $sale = Sale::where("payment_id", $paymentId)->first();
+        if ($sale->payment_status == "approved")
+            return redirect()->route("purchases")->with("error", "Payment have already processed");
+
 
         $execution = new PaymentExecution();
         $execution->setPayerId($payerId);
@@ -130,7 +133,7 @@ class PayPalController extends Controller
         $apiContext = $this->getApiContext();
 
         $payout = new Payout();
-        
+
         $currency = new Currency();
         $currency->setCurrency("USD");
         $currency->setValue($amount);
@@ -150,9 +153,6 @@ class PayPalController extends Controller
         $payout->setSenderBatchHeader($senderBatchHeader);
 
         $payout->create(null, $apiContext);
-
-
-
     }
 }
 
