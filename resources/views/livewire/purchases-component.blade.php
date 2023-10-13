@@ -51,11 +51,6 @@
                     <div class="mb-2 border-t border-gray-200 dark:border-gray-600"></div>
                 @endforeach
 
-
-
-
-
-
                 <div class="flex flex-col pl-3 mb-3 relative">
                     <span
                         class="top-0 right-0 absolute text-gray-400 text-right block text-lg">${{ $purchase->amount }}</span>
@@ -70,17 +65,17 @@
                     </span>
                 </div>
 
-                @if ($purchase->payment_status == 'pending')
-                    @switch($purchase->payment_method)
-                        @case('paypal')
-                            <button wire:click="payAgain('{{ $purchase->payment_method }}', '{{ $purchase->payment_id }}')"
-                                class="w-full bg-yellow-300 hover:bg-yellow-400 p-2 rounded-sm flex items-center justify-center ">
-                                <img src="paypal.png" alt="Buy now" class="w-32 ">
-                            </button>
-                        @break
+                @if ($purchase->payment_status == 'pending' && $purchase->payment_id)
+                    <?php
+                    $method = $methods[$purchase->payment_method];
+                    ?>
 
-                        @default
-                    @endswitch
+                    <button wire:click="payAgain('{{ $purchase->payment_method }}', '{{ $purchase->payment_id }}')"
+                        style="background-color: {{ $method['button']['bg'] }}"
+                        class="w-full p-2 rounded-sm flex items-center justify-center mb-2 ">
+                        <img src="{{ $method['button']['logo'] }}" alt="{{ $purchase->payment_method }} checkout"
+                            class="w-32 ">
+                    </button>
                 @endif
 
             </div>

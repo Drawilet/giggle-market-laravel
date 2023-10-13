@@ -155,33 +155,3 @@ class PayPalController extends Controller
         $payout->create(null, $apiContext);
     }
 }
-
-/** public function createPayout($email, $amount)
-    {
-        $apiContext = $this->getApiContext();
-
-        $payout = new Payout();
-
-        $currency = new Currency();
-        $currency->setCurrency("USD");
-        $currency->setValue($amount);
-
-        $item = new PayoutItem();
-        $item->setRecipientType("EMAIL");
-        $item->setReceiver($email);
-        $item->setAmount($currency);
-        $item->setNote("Simple note");
-
-        $payout->setItems([$item]);
-
-        $senderBatchHeader = new PayoutSenderBatchHeader();
-        $senderBatchHeader->setSenderBatchId("1");
-        $senderBatchHeader->setEmailSubject("Payment subject");
-
-        $payout->setSenderBatchHeader($senderBatchHeader);
-
-        $payout->create(null, $apiContext);
-
-
-
-    } */

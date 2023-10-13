@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Http\Controllers\PayPalController;
 use App\Models\Sale;
+use App\Utils\PaymentMethods;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -11,6 +12,14 @@ class PurchasesComponent extends Component
 {
     public $user;
     public $purchases;
+
+    public $methods;
+
+    public function mount()
+    {
+        $this->methods = PaymentMethods::get();
+    }
+
     public function render()
     {
         $this->user = Auth::user();
@@ -20,15 +29,13 @@ class PurchasesComponent extends Component
     }
 
 
-    public function payAgain($method, $paymentId)
-    {
-        switch ($method) {
-            case 'paypal':
-                $paypalController = new PayPalController();
-                return $paypalController->payAgain($paymentId);
+    public function payAgain($payment_method, $paymentId)
 
-            default:
-                break;
-        }
+    {
+        $method = $this->methods[$payment_method];
+        $controller = new $method["controller"];
+
+        $controller->payAgain($paymentId);
+
     }
 }

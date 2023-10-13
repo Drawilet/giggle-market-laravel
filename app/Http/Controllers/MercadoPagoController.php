@@ -115,4 +115,19 @@ class MercadoPagoController extends Controller
     {
         return redirect()->route('purchases')->with('info', 'Waiting for payment approval');
     }
+
+    public function payAgain($paymentId)
+    {
+
+        $preferenceClient = new PreferenceClient();
+        try {
+            $preference = $preferenceClient->get($paymentId);
+            redirect($preference->init_point);
+
+        } catch (MPApiException $e) {
+            redirect()->route("purchases")->with("error", $e->getApiResponse()->getContent()["message"]);
+        } catch (\Exception $e) {
+            redirect()->route("purchases")->with("error", $e->getMessage());
+        }
+    }
 }
