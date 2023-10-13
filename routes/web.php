@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PayPalController;
+use App\Http\Livewire\BillingComponent;
 use App\Http\Livewire\CatalogComponent;
 use App\Http\Livewire\CategoryComponent;
 use App\Http\Livewire\CheckoutComponent;
@@ -8,13 +9,9 @@ use App\Http\Livewire\DashboardComponent;
 use App\Http\Livewire\HomeComponent;
 use App\Http\Livewire\ManageTenantComponent;
 use App\Http\Livewire\NewTenantComponent;
-use App\Http\Livewire\PaymentCancelComponent;
-use App\Http\Livewire\PaymentSuccessComponent;
 use App\Http\Livewire\ProductComponent;
 use App\Http\Livewire\PurchasesComponent;
-use App\Http\Livewire\SalesComponent;
 use App\Http\Livewire\TaxComponent;
-use App\Http\Livewire\TenantComponent;
 use App\Http\Livewire\TenantDashboard;
 use Illuminate\Support\Facades\Route;
 
@@ -47,8 +44,10 @@ Route::middleware([
     Route::get("/checkout", CheckoutComponent::class)->name("checkout");
     Route::get("/purchases", PurchasesComponent::class)->name("purchases");
 
-    /*<──  ───────    PAYMENT   ───────  ──>*/
-    //Paypal
+    /*<──  ───────    BILLING   ───────  ──>*/
+    Route::get("/billing", BillingComponent::class)->name("billing");
+
+    // -> PayPal
     Route::get('/payment/paypal/execute', [PayPalController::class, "executePayment"]);
     Route::get('/payment/paypal/cancel', [PayPalController::class, "cancelPayment"]);
 });

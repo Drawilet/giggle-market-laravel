@@ -159,6 +159,10 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
+                            <x-dropdown-link href="{{ route('billing') }}">
+                                {{ __('Billing') }}
+                            </x-dropdown-link>
+
                             <x-dropdown-link href="{{ route('purchases') }}">
                                 {{ __('Purchases') }}
                             </x-dropdown-link>

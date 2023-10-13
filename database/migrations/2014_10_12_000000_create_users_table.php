@@ -29,6 +29,9 @@ return new class extends Migration
 
             $table->decimal('balance', 10, 2)->default(0.00);
 
+            /*<──  ───────    BILLING   ───────  ──>*/
+            $table->string("paypal_email")->nullable();
+
             $table->timestamps();
         });
     }

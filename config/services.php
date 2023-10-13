@@ -36,5 +36,10 @@ return [
         'settings' => [
             'mode' => env('PAYPAL_MODE', 'sandbox'),
         ],
+    ],
+
+    "mercadopago" => [
+        "access_token" => env("MERCADOPAGO_ACCESS_TOKEN"),
     ]
+
 ];

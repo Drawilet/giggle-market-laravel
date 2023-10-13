@@ -1,5 +1,4 @@
 <div class="p-5 flex flex-col lg:flex-row">
-
     <x-dialog-modal wire:model="transferModal">
         <x-slot name="title">
             <h1 class="text-center text-2xl">Transfer</h1>
@@ -38,7 +37,6 @@
         </x-slot>
         <x-slot name="footer"></x-slot>
     </x-dialog-modal>
-
 
     <div class="w-full mr-5 mb-4 lg:w-4/6">
         <div class="bg-slate-700 py-3 px-5 flex flex-col w-full rounded shadow-lg ">
@@ -81,32 +79,34 @@
         <div class="flex flex-col-reverse">
             @foreach ($transactions as $transaction)
                 @php
-                    $payer = $this->getPayerData($transaction);
+                    $payer = $this->getPayerData($transaction, $type, $tenant->id);
                 @endphp
 
-                <div class="flex bg-slate-800 p-2 mb-2 rounded flex-col relative">
-                    <div class="flex items-center mb-3">
-                        <div class="flex flex-col items-center">
-                            <span class="text-base text-gray-300">{{ $payer['name'] }} </span>
-                            <span class="text-base text-gray-400 -mt-2 capitalize">
-                                {{ $payer['type'] }}
-                            </span>
-                        </div>
-                        <i class="fa-solid fa-arrow-right mx-3 text-gray-300"></i>
+                <div class="flex bg-slate-800 p-2 mb-2 rounded flex-col">
+                    <div class="flex justify-between">
+                        <div class="flex items-center mb-3">
+                            <div class="flex flex-col items-center">
+                                <span class="text-base text-gray-300">{{ $payer['name'] }} </span>
+                                <span class="text-base text-gray-400 -mt-2 capitalize">
+                                    {{ $payer['type'] }}
+                                </span>
+                            </div>
+                            <i class="fa-solid fa-arrow-right mx-3 text-gray-300"></i>
 
-                        <div class="flex flex-col items-center">
-                            <span class="text-base text-gray-300">{{ $transaction->recipient->name }} </span>
-                            <span class="text-base text-gray-400 -mt-2 capitalize">
-                                {{ substr($transaction->recipient->getTable(), 0, -1) }}
-                            </span>
+                            <div class="flex flex-col items-center">
+                                <span class="text-base text-gray-300">{{ $transaction->recipient->name }} </span>
+                                <span class="text-base text-gray-400 -mt-2 capitalize">
+                                    {{ substr($transaction->recipient->getTable(), 0, -1) }}
+                                </span>
+                            </div>
+
                         </div>
+
+                        <span
+                            class="mr-1 text-gray-200 text-lg {{ $payer['is_mine'] ? 'text-red-500' : 'text-green-400' }}">{{ $payer['is_mine'] ? '-' : '+' }}
+                            ${{ $transaction->amount }}</span>
 
                     </div>
-
-                    <span
-                        class="absolute top-1 right-2 text-gray-200 text-lg {{ $transaction->payer_id == $tenant->id ? 'text-red-500' : 'text-green-400' }}">{{ $transaction->payer_id == $tenant->id ? '-' : '+' }}
-                        ${{ $transaction->amount }}</span>
-
                     <span class="text-gray-500 text-sm  text-right block">
                         {{ $transaction->description }} | {{ $transaction->created_at->format('d M Y, H:i') }}
                     </span>

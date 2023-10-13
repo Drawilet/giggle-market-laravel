@@ -38,8 +38,13 @@
             <span class="block w-full text-right text-white text-3xl">${{ $this->getAmount() }}</span>
 
             <button wire:click="checkout('paypal')"
-                class="w-full bg-yellow-300 hover:bg-yellow-400 p-2 rounded-sm flex items-center justify-center ">
-                <img src="paypal.png" alt="Buy now" class="w-32 ">
+                class="w-full bg-yellow-300 hover:bg-yellow-400 p-2 rounded-sm flex items-center justify-center mb-2 ">
+                <img src="paypal.png" alt="PayPal checkout" class="w-32 ">
+            </button>
+
+            <button wire:click="checkout('mercadopago')"
+                class="w-full bg-sky-400 hover:bg-sky-500 p-2 rounded-sm flex items-center justify-center ">
+                <img src="mercadopago.webp" alt="MercadoPago checkout" class="w-32 ">
             </button>
         </div>
     @else

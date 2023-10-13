@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Sale;
 use App\Models\User;
 use Illuminate\Http\Request;
+use PayPal\Api\PayoutItem;
+use PayPal\Api\PayoutSenderBatchHeader;
 use PayPal\Api\Transaction;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Api\Amount;
+use PayPal\Api\Currency;
 use PayPal\Api\Payer;
 use PayPal\Api\Payment;
 use PayPal\Api\PaymentExecution;
+use PayPal\Api\Payout;
 use PayPal\Api\RedirectUrls;
 
 class PayPalController extends Controller
@@ -119,4 +123,65 @@ class PayPalController extends Controller
 
         return redirect($payment->getApprovalLink());
     }
+
+
+    public function createPayout($email, $amount)
+    {
+        $apiContext = $this->getApiContext();
+
+        $payout = new Payout();
+        
+        $currency = new Currency();
+        $currency->setCurrency("USD");
+        $currency->setValue($amount);
+
+        $item = new PayoutItem();
+        $item->setRecipientType("EMAIL");
+        $item->setReceiver($email);
+        $item->setAmount($currency);
+        $item->setNote("Simple note");
+
+        $payout->setItems([$item]);
+
+        $senderBatchHeader = new PayoutSenderBatchHeader();
+        $senderBatchHeader->setSenderBatchId("1");
+        $senderBatchHeader->setEmailSubject("Payment subject");
+
+        $payout->setSenderBatchHeader($senderBatchHeader);
+
+        $payout->create(null, $apiContext);
+
+
+
+    }
 }
+
+/** public function createPayout($email, $amount)
+    {
+        $apiContext = $this->getApiContext();
+
+        $payout = new Payout();
+
+        $currency = new Currency();
+        $currency->setCurrency("USD");
+        $currency->setValue($amount);
+
+        $item = new PayoutItem();
+        $item->setRecipientType("EMAIL");
+        $item->setReceiver($email);
+        $item->setAmount($currency);
+        $item->setNote("Simple note");
+
+        $payout->setItems([$item]);
+
+        $senderBatchHeader = new PayoutSenderBatchHeader();
+        $senderBatchHeader->setSenderBatchId("1");
+        $senderBatchHeader->setEmailSubject("Payment subject");
+
+        $payout->setSenderBatchHeader($senderBatchHeader);
+
+        $payout->create(null, $apiContext);
+
+
+
+    } */

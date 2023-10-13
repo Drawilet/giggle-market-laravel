@@ -34,6 +34,8 @@ class CheckoutComponent extends Component
 
     public function render()
     {
+        if ($this->cart->isEmpty()) redirect("/dashboard");
+
         return view('livewire.checkout-component');
     }
 
@@ -81,7 +83,6 @@ class CheckoutComponent extends Component
 
     public function checkout($payment_method)
     {
-
         $amount = $this->getAmount();
 
         $sale = Sale::create(
@@ -111,5 +112,9 @@ class CheckoutComponent extends Component
         }
 
         if ($payment_method == "paypal") return $this->startPayPalPayment($sale);
+      /**  else if($payment_method == "mercadopago"){
+            $controller = new MercadoPagoController();
+            $controller->createPayment($sale);
+        } */
     }
 }
