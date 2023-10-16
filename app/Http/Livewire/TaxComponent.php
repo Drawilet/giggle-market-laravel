@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Product;
+use App\Models\ProductTax;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -11,10 +12,9 @@ use App\Models\Tax;
 class TaxComponent extends Component
 {
 
-    public $taxes, $name, $percentage, $tax_id, $user;
+    public $taxes, $name, $percentage, $tax_id, $user, $count = 0;
 
-    public $saveModal = false;
-    public $deleteModal = false;
+    public $saveModal = false, $deleteModal = false, $errorModal = false;
 
     public function render()
     {
@@ -69,19 +69,22 @@ class TaxComponent extends Component
     /*<──  ───────    DELETE   ───────  ──>*/
     public function delete()
     {
-        $tax = Tax::find($this->tax_id);
-
-        return;
-        $tax->delete();
-
-        session()->flash("message", "Tax deleted succesfully");
-
-        $this->clean();
         $this->closeDeleteModal();
+
+        $relations = ProductTax::where("tax_id", $this->tax_id)->get();
+        if (!$relations->isEmpty()) {
+            $this->count = $relations->count();
+            return $this->openErrorModal();
+        }
+
+        Tax::find($this->tax_id)->delete();
+        session()->flash("message", "Tax deleted succesfully");
     }
 
     public function openDeleteModal($id, $name)
     {
+        $this->clean();
+
         $this->tax_id = $id;
         session()->flash("name", $name);
 
@@ -90,6 +93,15 @@ class TaxComponent extends Component
     public function closeDeleteModal()
     {
         $this->deleteModal = false;
-        $this->clean();
+    }
+
+    public function closeErrorModal()
+    {
+        $this->errorModal = false;
+    }
+
+    public function openErrorModal()
+    {
+        $this->errorModal = true;
     }
 }

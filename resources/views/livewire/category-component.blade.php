@@ -58,7 +58,7 @@
             Unable to delete this category.
         </x-slot>
         <x-slot name="content">
-            <h2 class="text-white">There are {{ $count }} products linked to this category.</h2>
+            <h2 class="text-white">There are {{ $count }} product(s) linked to this category.</h2>
         </x-slot>
         <x-slot name="footer">
             <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">

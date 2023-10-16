@@ -89,7 +89,6 @@ class CategoryComponent extends Component
         $this->deleteModal = false;
     }
 
-
     public function closeErrorModal()
     {
         $this->errorModal = false;
@@ -97,7 +96,6 @@ class CategoryComponent extends Component
 
     public function openErrorModal()
     {
-
         $this->errorModal = true;
     }
 }
