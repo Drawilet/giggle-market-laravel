@@ -22,6 +22,11 @@ class CartComponent extends Component
         $this->totalQuantity = array_sum(array_column($this->cart->toArray(), "quantity"));
 
         foreach ($this->cart as $item) {
+            if($item->product->unpublished) {
+                $item->delete();
+                continue;
+            }
+
             $calc = $item->product->stock - $item->quantity;
             if ($calc < 0) {
                 $item->quantity -= abs($calc);

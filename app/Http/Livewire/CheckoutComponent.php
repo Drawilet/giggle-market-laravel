@@ -30,6 +30,11 @@ class CheckoutComponent extends Component
         else  $this->cart = $items;
 
         foreach ($items as $item) {
+            if ($item->product->unpublished) {
+                $item->delete();
+                continue;
+            }
+
             $calc = $item->product->stock - $item->quantity;
             if ($calc < 0) {
                 $item->quantity -= abs($calc);

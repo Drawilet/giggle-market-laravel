@@ -20,8 +20,9 @@
                         {{ __('Catalog') }}
                     </x-nav-link>
 
+                    <span></span>
+
                     @if (Auth::user()->store)
-                        <span></span>
                         <x-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
                             {{ __('Products') }}
                         </x-nav-link>
@@ -30,8 +31,6 @@
                             {{ __('¡Become a seller!') }} <i class="fa-solid fa-dollar-sign"></i>
                         </x-nav-link>
                     @endif
-
-                    <span></span>
 
                     <x-admin>
                         <x-nav-link href="{{ route('categories') }}" :active="request()->routeIs('categories')">

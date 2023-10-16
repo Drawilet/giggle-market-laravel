@@ -1,4 +1,4 @@
-<div  class="py-5">
+<div class="py-5">
     <x-dialog-modal wire:model="saveModal">
         <x-slot name="title">
             <h1 class="text-center text-2xl">
@@ -22,12 +22,12 @@
                             <g data-name="upload">
                                 <rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"
                                     fill="#303243" />
-                                <rect x="4" y="4" width="16" height="2" rx="1"
-                                    ry="1" transform="rotate(180 12 5)" fill="#303243" />
-                                <rect x="17" y="5" width="4" height="2" rx="1"
-                                    ry="1" transform="rotate(90 19 6)" fill="#303243" />
-                                <rect x="3" y="5" width="4" height="2" rx="1"
-                                    ry="1" transform="rotate(90 5 6)" fill="#303243" />
+                                <rect x="4" y="4" width="16" height="2" rx="1" ry="1"
+                                    transform="rotate(180 12 5)" fill="#303243" />
+                                <rect x="17" y="5" width="4" height="2" rx="1" ry="1"
+                                    transform="rotate(90 19 6)" fill="#303243" />
+                                <rect x="3" y="5" width="4" height="2" rx="1" ry="1"
+                                    transform="rotate(90 5 6)" fill="#303243" />
                                 <path
                                     d="M8 14a1 1 0 0 1-.8-.4 1 1 0 0 1 .2-1.4l4-3a1 1 0 0 1 1.18 0l4 2.82a1 1 0 0 1 .24 1.39 1 1 0 0 1-1.4.24L12 11.24 8.6 13.8a1 1 0 0 1-.6.2z"
                                     fill="#303243" />
@@ -104,22 +104,22 @@
         <x-slot name="footer"></x-slot>
     </x-dialog-modal>
 
-    <x-dialog-modal wire:model="deleteModal">
+    <x-dialog-modal wire:model="unpublishModal">
         <x-slot name="title">
 
         </x-slot>
         <x-slot name="content">
 
-            <h2 class="text-white">¿Are you sure you want do delete "{{ session('description') }}"?</h2>
+            <h2 class="text-white">¿Are you sure you want do unpublish "{{ session('description') }}"?</h2>
 
             <div class=" px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                    <button wire:click.prevent="delete()" type="button"
-                        class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-500 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-600 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5">Delete</button>
+                    <button wire:click.prevent="unpublish()" type="button"
+                        class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-500 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-600 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5">Unpublish</button>
                 </span>
 
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                    <button wire:click="closeDeleteModal()" type="button"
+                    <button wire:click="closeUnpublishModal()" type="button"
                         class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-gray-200 text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">Cancel</button>
                 </span>
             </div>
@@ -216,12 +216,12 @@
 
                                 <x-store-admin>
                                     <td class="border px-4 py-2 text-center">
-                                        <button wire:click="openUpdateModal({{ $product->id }})"
+                                        <button title="Update" wire:click="openUpdateModal({{ $product->id }})"
                                             class="bg-yellow-300  hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-sm ">
                                             <i class="fa-solid fa-pencil"></i>
                                         </button>
-                                        <button
-                                            wire:click="openDeleteModal({{ $product->id }}, '{{ $product->description }}')"
+                                        <button title="Unpublish"
+                                            wire:click="openUnpublishModal({{ $product->id }}, '{{ $product->description }}')"
                                             class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4  rounded-sm">
                                             <i class="fa-solid fa-trash-can"></i>
                                         </button>

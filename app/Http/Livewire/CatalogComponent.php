@@ -26,7 +26,7 @@ class CatalogComponent extends Component
         $this->user = Auth::user();
 
         $this->stores = Store::all();
-        $this->products = Product::all();
+        $this->products = Product::where("unpublished", false)->get();
 
         $this->orderedProducts = $this->products->groupBy("store_id")->toArray();
 

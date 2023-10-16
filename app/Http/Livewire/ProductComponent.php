@@ -23,8 +23,7 @@ class ProductComponent extends Component
     public  $product_id, $tax_id;
     public $photo, $description, $price, $stock, $category_id, $taxes_id = [];
 
-    public $saveModal = false;
-    public $deleteModal = false;
+    public $saveModal = false, $unpublishModal = false;
 
     public $filter_category, $filter_description = "", $filter_min_price, $filter_max_price;
 
@@ -34,8 +33,11 @@ class ProductComponent extends Component
 
         /*<──  ───────    PRODUCTS   ───────  ──>*/
         $this->products = Product::where(function ($query) {
+            $query->where("unpublished", false);
+
             $query->where("store_id", $this->user->store_id);
             $query->where("category_id", "like", "%" . $this->filter_category . "%");
+
 
             if (!empty($this->filter_description)) {
                 $query->where("description", "like", "%" . $this->filter_description . "%");
@@ -171,37 +173,28 @@ class ProductComponent extends Component
         $this->openSaveModal();
     }
 
-    /*<──  ───────    DELETE   ───────  ──>*/
-    public function delete()
+    /*<──  ───────    UNPUBLISH   ───────  ──>*/
+    public function unpublish()
     {
         $product = Product::find($this->product_id);
-        /*<──  ───────    DELETE TAXES   ───────  ──>*/
-        foreach ($product->product_taxes as $product_tax) {
-            ProductTax::find($product_tax->id)->delete();
-        }
+        $product->unpublished = TRUE;
+        $product->save();
 
-        /*<──  ───────    FILE   ───────  ──>*/
-        $filePath = "public/products/$product->id";
-        if (Storage::directoryExists($filePath))
-            Storage::deleteDirectory($filePath);
+        session()->flash("message", "Product unpublished succesfully");
 
-        $product->delete();
-
-        session()->flash("message", "Product deleted succesfully");
-
-        $this->closeDeleteModal();
+        $this->closeUnpublishModal();
     }
 
-    public function openDeleteModal($id, $description)
+    public function openUnpublishModal($id, $description)
     {
         $this->product_id = $id;
         session()->flash("description", $description);
 
-        $this->deleteModal = true;
+        $this->unpublishModal = true;
     }
-    public function closeDeleteModal()
+    public function closeUnpublishModal()
     {
-        $this->deleteModal = false;
+        $this->unpublishModal = false;
         $this->clear();
     }
 }
