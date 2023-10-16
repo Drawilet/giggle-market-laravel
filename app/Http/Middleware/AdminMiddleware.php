@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class TenantAdminMiddleware
+class AdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -19,7 +19,7 @@ class TenantAdminMiddleware
     {
         $user = Auth::user();
 
-        if ($user && $user->tenant && $user->tenant_role == 'admin')
+        if ($user && $user->role == "admin")
             return $next($request);
 
         return abort(403);

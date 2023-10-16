@@ -100,7 +100,7 @@ class PayPalController extends Controller
                 $transaction = new TransactionController();
 
                 $transaction->setPayer("Giggle Market", "system");
-                $transaction->setRecepient($description->tenant, "tenant");
+                $transaction->setRecepient($description->store, "store");
 
                 $transaction->setDescription("Sale of $description->description");
                 $transaction->setAmount($description->quantity * $description->price);

@@ -36,7 +36,7 @@
                             <div class="p-2 items-center flex-col w-full">
                                 <div>
                                     <p class="text-slate-600 text-xl"> {{ $item->description }}</p>
-                                    <p class="text-slate-500 -mt-2">{{ $item->tenant_name }}</p>
+                                    <p class="text-slate-500 -mt-2">{{ $item->store_name }}</p>
                                 </div>
                             </div>
                         </div>

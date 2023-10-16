@@ -19,7 +19,7 @@ class TaxComponent extends Component
     public function render()
     {
         $this->user = Auth::user();
-        $this->taxes = Tax::where("tenant_id", $this->user->tenant_id)->get();
+        $this->taxes = Tax::all();
 
         return view('livewire.tax-component');
     }
@@ -38,7 +38,6 @@ class TaxComponent extends Component
         Tax::updateOrCreate(["id" => $this->tax_id], [
             "name" => $this->name,
             "percentage" => $this->percentage,
-            "tenant_id" => $this->user->tenant_id
         ]);
 
         session()->flash("message", $this->tax_id ? "Tax updated successfully" : "Tax added succesfully");

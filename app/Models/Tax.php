@@ -8,5 +8,5 @@ class Tax extends Base
 {
     use HasFactory;
 
-    protected $fillable = ["name", "percentage", "tenant_id"];
+    protected $fillable = ["name", "percentage"];
 }

@@ -8,12 +8,12 @@ use App\Http\Livewire\CategoryComponent;
 use App\Http\Livewire\CheckoutComponent;
 use App\Http\Livewire\DashboardComponent;
 use App\Http\Livewire\HomeComponent;
-use App\Http\Livewire\ManageTenantComponent;
-use App\Http\Livewire\NewTenantComponent;
+use App\Http\Livewire\ManageStoreComponent;
+use App\Http\Livewire\NewStoreComponent;
 use App\Http\Livewire\ProductComponent;
 use App\Http\Livewire\PurchasesComponent;
 use App\Http\Livewire\TaxComponent;
-use App\Http\Livewire\TenantDashboard;
+use App\Http\Livewire\StoreDashboard;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,8 +66,6 @@ Route::middleware([
     "seller"
 ])->group(function () {
     Route::get("/products", ProductComponent::class)->name('products');
-    Route::get("/categories", CategoryComponent::class)->name('categories');
-    Route::get("/taxes", TaxComponent::class)->name('taxes');
 });
 
 /*<──  ───────    NOT SELLER   ───────  ──>*/
@@ -77,7 +75,7 @@ Route::middleware([
     'verified',
     "not.seller",
 ])->group(function () {
-    Route::get("/tenants/new", NewTenantComponent::class)->name('tenant.new');
+    Route::get("/stores/new", NewStoreComponent::class)->name('store.new');
 });
 
 /*<──  ───────    ADMIN   ───────  ──>*/
@@ -86,10 +84,19 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
     "seller",
-    "tenant.admin"
+    "store.admin"
 ])->group(function () {
-    Route::get("/tenants/manage", ManageTenantComponent::class)->name('tenant.manage');
-    Route::get("/tenants/dashboard", TenantDashboard::class)->name('tenant.dashboard');
-
+    Route::get("/stores/manage", ManageStoreComponent::class)->name('store.manage');
+    Route::get("/stores/dashboard", StoreDashboard::class)->name('store.dashboard');
 });
 
+/*<──  ───────    ADMIN   ───────  ──>*/
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+    "admin"
+])->group(function () {
+    Route::get("/categories", CategoryComponent::class)->name('categories');
+    Route::get("/taxes", TaxComponent::class)->name('taxes');
+});

@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Auth;
 class Base extends Model
 {
     use HasFactory;
-    public function tenant()
+    public function store()
     {
-        return  $this->belongsTo(Tenant::class);
+        return  $this->belongsTo(Store::class);
     }
 }

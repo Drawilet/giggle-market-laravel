@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class SaleDescription extends Base
 {
     protected $fillable = [
-        "tenant_id",
-        "tenant_name",
+        "store_id",
+        "store_name",
         "description",
         "quantity",
         "price",

@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Category extends Base
 {
     use HasFactory;
-    protected $fillable = ["name", "tenant_id"];
+    protected $fillable = ["name"];
 }

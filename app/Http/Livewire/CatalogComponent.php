@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Cart;
 use App\Models\Product;
-use App\Models\Tenant;
+use App\Models\Store;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -16,7 +16,7 @@ class CatalogComponent extends Component
 
     public $user;
 
-    public $products, $tenants;
+    public $products, $stores;
     public $orderedProducts = [];
 
     public $successModal = false;
@@ -25,10 +25,10 @@ class CatalogComponent extends Component
     {
         $this->user = Auth::user();
 
-        $this->tenants = Tenant::all();
+        $this->stores = Store::all();
         $this->products = Product::all();
 
-        $this->orderedProducts = $this->products->groupBy("tenant_id")->toArray();
+        $this->orderedProducts = $this->products->groupBy("store_id")->toArray();
 
         return view('livewire.catalog-component');
     }

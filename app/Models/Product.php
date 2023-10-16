@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable = [
-        "tenant_id",
+        "store_id",
         "user_id",
         "description",
         "price",
@@ -28,9 +28,9 @@ class Product extends Model
         return $this->hasMany(ProductTax::class);
     }
 
-    public function tenant()
+    public function store()
     {
-        return  $this->belongsTo(Tenant::class);
+        return  $this->belongsTo(Store::class);
     }
 
     public function user()

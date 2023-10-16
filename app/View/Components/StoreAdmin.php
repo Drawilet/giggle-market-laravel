@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class isAdmin extends Component
+class StoreAdmin extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class isAdmin extends Component
      */
     public function render()
     {
-        return view('components.is-admin');
+        return view('components.store-admin');
     }
 }

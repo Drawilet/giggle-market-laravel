@@ -19,14 +19,14 @@
         <x-slot name="footer"></x-slot>
     </x-dialog-modal>
 
-    @foreach ($orderedProducts as $tenant)
+    @foreach ($orderedProducts as $store)
         <details class="mb-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-md" open>
             <summary class="text-white text-lg font-semibold">
-                {{ $tenants->where('id', $tenant[0]['tenant_id'])->first()->name }}
+                {{ $stores->where('id', $store[0]['store_id'])->first()->name }}
             </summary>
 
             <div class="flex flex-wrap justify-start gap-4 mt-4">
-                @foreach ($tenant as $product)
+                @foreach ($store as $product)
                     @php
                         $stock = $this->getStock($product);
                     @endphp

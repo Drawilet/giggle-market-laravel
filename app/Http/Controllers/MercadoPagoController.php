@@ -28,7 +28,7 @@ class MercadoPagoController extends Controller
             $items[] = [
                 "id" => $item->id,
                 "title" => $item->description,
-                //   "description" => $item->tenant_name,
+                //   "description" => $item->store_name,
                 "quantity" => $item->quantity,
                 "currency_id" => "USD",
                 "unit_price" => floatval($item->price)
@@ -86,7 +86,7 @@ class MercadoPagoController extends Controller
                     $transaction = new TransactionController();
 
                     $transaction->setPayer("Giggle Market", "system");
-                    $transaction->setRecepient($description->tenant, "tenant");
+                    $transaction->setRecepient($description->store, "store");
 
                     $transaction->setDescription("Sale of $description->description");
                     $transaction->setAmount($description->quantity * $description->price);

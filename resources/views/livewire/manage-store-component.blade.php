@@ -17,14 +17,14 @@
 
 
             <div class="mb-4">
-                <label for="tenant_role" class="block text-white text-sm font-bold mb-2">Role:</label>
-                <select id="tenant_role" wire:model="tenant_role" required
+                <label for="store_role" class="block text-white text-sm font-bold mb-2">Role:</label>
+                <select id="store_role" wire:model="store_role" required
                     class="block w-full mt-1 p-2 border border-gray-300 bg-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white focus:outline-none">
                     <option value="{{ null }}">Select a role</option>
                     <option value="seller">Seller</option>
                     <option value="admin">Admin</option>
                 </select>
-                @error('tenant_role')
+                @error('store_role')
                     <p class="text-red-600">{{ $message }}</p>
                 @enderror
             </div>
@@ -70,28 +70,28 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ $tenant_name }}
+            {{ $store_name }}
         </h2>
     </x-slot>
 
     <div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-            <x-form-section submit="updateTenantInformation">
+            <x-form-section submit="updateStoreInformation">
                 <x-slot name="title">
-                    {{ __('Tenant Information') }}
+                    {{ __('Store Information') }}
                 </x-slot>
 
                 <x-slot name="description">
-                    {{ __('Update your tenants\'s information') }}
+                    {{ __('Update your stores\'s information') }}
                 </x-slot>
 
                 <x-slot name="form">
                     <!-- Name -->
                     <div class="col-span-6 sm:col-span-4">
-                        <x-label for="tenant_name" value="{{ __('Name') }}" />
-                        <x-input id="tenant_name" type="text" class="mt-1 block w-full" wire:model="tenant_name"
-                            autocomplete="tenant_name" />
-                        <x-input-error for="tenant_name" class="mt-2" />
+                        <x-label for="store_name" value="{{ __('Name') }}" />
+                        <x-input id="store_name" type="text" class="mt-1 block w-full" wire:model="store_name"
+                            autocomplete="store_name" />
+                        <x-input-error for="store_name" class="mt-2" />
                     </div>
 
                 </x-slot>
@@ -114,7 +114,7 @@
                 </x-slot>
 
                 <x-slot name="description">
-                    {{ __('Update your tenants\'s users') }}
+                    {{ __('Update your stores\'s users') }}
 
                     <button wire:click="openSaveUserModal()"
                         class="block rounded-sm bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 my-3">Add
@@ -139,7 +139,7 @@
                                         <td class="border px-4 py-2 text-white">{{ $user->name }}</td>
                                         <td class="border px-4 py-2 text-white">{{ $user->email }}</td>
                                         <td class="border px-4 py-2 text-white capitalize">
-                                            {{ $user->tenant_role }}
+                                            {{ $user->store_role }}
                                         </td>
                                         <td class="border px-4 py-2 text-center">
                                             <button wire:click="openUpdateUserModal({{ $user->id }})"

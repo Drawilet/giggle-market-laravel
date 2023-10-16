@@ -20,12 +20,20 @@
                         {{ __('Catalog') }}
                     </x-nav-link>
 
-                    @if (Auth::user()->tenant)
+                    @if (Auth::user()->store)
                         <span></span>
-
                         <x-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
                             {{ __('Products') }}
                         </x-nav-link>
+                    @else
+                        <x-nav-link href="{{ route('store.new') }}" :active="request()->routeIs('store.new')">
+                            {{ __('¡Become a seller!') }} <i class="fa-solid fa-dollar-sign"></i>
+                        </x-nav-link>
+                    @endif
+
+                    <span></span>
+
+                    <x-admin>
                         <x-nav-link href="{{ route('categories') }}" :active="request()->routeIs('categories')">
                             {{ __('Categories') }}
                         </x-nav-link>
@@ -33,11 +41,7 @@
                         <x-nav-link href="{{ route('taxes') }}" :active="request()->routeIs('taxes')">
                             {{ __('Taxes') }}
                         </x-nav-link>
-                    @else
-                        <x-nav-link href="{{ route('tenant.new') }}" :active="request()->routeIs('tenant.new')">
-                            {{ __('¡Become a seller!') }} <i class="fa-solid fa-dollar-sign"></i>
-                        </x-nav-link>
-                    @endif
+                    </x-admin>
                 </div>
             </div>
 
@@ -119,7 +123,7 @@
                                             </span>
                                             @if (!Auth::user()->isCustomer)
                                                 <span class="text-xs text-gray-600">
-                                                    {{ Auth::user()->tenant?->name }}
+                                                    {{ Auth::user()->store?->name }}
                                                 </span>
                                             @endif
                                         </p>
@@ -135,17 +139,17 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <!-- Tenant Management -->
-                            @if (Auth::user()->tenant_role == 'admin')
+                            <!-- Store Management -->
+                            @if (Auth::user()->store_role == 'admin')
                                 <div class="block px-4 py-2 text-xs text-gray-400">
-                                    {{ __('Tenant') }}
+                                    {{ __('Store') }}
                                 </div>
 
-                                <x-dropdown-link href="{{ route('tenant.dashboard') }}">
+                                <x-dropdown-link href="{{ route('store.dashboard') }}">
                                     {{ __('Dashboard') }}
                                 </x-dropdown-link>
 
-                                <x-dropdown-link href="{{ route('tenant.manage') }}">
+                                <x-dropdown-link href="{{ route('store.manage') }}">
                                     {{ __('Manage') }}
                                 </x-dropdown-link>
                             @endif
@@ -216,7 +220,7 @@
                 {{ __('Catalog') }}
             </x-responsive-nav-link>
 
-            @if (Auth::user()->tenant)
+            @if (Auth::user()->store)
                 <span></span>
 
                 <x-responsive-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
@@ -255,10 +259,10 @@
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
-                <!-- Tenant Management -->
-                @if (Auth::user()->tenant_role == 'admin')
-                    <x-responsive-nav-link href="{{ route('tenant.manage') }}">
-                        {{ __('Manage tenant') }}
+                <!-- Store Management -->
+                @if (Auth::user()->store_role == 'admin')
+                    <x-responsive-nav-link href="{{ route('store.manage') }}">
+                        {{ __('Manage store') }}
                     </x-responsive-nav-link>
                 @endif
 

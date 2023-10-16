@@ -34,7 +34,7 @@ class ProductComponent extends Component
 
         /*<──  ───────    PRODUCTS   ───────  ──>*/
         $this->products = Product::where(function ($query) {
-            $query->where("tenant_id", $this->user->tenant_id);
+            $query->where("store_id", $this->user->store_id);
             $query->where("category_id", "like", "%" . $this->filter_category . "%");
 
             if (!empty($this->filter_description)) {
@@ -51,10 +51,10 @@ class ProductComponent extends Component
         })->get();
 
         /*<──  ───────    TAXES   ───────  ──>*/
-        $this->taxes = Tax::where("tenant_id", $this->user->tenant_id)->get();
+        $this->taxes = Tax::all();
 
         /*<──  ───────    CATEGORIES   ───────  ──>*/
-        $this->categories = Category::where("tenant_id", $this->user->tenant_id)->get();
+        $this->categories = Category::all();
 
         return view('livewire.product-component');
     }
@@ -112,7 +112,7 @@ class ProductComponent extends Component
         $user = Auth::user();
 
         $data = [
-            "tenant_id" => $user->tenant_id,
+            "store_id" => $user->store_id,
             "user_id" => $user->id,
             "description" => $this->description,
             "price" => $this->price,

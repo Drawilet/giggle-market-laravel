@@ -13,10 +13,10 @@
                 <x-slot name="form">
                     <!-- Name -->
                     <div class="col-span-6 sm:col-span-4">
-                        <x-label for="tenant_name" value="{{ __('Company name') }}" />
-                        <x-input id="tenant_name" type="text" class="mt-1 block w-full" wire:model="tenant_name"
-                            autocomplete="tenant_name" />
-                        <x-input-error for="tenant_name" class="mt-2" />
+                        <x-label for="store_name" value="{{ __('Company name') }}" />
+                        <x-input id="store_name" type="text" class="mt-1 block w-full" wire:model="store_name"
+                            autocomplete="store_name" />
+                        <x-input-error for="store_name" class="mt-2" />
                     </div>
 
                 </x-slot>

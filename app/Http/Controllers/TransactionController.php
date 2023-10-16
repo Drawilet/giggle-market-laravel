@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tenant;
+use App\Models\Store;
 use App\Models\Transaction;
 use App\Models\User;
 
@@ -19,7 +19,7 @@ class TransactionController extends Controller
         }
 
         if (gettype($payer) == "string" && $type) {
-            if ($type == "tenant") $this->payer = Tenant::where("id", "$payer")->first();
+            if ($type == "store") $this->payer = Store::where("id", "$payer")->first();
             elseif ($type == "user") $this->payer = User::where("id", "$payer")->first();
         } else $this->payer = $payer;
     }
@@ -27,7 +27,7 @@ class TransactionController extends Controller
     public function setRecepient($recipient, $type = null)
     {
         if (gettype($recipient) == "string" && $type) {
-            if ($type == "tenant") $this->recipient = Tenant::where("id", "$recipient")->first();
+            if ($type == "store") $this->recipient = Store::where("id", "$recipient")->first();
             elseif ($type == "user") $this->recipient = User::where("id", "$recipient")->first();
         } else $this->recipient = $recipient;
     }

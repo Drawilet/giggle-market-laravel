@@ -16,9 +16,6 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger("tenant_id");
-            $table->foreign("tenant_id")->references("id")->on("tenants");
-
             $table->string("name", 50);
 
             $table->timestamps();

@@ -23,7 +23,7 @@
                                     <div class="p-2 flex items-center flex-col">
                                         <div>
                                             <p class="text-slate-800 text-xl leading-none">{{ $item->product->description }}</p>
-                                            <p class="text-slate-500 ">{{ $item->product->tenant->name }} /
+                                            <p class="text-slate-500 ">{{ $item->product->store->name }} /
                                                 {{ $item->product->category->name }}</p>
                                         </div>
 

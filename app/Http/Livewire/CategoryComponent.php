@@ -15,7 +15,7 @@ class CategoryComponent extends Component
 
     public function render()
     {
-        $this->categories = Category::where("tenant_id", Auth::user()->tenant_id)->get();
+        $this->categories = Category::all();
 
         return view('livewire.category-component');
     }
@@ -32,7 +32,6 @@ class CategoryComponent extends Component
     {
         Category::updateOrCreate(["id" => $this->category_id], [
             "name" => $this->name,
-            "tenant_id" => Auth::user()->tenant_id
         ]);
 
         session()->flash("message", $this->category_id ? "Category updated successfully" : "Category added succesfully");

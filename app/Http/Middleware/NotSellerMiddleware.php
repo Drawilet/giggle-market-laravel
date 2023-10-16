@@ -19,7 +19,7 @@ class NotSellerMiddleware
     {
 
         $user = Auth::user();
-        if (!$user->tenant)
+        if (!$user->store)
             return $next($request);
 
         return abort(403);

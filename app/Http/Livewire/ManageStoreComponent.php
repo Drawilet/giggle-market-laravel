@@ -2,42 +2,42 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Tenant;
+use App\Models\Store;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
-class ManageTenantComponent extends Component
+class ManageStoreComponent extends Component
 {
 
     public $users;
-    public $tenant_name, $user_id;
-    public $name, $email, $password, $tenant_role;
+    public $store_name, $user_id;
+    public $name, $email, $password, $store_role;
 
     public $saveUserModal = false, $deleteUserModal = false;
 
     public function mount()
     {
-        $this->tenant_name = Auth::user()->tenant->name;
+        $this->store_name = Auth::user()->store->name;
     }
 
     public function render()
     {
-        $this->users = User::where("tenant_id", Auth::user()->tenant_id)
+        $this->users = User::where("store_id", Auth::user()->store_id)
             ->where("id", "!=", Auth::user()->id)
             ->get();
 
-        return view('livewire.manage-tenant-component');
+        return view('livewire.manage-store-component');
     }
-    public function updateTenantInformation()
+    public function updateStoreInformation()
     {
         $this->validate([
-            'tenant_name' => ['required', 'string', 'max:255'],
+            'store_name' => ['required', 'string', 'max:255'],
         ]);
 
-        Tenant::where("id", Auth::user()->tenant_id)->update([
-            "name" => $this->tenant_name
+        Store::where("id", Auth::user()->store_id)->update([
+            "name" => $this->store_name
         ]);
     }
 
@@ -48,7 +48,7 @@ class ManageTenantComponent extends Component
         $this->name = null;
         $this->email = null;
         $this->password = null;
-        $this->tenant_role = null;
+        $this->store_role = null;
     }
 
     public function deleteUser()
@@ -89,7 +89,7 @@ class ManageTenantComponent extends Component
         $this->name = $user->name;
         $this->email = $user->email;
         $this->password = "- - -";
-        $this->tenant_role = $user->tenant_role;
+        $this->store_role = $user->store_role;
 
         $this->openSaveUserModal();
     }
@@ -100,14 +100,14 @@ class ManageTenantComponent extends Component
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
             "password" => ["required"],
-            'tenant_role' => ['required']
+            'store_role' => ['required']
         ]);
 
         $data =  [
             "name" => $this->name,
             "email" => $this->email,
-            "tenant_id" => Auth::user()->tenant_id,
-            "tenant_role" => $this->tenant_role,
+            "store_id" => Auth::user()->store_id,
+            "store_role" => $this->store_role,
         ];
         if ($this->password != "- - -")
             $data["password"] = Hash::make($this->password);

@@ -81,20 +81,20 @@
                 </div>
             @endif
 
-            <x-is-admin>
-                <button wire:click="openSaveModal()"
-                    class="rounded-sm bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 my-3">
-                    <i class="fa-solid fa-plus mr-1"></i> Add</button>
-            </x-is-admin>
+
+            <button wire:click="openSaveModal()"
+                class="rounded-sm bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 my-3">
+                <i class="fa-solid fa-plus mr-1"></i> Add</button>
+
 
             <table class="table-fixed w-full">
                 <thead>
                     <tr class="bg-slate-800 text-white">
                         <th class="px-4 py-2">ID</th>
                         <th class="px-4 py-2">Name</th>
-                        <x-is-admin>
+
                             <th class="px-4 py-2">Actions</th>
-                        </x-is-admin>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -103,7 +103,6 @@
                             <td class="border px-4 py-2 text-white">{{ $category->id }}</td>
                             <td class="border px-4 py-2 text-white">{{ $category->name }}</td>
 
-                            <x-is-admin>
                                 <td class="border px-4 py-2 text-center">
                                     <button wire:click="openUpdateModal({{ $category->id }})"
                                         class="bg-yellow-300  hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-sm ">
@@ -114,7 +113,7 @@
                                         <i class="fa-solid fa-trash-can"></i>
                                     </button>
                                 </td>
-                            </x-is-admin>
+
                         </tr>
                     @endforeach
                 </tbody>

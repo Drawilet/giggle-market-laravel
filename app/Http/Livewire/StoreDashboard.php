@@ -4,31 +4,31 @@ namespace App\Http\Livewire;
 
 use App\Http\Controllers\TransactionController;
 use App\Models\SaleDescription;
-use App\Models\Tenant;
+use App\Models\Store;
 use App\Models\User;
 use App\Utils\ComponentWithTransactions;
 use Illuminate\Support\Facades\Auth;
 
-class TenantDashboard extends ComponentWithTransactions
+class StoreDashboard extends ComponentWithTransactions
 {
-    public $type = Tenant::class;
+    public $type = Store::class;
 
-    public $tenant, $sales, $users, $transactions;
+    public $store, $sales, $users, $transactions;
 
     public $user_id, $amount, $description;
     public $transferModal = false;
 
     public function render()
     {
-        return view('livewire.tenant-dashboard');
+        return view('livewire.store-dashboard');
     }
 
     public function mount()
     {
-        $this->tenant = Auth::user()->tenant;
-        $this->sales = SaleDescription::where("tenant_id", $this->tenant->id)->get();
-        $this->users = User::where("tenant_id", $this->tenant->id)->get();
-        $this->getTransactions(Tenant::class,  $this->tenant->id);
+        $this->store = Auth::user()->store;
+        $this->sales = SaleDescription::where("store_id", $this->store->id)->get();
+        $this->users = User::where("store_id", $this->store->id)->get();
+        $this->getTransactions(Store::class,  $this->store->id);
     }
 
 
@@ -54,7 +54,7 @@ class TenantDashboard extends ComponentWithTransactions
 
     public function transfer()
     {
-        $balance = $this->tenant->balance;
+        $balance = $this->store->balance;
 
         $this->validate([
             "user_id" => "required",
@@ -65,7 +65,7 @@ class TenantDashboard extends ComponentWithTransactions
 
         $transaction = new TransactionController();
 
-        $transaction->setPayer($this->tenant);
+        $transaction->setPayer($this->store);
         $transaction->setRecepient($this->user_id, "user");
         $transaction->setAmount($this->amount);
         $transaction->setDescription($this->description);
@@ -73,6 +73,6 @@ class TenantDashboard extends ComponentWithTransactions
         $transaction->execute();
 
         $this->closeTransferModal();
-        $this->getTransactions(Tenant::class,  $this->tenant->id);
+        $this->getTransactions(Store::class,  $this->store->id);
     }
 }

@@ -24,8 +24,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        "tenant_id",
-        "tenant_role",
+        "store_id",
+        "store_role",
+        "role",
         'name',
         'email',
         'password',
@@ -63,9 +64,9 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function tenant()
+    public function store()
     {
-        return  $this->belongsTo(Tenant::class);
+        return  $this->belongsTo(Store::class);
     }
 
     public function user_carts()

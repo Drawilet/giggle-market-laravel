@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger("tenant_id")->nullable();
-            $table->foreign("tenant_id")->references("id")->on("tenants");
+            $table->unsignedBigInteger("store_id")->nullable();
+            $table->foreign("store_id")->references("id")->on("stores");
 
-            $table->string('tenant_role')->nullable();
+            $table->string('store_role')->nullable();
+
+            $table->string("role")->default("user");
 
             $table->string('name');
             $table->string('email')->unique();

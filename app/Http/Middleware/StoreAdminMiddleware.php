@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class SellerMiddleware
+class StoreAdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,9 +17,9 @@ class SellerMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-
         $user = Auth::user();
-        if ($user->store)
+
+        if ($user && $user->store && $user->store_role == 'admin')
             return $next($request);
 
         return abort(403);

@@ -19,7 +19,7 @@
             </div>
 
             <x-text-input wire:model="amount" id="amount" type="number" label="Amount"
-                max="{{ $tenant->balance }}" />
+                max="{{ $store->balance }}" />
 
             <x-text-input wire:model="description" id="description" label="Description" />
 
@@ -41,7 +41,7 @@
     <div class="w-full mr-5 mb-4 lg:w-4/6">
         <div class="bg-slate-700 py-3 px-5 flex flex-col w-full rounded shadow-lg ">
             <span class="text-gray-300">Balance</span>
-            <span class="text-gray-100 text-3xl">${{ $tenant->balance }}</span>
+            <span class="text-gray-100 text-3xl">${{ $store->balance }}</span>
         </div>
 
         <button class="w-full bg-blue-400 hover:bg-blue-500 mt-1 py-2 rounded text-slate-50"
@@ -79,7 +79,7 @@
         <div class="flex flex-col-reverse">
             @foreach ($transactions as $transaction)
                 @php
-                    $payer = $this->getPayerData($transaction, $type, $tenant->id);
+                    $payer = $this->getPayerData($transaction, $type, $store->id);
                 @endphp
 
                 <div class="flex bg-slate-800 p-2 mb-2 rounded flex-col">

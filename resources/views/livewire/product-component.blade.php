@@ -169,11 +169,11 @@
                         <button wire:click="clearFilters()"
                             class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-sm">
                             <i class="fa-solid fa-broom mr-1"></i> Clear</button>
-                        <x-is-admin>
+                        <x-store-admin>
                             <button wire:click="openSaveModal()"
                                 class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-sm">
                                 <i class="fa-solid fa-plus mr-1"></i> Add</button>
-                        </x-is-admin>
+                        </x-store-admin>
                     </div>
                 </div>
             </div>
@@ -188,9 +188,9 @@
                         <th class="px-4 py-2">Taxes</th>
                         <th class="px-4 py-2">Stock</th>
                         <th class="px-4 py-2">Category</th>
-                        <x-is-admin>
+                        <x-store-admin>
                             <th class="px-4 py-2">Actions</th>
-                        </x-is-admin>
+                        </x-store-admin>
                     </tr>
                 </thead>
                 <tbody>
@@ -214,7 +214,7 @@
                                 <td class="border px-4 py-2 text-white">{{ $product->category?->name ?? 'N/A' }}</td>
 
 
-                                <x-is-admin>
+                                <x-store-admin>
                                     <td class="border px-4 py-2 text-center">
                                         <button wire:click="openUpdateModal({{ $product->id }})"
                                             class="bg-yellow-300  hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-sm ">
@@ -226,7 +226,7 @@
                                             <i class="fa-solid fa-trash-can"></i>
                                         </button>
                                     </td>
-                                </x-is-admin>
+                                </x-store-admin>
                             </tr>
                         @endforeach
                     @else
