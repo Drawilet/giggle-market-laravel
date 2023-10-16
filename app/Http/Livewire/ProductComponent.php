@@ -52,7 +52,6 @@ class ProductComponent extends Component
 
         /*<──  ───────    TAXES   ───────  ──>*/
         $this->taxes = Tax::where("tenant_id", $this->user->tenant_id)->get();
-        //   $this->taxes = Tax::whereNotIn("id", $this->taxes_id)->get();
 
         /*<──  ───────    CATEGORIES   ───────  ──>*/
         $this->categories = Category::where("tenant_id", $this->user->tenant_id)->get();

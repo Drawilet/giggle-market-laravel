@@ -93,6 +93,7 @@
                                         class="bg-yellow-300  hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-sm ">
                                         <i class="fa-solid fa-pencil"></i>
                                     </button>
+
                                     <button wire:click="openDeleteModal({{ $tax->id }}, '{{ $tax->name }}')"
                                         class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4  rounded-sm">
                                         <i class="fa-solid fa-trash-can"></i>

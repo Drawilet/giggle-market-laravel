@@ -1,4 +1,4 @@
-<div  class="py-5">
+<div class="py-5">
     <x-dialog-modal wire:model="saveModal">
         <x-slot name="title">
 
@@ -46,8 +46,27 @@
                 </span>
             </div>
 
+
         </x-slot>
-        <x-slot name="footer"></x-slot>
+        <x-slot name="footer">
+
+        </x-slot>
+    </x-dialog-modal>
+
+    <x-dialog-modal wire:model="errorModal">
+        <x-slot name="title">
+            Unable to delete this category.
+        </x-slot>
+        <x-slot name="content">
+            <h2 class="text-white">There are {{ $count }} products linked to this category.</h2>
+        </x-slot>
+        <x-slot name="footer">
+            <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
+                <button wire:click="closeErrorModal()" type="button"
+                    class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-gray-200 text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">Close</button>
+            </span>
+
+        </x-slot>
     </x-dialog-modal>
 
     <div class="max-w-7xl mx-auto sm:px6 lg:px-8">

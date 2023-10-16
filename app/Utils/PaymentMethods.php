@@ -7,9 +7,6 @@ use App\Http\Controllers\PayPalController;
 
 class PaymentMethods
 {
-
-
-
     public static function get()
     {
         return [
@@ -19,7 +16,8 @@ class PaymentMethods
                     "bg" => "rgb(253 224 71)",
                     "logo" => "paypal.png",
                 ],
-                "allowPayments" => true
+                "allowPayments" => true,
+                "allowWithdraw" => false
             ],
             "mercadopago" => [
                 "controller" => MercadoPagoController::class,
@@ -27,7 +25,8 @@ class PaymentMethods
                     "bg" => " rgb(56 189 248)",
                     "logo" => "mercadopago.webp",
                 ],
-                "allowPayments" => true
+                "allowPayments" => true,
+                "allowWithdraw" => true
             ]
         ];
     }

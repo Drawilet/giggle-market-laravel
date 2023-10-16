@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -68,7 +69,11 @@ class TaxComponent extends Component
     /*<──  ───────    DELETE   ───────  ──>*/
     public function delete()
     {
-        Tax::find($this->tax_id)->delete();
+        $tax = Tax::find($this->tax_id);
+
+        return;
+        $tax->delete();
+
         session()->flash("message", "Tax deleted succesfully");
 
         $this->clean();

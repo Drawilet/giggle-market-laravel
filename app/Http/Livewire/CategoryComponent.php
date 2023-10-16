@@ -4,18 +4,19 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
 class CategoryComponent extends Component
 {
-    public $categories, $name, $category_id;
+    public $categories, $name, $category_id, $count = 0;
 
-    public $saveModal = false;
-    public $deleteModal = false;
+    public $saveModal = false, $deleteModal = false, $errorModal = false;
 
     public function render()
     {
         $this->categories = Category::where("tenant_id", Auth::user()->tenant_id)->get();
+
         return view('livewire.category-component');
     }
 
@@ -61,15 +62,23 @@ class CategoryComponent extends Component
     /*<──  ───────    DELETE   ───────  ──>*/
     public function delete()
     {
-        Category::find($this->category_id)->delete();
-        session()->flash("message", "Category deleted succesfully");
-
-        $this->clean();
         $this->closeDeleteModal();
+
+        $products = Product::where("category_id", $this->category_id)->get();
+        if (!$products->isEmpty()) {
+            $this->count = $products->count();
+            return $this->openErrorModal();
+        }
+
+        Category::find($this->category_id)->delete();
+
+        session()->flash("message", "Category deleted succesfully");
     }
 
     public function openDeleteModal($id, $name)
     {
+        $this->clean();
+
         $this->category_id = $id;
         session()->flash("name", $name);
 
@@ -78,6 +87,17 @@ class CategoryComponent extends Component
     public function closeDeleteModal()
     {
         $this->deleteModal = false;
-        $this->clean();
+    }
+
+
+    public function closeErrorModal()
+    {
+        $this->errorModal = false;
+    }
+
+    public function openErrorModal()
+    {
+
+        $this->errorModal = true;
     }
 }
