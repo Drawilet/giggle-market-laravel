@@ -20,7 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger("payer_id")->nullable();
             $table->string("payer_type");
 
-            $table->unsignedBigInteger("recipient_id");
+            $table->string("recipient_name")->nullable();
+            $table->unsignedBigInteger("recipient_id")->nullable();
             $table->string("recipient_type");
 
             $table->decimal("amount");

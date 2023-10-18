@@ -128,7 +128,7 @@ class PayPalController extends Controller
     }
 
 
-    public function createPayout($email, $amount)
+    public function createPayout($user, $amount)
     {
         $apiContext = $this->getApiContext();
 
@@ -140,18 +140,29 @@ class PayPalController extends Controller
 
         $item = new PayoutItem();
         $item->setRecipientType("EMAIL");
-        $item->setReceiver($email);
+        $item->setReceiver($user->paypal_email);
         $item->setAmount($currency);
         $item->setNote("Simple note");
 
         $payout->setItems([$item]);
 
         $senderBatchHeader = new PayoutSenderBatchHeader();
-        $senderBatchHeader->setSenderBatchId("1");
+        $senderBatchHeader->setSenderBatchId(rand());
         $senderBatchHeader->setEmailSubject("Payment subject");
 
         $payout->setSenderBatchHeader($senderBatchHeader);
 
+
         $payout->create(null, $apiContext);
+
+        $transaction = new TransactionController();
+
+        $transaction->setPayer($user);
+        $transaction->setRecepient("PayPal", "system");
+
+        $transaction->setDescription("Withdraw");
+        $transaction->setAmount(floatval($amount));
+
+        $transaction->execute();
     }
 }

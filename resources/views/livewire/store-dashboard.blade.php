@@ -80,6 +80,7 @@
             @foreach ($transactions as $transaction)
                 @php
                     $payer = $this->getPayerData($transaction, $type, $store->id);
+                    $recipient = $this->getRecipientData($transaction, $type, $store->id);
                 @endphp
 
                 <div class="flex bg-slate-800 p-2 mb-2 rounded flex-col">
@@ -94,9 +95,9 @@
                             <i class="fa-solid fa-arrow-right mx-3 text-gray-300"></i>
 
                             <div class="flex flex-col items-center">
-                                <span class="text-base text-gray-300">{{ $transaction->recipient->name }} </span>
+                                <span class="text-base text-gray-300">{{ $recipient['name'] }} </span>
                                 <span class="text-base text-gray-400 -mt-2 capitalize">
-                                    {{ substr($transaction->recipient->getTable(), 0, -1) }}
+                                    {{ $recipient['type'] }}
                                 </span>
                             </div>
 

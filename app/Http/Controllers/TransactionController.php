@@ -8,7 +8,7 @@ use App\Models\User;
 
 class TransactionController extends Controller
 {
-    private $payer, $payer_type, $recipient, $amount, $description;
+    private $payer, $payer_type, $recipient, $recipient_type, $amount, $description;
 
     public function setPayer($payer, $type = null)
     {
@@ -26,6 +26,12 @@ class TransactionController extends Controller
 
     public function setRecepient($recipient, $type = null)
     {
+        if ($type == "system") {
+            $this->recipient = $recipient;
+            $this->recipient_type = "system";
+            return;
+        }
+
         if (gettype($recipient) == "string" && $type) {
             if ($type == "store") $this->recipient = Store::where("id", "$recipient")->first();
             elseif ($type == "user") $this->recipient = User::where("id", "$recipient")->first();
@@ -44,9 +50,6 @@ class TransactionController extends Controller
     public function execute()
     {
         $data = [
-            "recipient_id" => $this->recipient->id,
-            "recipient_type" => $this->recipient::class,
-
             "amount" => $this->amount,
             "description" => $this->description
         ];
@@ -56,7 +59,7 @@ class TransactionController extends Controller
             $data["payer_type"] = "system";
         } else {
             if ($this->payer->balance < $this->amount)
-                return   abort(403, 'Insufficient balance to perform this transaction');
+                return  abort(403, 'Insufficient balance to perform this transaction');
 
             $this->payer->balance -= $this->amount;
             $this->payer->save();
@@ -65,9 +68,16 @@ class TransactionController extends Controller
             $data["payer_type"] = $this->payer::class;
         }
 
-        $this->recipient->balance += $this->amount;
-        $this->recipient->save();
+        if ($this->recipient_type == "system") {
+            $data["recipient_name"] = $this->recipient;
+            $data["recipient_type"] = "system";
+        } else {
+            $data["recipient_id"] = $this->recipient->id;
+            $data["recipient_type"] = $this->recipient::class;
 
+            $this->recipient->balance += $this->amount;
+            $this->recipient->save();
+        }
         Transaction::create($data);
     }
 }

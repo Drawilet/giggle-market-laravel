@@ -9,11 +9,11 @@
                 <select id="method" wire:model="method"
                     class="block w-full mt-1 p-2 border border-gray-300 bg-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white focus:outline-none">
                     <option value="{{ null }}">Select a method</option>
-                    @if ($user->paypal_email)
-                        <option value="paypal">
-                            PayPal ({{ $user->paypal_email }})
-                        </option>
-                    @endif
+                    @foreach ($methods as $key => $method)
+                        @if ($method['allowWithdraw'])
+                            <option value="{{ $key }}">{{ $method['label'] }}</option>
+                        @endif
+                    @endforeach
                 </select>
                 @error('method')
                     <p class="text-red-600">{{ $message }}</p>
@@ -53,7 +53,9 @@
         <div class="flex flex-col-reverse">
             @foreach ($transactions as $transaction)
                 @php
-                    $payer = $this->getPayerData($transaction, User::class, $user->id);
+                    $payer = $this->getPayerData($transaction, $type, $user->id);
+                    $recipient = $this->getRecipientData($transaction, $type, $user->id);
+
                 @endphp
 
                 <div class="flex bg-slate-800 p-2 mb-2 rounded flex-col">
@@ -68,9 +70,9 @@
                             <i class="fa-solid fa-arrow-right mx-3 text-gray-300"></i>
 
                             <div class="flex flex-col items-center">
-                                <span class="text-base text-gray-300">{{ $transaction->recipient->name }} </span>
+                                <span class="text-base text-gray-300">{{ $recipient['name'] }} </span>
                                 <span class="text-base text-gray-400 -mt-2 capitalize">
-                                    {{ substr($transaction->recipient->getTable(), 0, -1) }}
+                                    {{ $recipient['type'] }}
                                 </span>
                             </div>
 

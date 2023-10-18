@@ -130,4 +130,8 @@ class MercadoPagoController extends Controller
             redirect()->route("purchases")->with("error", $e->getMessage());
         }
     }
+
+    public function createPayout(){
+
+    }
 }

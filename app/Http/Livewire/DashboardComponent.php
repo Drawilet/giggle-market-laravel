@@ -2,21 +2,23 @@
 
 namespace App\Http\Livewire;
 
-use App\Http\Controllers\PayPalController;
-use App\Models\Transaction;
 use App\Models\User;
 use App\Utils\ComponentWithTransactions;
+use App\Utils\PaymentMethods;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardComponent extends ComponentWithTransactions
 {
-    public  $transactions, $user;
+    public $type = User::class;
+    public $user;
 
     public $amount, $method;
     public $withdrawModal = false;
 
+    public $methods = [];
     public function mount()
     {
+        $this->methods = PaymentMethods::get();
         $this->user = Auth::user();
         $this->getTransactions(User::class, $this->user->id);
     }
@@ -43,7 +45,6 @@ class DashboardComponent extends ComponentWithTransactions
         $this->withdrawModal = false;
     }
 
-
     public function withdraw()
     {
         $balance = $this->user->balance;
@@ -54,15 +55,12 @@ class DashboardComponent extends ComponentWithTransactions
         ]);
         $this->amount = floatval($this->amount);
 
-        switch ($this->method) {
-            case 'paypal':
-                $paypalController  = new PayPalController();
-                $paypalController->createPayout($this->user->paypal_email, $this->amount);
-                break;
+        $Method = $this->methods[$this->method];
+        $controller = new $Method["controller"];
 
-            default:
-                # code...
-                break;
-        }
+        $controller->createPayout($this->user, $this->amount);
+
+        $this->closeWithdrawModal();
+        $this->getTransactions(User::class, $this->user->id);
     }
 }

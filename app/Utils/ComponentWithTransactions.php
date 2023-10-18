@@ -8,7 +8,7 @@ use Livewire\Component;
 class ComponentWithTransactions extends Component
 {
 
-    public $transactions;
+    public $transactions = [];
 
     static  function getPayerData($transaction, $type, $id)
     {
@@ -24,6 +24,23 @@ class ComponentWithTransactions extends Component
             'name' => $transaction->payer->name,
             'type' => substr($transaction->payer->getTable(), 0, -1),
             "is_mine" => ($transaction->payer_id == $id) && ($transaction->payer_type == $type)
+        ];
+    }
+
+    static function getRecipientData($transaction, $type, $id)
+    {
+        if ($transaction->recipient_type == 'system') {
+            return [
+                'name' => $transaction->recipient_name,
+                'type' => $transaction->recipient_type,
+                "is_mine" => false
+            ];
+        }
+
+        return [
+            'name' => $transaction->recipient->name,
+            'type' => substr($transaction->recipient->getTable(), 0, -1),
+            "is_mine" => ($transaction->recipient_id == $id) && ($transaction->recipient_type == $type)
         ];
     }
 

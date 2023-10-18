@@ -87,8 +87,6 @@ class CheckoutComponent extends Component
     /*<──  ───────    CHECKOUT   ───────  ──>*/
     public function checkout($payment_method)
     {
-
-
         $amount = $this->getAmount();
 
         $sale = Sale::create(
