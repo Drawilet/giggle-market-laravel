@@ -1,4 +1,41 @@
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 sticky top-0">
+    @php
+        $user = Auth::user();
+
+        $navigation = [
+            'dashboard' => [
+                'label' => 'Dashboard',
+            ],
+            'catalog' => [
+                'label' => 'Catalog',
+            ],
+            'store.new' => [
+                'label' => '¡Become a seller!',
+                'middleware' => !$user->store,
+            ],
+        ];
+
+        $menu = [
+            'Manage Account' => [
+                'profile.show' => 'Profile',
+                'user.billing' => 'Billing',
+                'user.purchases' => 'Purchases',
+            ],
+            'Store' => [
+                'middleware' => $user->store_role == 'admin',
+                'store.dashboard' => 'Dashboard',
+                'store.products' => 'Products',
+                'store.manage' => 'Manage',
+            ],
+            'Admin' => [
+                'middleware' => $user->role == 'admin',
+                'categories' => 'Categories',
+                'taxes' => 'Taxes',
+            ],
+        ];
+
+    @endphp
+
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -12,35 +49,13 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-
-                    <x-nav-link href="{{ route('catalog') }}" :active="request()->routeIs('catalog')">
-                        {{ __('Catalog') }}
-                    </x-nav-link>
-
-                    <span></span>
-
-                    @if (Auth::user()->store)
-                        <x-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
-                            {{ __('Products') }}
-                        </x-nav-link>
-                    @else
-                        <x-nav-link href="{{ route('store.new') }}" :active="request()->routeIs('store.new')">
-                            {{ __('¡Become a seller!') }} <i class="fa-solid fa-dollar-sign"></i>
-                        </x-nav-link>
-                    @endif
-
-                    <x-admin>
-                        <x-nav-link href="{{ route('categories') }}" :active="request()->routeIs('categories')">
-                            {{ __('Categories') }}
-                        </x-nav-link>
-
-                        <x-nav-link href="{{ route('taxes') }}" :active="request()->routeIs('taxes')">
-                            {{ __('Taxes') }}
-                        </x-nav-link>
-                    </x-admin>
+                    @foreach ($navigation as $key => $link)
+                        @if (!isset($link['middleware']) || (isset($link['middleware']) && $link['middleware'] !== false))
+                            <x-nav-link href="{{ route($key) }}" :active="request()->routeIs($key)">
+                                {{ $link['label'] }}
+                            </x-nav-link>
+                        @endif
+                    @endforeach
                 </div>
             </div>
 
@@ -138,43 +153,20 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <!-- Store Management -->
-                            @if (Auth::user()->store_role == 'admin')
-                                <div class="block px-4 py-2 text-xs text-gray-400">
-                                    {{ __('Store') }}
-                                </div>
-
-                                <x-dropdown-link href="{{ route('store.dashboard') }}">
-                                    {{ __('Dashboard') }}
-                                </x-dropdown-link>
-
-                                <x-dropdown-link href="{{ route('store.manage') }}">
-                                    {{ __('Manage') }}
-                                </x-dropdown-link>
-                            @endif
-
-                            <!-- Account Management -->
-                            <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Manage Account') }}
-                            </div>
-
-                            <x-dropdown-link href="{{ route('profile.show') }}">
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
-
-                            <x-dropdown-link href="{{ route('billing') }}">
-                                {{ __('Billing') }}
-                            </x-dropdown-link>
-
-                            <x-dropdown-link href="{{ route('purchases') }}">
-                                {{ __('Purchases') }}
-                            </x-dropdown-link>
-
-                            @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                                <x-dropdown-link href="{{ route('api-tokens.index') }}">
-                                    {{ __('API Tokens') }}
-                                </x-dropdown-link>
-                            @endif
+                            @foreach ($menu as $key => $links)
+                                @if (!isset($links['middleware']) || (isset($links['middleware']) && $links['middleware'] !== false))
+                                    <div class="block px-4 py-2 text-xs text-gray-400">
+                                        {{ $key }}
+                                    </div>
+                                    @foreach ($links as $link => $label)
+                                        @if ($link != 'middleware')
+                                            <x-dropdown-link href="{{ route($link) }}">
+                                                {{ $label }}
+                                            </x-dropdown-link>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            @endforeach
 
                             <div class="border-t border-gray-200 dark:border-gray-600"></div>
 
@@ -211,29 +203,13 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-
-            <x-responsive-nav-link href="{{ route('catalog') }}" :active="request()->routeIs('catalog')">
-                {{ __('Catalog') }}
-            </x-responsive-nav-link>
-
-            @if (Auth::user()->store)
-                <span></span>
-
-                <x-responsive-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
-                    {{ __('Products') }}
-                </x-responsive-nav-link>
-                <x-responsive-nav-link href="{{ route('categories') }}" :active="request()->routeIs('categories')">
-                    {{ __('Categories') }}
-                </x-responsive-nav-link>
-
-                <x-responsive-nav-link href="{{ route('taxes') }}" :active="request()->routeIs('taxes')">
-                    {{ __('Taxes') }}
-                </x-responsive-nav-link>
-            @endif
-
+            @foreach ($navigation as $key => $link)
+                @if (!isset($link['middleware']) || (isset($link['middleware']) && $link['middleware'] !== false))
+                    <x-responsive-nav-link href="{{ route($key) }}" :active="request()->routeIs($key)">
+                        {{ $link['label'] }}
+                    </x-responsive-nav-link>
+                @endif
+            @endforeach
         </div>
 
         <!-- Responsive Settings Options -->
@@ -253,25 +229,23 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <!-- Account Management -->
-                <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
+                @foreach ($menu as $key => $links)
+                    @if (!isset($links['middleware']) || (isset($links['middleware']) && $links['middleware'] !== false))
+                        <div class="border-t border-gray-200 dark:border-gray-600"></div>
+                        <div class="block px-4 py-2 text-xs text-gray-400">
+                            {{ $key }}
+                        </div>
+                        @foreach ($links as $link => $label)
+                            @if ($link != 'middleware')
+                                <x-responsive-nav-link href="{{ route($link) }}">
+                                    {{ $label }}
+                                </x-responsive-nav-link>
+                            @endif
+                        @endforeach
+                    @endif
+                @endforeach
 
-                <!-- Store Management -->
-                @if (Auth::user()->store_role == 'admin')
-                    <x-responsive-nav-link href="{{ route('store.manage') }}">
-                        {{ __('Manage store') }}
-                    </x-responsive-nav-link>
-                @endif
-
-                <x-responsive-nav-link href="{{ route('profile.show') }}">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
-                <x-responsive-nav-link href="{{ route('purchases') }}">
-                    {{ __('Purchases') }}
-                </x-responsive-nav-link>
+                <div class="border-t border-gray-200 dark:border-gray-600"></div>
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                     <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">

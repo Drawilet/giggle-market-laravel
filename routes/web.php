@@ -43,10 +43,9 @@ Route::middleware([
     Route::get("/catalog", CatalogComponent::class)->name('catalog');
 
     Route::get("/checkout", CheckoutComponent::class)->name("checkout");
-    Route::get("/purchases", PurchasesComponent::class)->name("purchases");
 
-    /*<──  ───────    BILLING   ───────  ──>*/
-    Route::get("/billing", BillingComponent::class)->name("billing");
+    Route::get("/user/purchases", PurchasesComponent::class)->name("user.purchases");
+    Route::get("/user/billing", BillingComponent::class)->name("user.billing");
 
     // -> PayPal
     Route::get('/payment/paypal/execute', [PayPalController::class, "executePayment"]);
@@ -58,27 +57,27 @@ Route::middleware([
     Route::get('/payment/mercadopago/cancel', [MercadoPagoController::class, "cancelPayment"]);
 });
 
-/*<──  ───────    SELLER   ───────  ──>*/
+/*<──  ───────    STORE   ───────  ──>*/
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
     "seller"
 ])->group(function () {
-    Route::get("/products", ProductComponent::class)->name('products');
+    Route::get("/store/products", ProductComponent::class)->name('store.products');
 });
 
-/*<──  ───────    NOT SELLER   ───────  ──>*/
+/*<──  ───────    NOT STORE   ───────  ──>*/
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
     "not.seller",
 ])->group(function () {
-    Route::get("/stores/new", NewStoreComponent::class)->name('store.new');
+    Route::get("/store/new", NewStoreComponent::class)->name('store.new');
 });
 
-/*<──  ───────    ADMIN   ───────  ──>*/
+/*<──  ───────    STORE ADMIN   ───────  ──>*/
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -86,8 +85,8 @@ Route::middleware([
     "seller",
     "store.admin"
 ])->group(function () {
-    Route::get("/stores/manage", ManageStoreComponent::class)->name('store.manage');
-    Route::get("/stores/dashboard", StoreDashboard::class)->name('store.dashboard');
+    Route::get("/store/manage", ManageStoreComponent::class)->name('store.manage');
+    Route::get("/store/dashboard", StoreDashboard::class)->name('store.dashboard');
 });
 
 /*<──  ───────    ADMIN   ───────  ──>*/
