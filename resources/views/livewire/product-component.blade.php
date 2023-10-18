@@ -181,9 +181,9 @@
             <table class="table-fixed w-full">
                 <thead>
                     <tr class="bg-slate-800 text-white">
-                        <th class="px-4 py-2"></th>
                         <th class="px-4 py-2">ID</th>
-                        <th class="px-4 py-2">Description</th>
+                        <th class="px-4 py-2">Image</th>
+                        <th class="px-4 py-2  w-1/4">Description</th>
                         <th class="px-4 py-2">Price</th>
                         <th class="px-4 py-2">Taxes</th>
                         <th class="px-4 py-2">Stock</th>
@@ -197,12 +197,17 @@
                     @if ($products)
                         @foreach ($products as $product)
                             <tr>
+                                <td class="border px-4 py-2 text-white">{{ $product->id }}</td>
                                 <td class="border px-4 py-2 text-white">
                                     <img src="{{ "/storage/products/$product->id/$product->photo" }}"
                                         alt="{{ "$product->description photo" }}" class="block max-h-14 mx-auto">
                                 </td>
-                                <td class="border px-4 py-2 text-white">{{ $product->id }}</td>
-                                <td class="border px-4 py-2 text-white">{{ $product->description }}</td>
+                                <td class="border px-4 py-2 text-white">
+                                    <span class=""> {{ $product->description }}</span>
+                                    <div>
+                                        <span class="text-gray-400 text-sm">{{ $product->user->name }}</span>
+                                    </div>
+                                </td>
                                 <td class="border px-4 py-2 text-white">${{ $product->price }}</td>
                                 <td class="border px-4 py-2 text-white">
                                     @foreach ($product->product_taxes as $product_tax)
@@ -230,7 +235,6 @@
                             </tr>
                         @endforeach
                     @else
-                        <h1>Not found</h1>
                     @endif
                 </tbody>
             </table>

@@ -22,11 +22,16 @@
                 'user.purchases' => 'Purchases',
             ],
             'Store' => [
+                'middleware' => $user->store_role == 'seller',
+                'store.products' => 'Products',
+            ],
+            'Store' => [
                 'middleware' => $user->store_role == 'admin',
+                'store.manage' => 'Manage',
                 'store.dashboard' => 'Dashboard',
                 'store.products' => 'Products',
-                'store.manage' => 'Manage',
             ],
+
             'Admin' => [
                 'middleware' => $user->role == 'admin',
                 'categories' => 'Categories',
