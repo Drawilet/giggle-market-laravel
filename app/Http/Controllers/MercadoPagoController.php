@@ -27,7 +27,7 @@ class MercadoPagoController extends Controller
         foreach ($sale->descriptions as $item) {
             $items[] = [
                 "id" => $item->id,
-                "title" => $item->description,
+                "title" => $item->title,
                 //   "description" => $item->store_name,
                 "quantity" => $item->quantity,
                 "currency_id" => "USD",

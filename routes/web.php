@@ -14,6 +14,7 @@ use App\Http\Livewire\ProductComponent;
 use App\Http\Livewire\PurchasesComponent;
 use App\Http\Livewire\TaxComponent;
 use App\Http\Livewire\StoreDashboard;
+use App\Http\Livewire\StoreProductsComponent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,7 +42,9 @@ Route::middleware([
     Route::get('/dashboard', DashboardComponent::class)->name('dashboard');
 
     Route::get("/catalog", CatalogComponent::class)->name('catalog');
+    Route::get("/products/{id}", ProductComponent::class)->name("products.show");
 
+    /*<──  ───────    PAYMENT   ───────  ──>*/
     Route::get("/checkout", CheckoutComponent::class)->name("checkout");
 
     Route::get("/user/purchases", PurchasesComponent::class)->name("user.purchases");
@@ -64,7 +67,7 @@ Route::middleware([
     'verified',
     "seller"
 ])->group(function () {
-    Route::get("/store/products", ProductComponent::class)->name('store.products');
+    Route::get("/store/products", StoreProductsComponent::class)->name('store.products');
 });
 
 /*<──  ───────    NOT STORE   ───────  ──>*/

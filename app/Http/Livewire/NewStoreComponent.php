@@ -31,6 +31,6 @@ class NewStoreComponent extends Component
 
         $user->save();
 
-        return redirect("/stores/manage");
+        return redirect("/store/manage");
     }
 }

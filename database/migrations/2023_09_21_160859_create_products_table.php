@@ -24,7 +24,10 @@ return new class extends Migration
 
             $table->string("photo");
 
-            $table->string("description", 50);
+            $table->string("title");
+            $table->text("description");
+            $table->string("tags")->nullable();
+
             $table->decimal("price");
             $table->integer("stock");
 
