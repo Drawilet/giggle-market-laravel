@@ -31,7 +31,9 @@ Giggle Market is an online marketplace application developed using Laravel, Live
 4. Set up the Laravel environment and database.
 5. Run migrations and seed the database: `php artisan migrate --seed`
 6. Start the development server: `php artisan serve`
-7. Access Giggle Market at `http://localhost:8000` in your web browser.
+7. Start vite: `npm run dev`
+8. Start the websocket server: `php artisan websockets:serve`
+9. Access Giggle Market at `http://localhost:8000` in your web browser.
 
 ## Usage
 

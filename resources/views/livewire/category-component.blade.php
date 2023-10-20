@@ -92,9 +92,7 @@
                     <tr class="bg-slate-800 text-white">
                         <th class="px-4 py-2">ID</th>
                         <th class="px-4 py-2">Name</th>
-
-                            <th class="px-4 py-2">Actions</th>
-
+                        <th class="px-4 py-2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -103,16 +101,16 @@
                             <td class="border px-4 py-2 text-white">{{ $category->id }}</td>
                             <td class="border px-4 py-2 text-white">{{ $category->name }}</td>
 
-                                <td class="border px-4 py-2 text-center">
-                                    <button wire:click="openUpdateModal({{ $category->id }})"
-                                        class="bg-yellow-300  hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-sm ">
-                                        <i class="fa-solid fa-pencil"></i>
-                                    </button>
-                                    <button wire:click="openDeleteModal({{ $category->id }}, '{{ $category->name }}')"
-                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4  rounded-sm">
-                                        <i class="fa-solid fa-trash-can"></i>
-                                    </button>
-                                </td>
+                            <td class="border px-4 py-2 text-center">
+                                <button wire:click="openUpdateModal({{ $category->id }})"
+                                    class="bg-yellow-300  hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-sm ">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </button>
+                                <button wire:click="openDeleteModal({{ $category->id }}, '{{ $category->name }}')"
+                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4  rounded-sm">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </td>
 
                         </tr>
                     @endforeach
@@ -120,4 +118,10 @@
             </table>
         </div>
     </div>
+
+    <script type="module">
+        Echo.channel("global").listen("CategoryEvent", (e) => {
+            window.livewire.emit("CategoryEvent", e)
+        })
+    </script>
 </div>

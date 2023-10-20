@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Events\CategoryEvent;
+use App\Events\NewEvent;
 use Livewire\Component;
 use App\Models\Category;
 use App\Models\Product;
@@ -13,28 +15,70 @@ class CategoryComponent extends Component
 
     public $saveModal = false, $deleteModal = false, $errorModal = false;
 
-    public function render()
+    protected $listeners = ["CategoryEvent" => "eventHandler"];
+
+    public function eventHandler($e)
+    {
+        $action = $e["action"];
+        $data = $e["data"];
+
+        switch ($action) {
+            case 'create':
+                $category = Category::make($data);
+                $category->id = $data["id"];
+
+                $this->categories->push($category);
+                break;
+
+            case "update":
+                $category = $this->categories->first(function ($category) use ($data) {
+                    return $category->id === $data["id"];
+                });
+
+                if ($category) {
+                    $category->fill($data);
+                }
+
+                break;
+
+            case "delete":
+                $this->categories = $this->categories->filter(function ($category) use ($data) {
+                    return $category->id != $data["id"];
+                });
+                break;
+            default:
+                # code...
+                break;
+        }
+    }
+
+    public function mount()
     {
         $this->categories = Category::all();
+    }
 
+    public function render()
+    {
         return view('livewire.category-component');
     }
 
     /*<──  ───────    UTILS   ───────  ──>*/
     public function clean()
     {
-        $this->name = "";
-        $this->category_id = "";
+        $this->name = null;
+        $this->category_id = null;
     }
 
     /*<──  ───────    SAVE   ───────  ──>*/
     public function save()
     {
-        Category::updateOrCreate(["id" => $this->category_id], [
+        $category = Category::updateOrCreate(["id" => $this->category_id], [
             "name" => $this->name,
         ]);
 
         session()->flash("message", $this->category_id ? "Category updated successfully" : "Category added succesfully");
+
+        event(new CategoryEvent($this->category_id ? "update" : "create", $category));
 
         $this->closeSaveModal();
         $this->clean();
@@ -70,6 +114,7 @@ class CategoryComponent extends Component
         }
 
         Category::find($this->category_id)->delete();
+        event(new CategoryEvent("delete", ["id" => $this->category_id]));
 
         session()->flash("message", "Category deleted succesfully");
     }
