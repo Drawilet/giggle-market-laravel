@@ -7,7 +7,7 @@
                 alt="{{ "{$product['photo']} photo" }}" class="w-full object-contain rounded-md lg:max-h-fit">
         </div>
 
-        <div class="mt-2 w-1/2">
+        <div class="mt-2 lg:w-1/2">
             <h1 class="text-gray-200 text-2xl">{{ $product['title'] }}</h1>
 
             @if ($stock > 0)
