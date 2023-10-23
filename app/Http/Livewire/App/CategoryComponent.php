@@ -26,6 +26,11 @@ class CategoryComponent extends Component
                 $category->id = $data["id"];
 
                 $this->categories->push($category);
+
+                $this->emit("notify", [
+                    "type" => "success",
+                    "message" =>  $data["name"] . " category created"
+                ]);
                 break;
 
             case "update":
@@ -37,12 +42,21 @@ class CategoryComponent extends Component
                     $category->fill($data);
                 }
 
+                $this->emit("notify", [
+                    "type" => "warning",
+                    "message" =>  $data["name"] . " category updated"
+                ]);
                 break;
 
             case "delete":
                 $this->categories = $this->categories->filter(function ($category) use ($data) {
                     return $category->id != $data["id"];
                 });
+
+                $this->emit("notify", [
+                    "type" => "error",
+                    "message" =>  $data["name"] . " category deleted"
+                ]);
                 break;
             default:
                 # code...
@@ -74,12 +88,15 @@ class CategoryComponent extends Component
             "name" => $this->name,
         ]);
 
-        session()->flash("message", $this->category_id ? "Category updated successfully" : "Category added succesfully");
-
         event(new CategoryEvent($this->category_id ? "update" : "create", $category));
 
         $this->closeSaveModal();
         $this->clean();
+    }
+    public function openCreateModal()
+    {
+        $this->clean();
+        $this->openSaveModal();
     }
     public function openSaveModal()
     {
@@ -93,6 +110,8 @@ class CategoryComponent extends Component
     /*<──  ───────    UPDATE   ───────  ──>*/
     public function openUpdateModal($id)
     {
+        $this->clean();
+
         $category = Category::findOrFail($id);
         $this->category_id = $id;
         $this->name = $category->name;
@@ -111,10 +130,13 @@ class CategoryComponent extends Component
             return $this->openErrorModal();
         }
 
-        Category::find($this->category_id)->delete();
-        event(new CategoryEvent("delete", ["id" => $this->category_id]));
+        $category = Category::find($this->category_id);
+        $id = $category->id;
+        $name = $category->name;
 
-        session()->flash("message", "Category deleted succesfully");
+        $category->delete();
+
+        event(new CategoryEvent("delete", ["id" => $id, "name" => $name]));
     }
 
     public function openDeleteModal($id, $name)

@@ -81,8 +81,7 @@
                 </div>
             @endif
 
-
-            <button wire:click="openSaveModal()"
+            <button wire:click="openCreateModal()"
                 class="rounded-sm bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 my-3">
                 <i class="fa-solid fa-plus mr-1"></i> Add</button>
 
@@ -118,6 +117,7 @@
             </table>
         </div>
     </div>
+
 
     <script type="module">
         Echo.channel("global").listen("CategoryEvent", (e) => {
