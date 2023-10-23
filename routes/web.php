@@ -39,7 +39,7 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/home', HomeComponent::class)->name('home');
-    Route::get('/dashboard', DashboardComponent::class)->name('dashboard');
+    Route::get('/user/dashboard', DashboardComponent::class)->name('user.dashboard');
 
     Route::get("/catalog", CatalogComponent::class)->name('catalog');
     Route::get("/products/{id}", ProductComponent::class)->name("products.show");

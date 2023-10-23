@@ -3,7 +3,7 @@
         $user = Auth::user();
 
         $navigation = [
-            'dashboard' => [
+            'user.dashboard' => [
                 'label' => 'Dashboard',
             ],
             'catalog' => [
