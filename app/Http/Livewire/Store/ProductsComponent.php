@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Store;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -12,7 +12,7 @@ use App\Models\ProductTax;
 use App\Models\Tax;
 use Illuminate\Support\Facades\Auth;
 
-class StoreProductsComponent extends Component
+class ProductsComponent extends Component
 {
     use WithFileUploads;
 
@@ -56,7 +56,7 @@ class StoreProductsComponent extends Component
         /*<──  ───────    CATEGORIES   ───────  ──>*/
         $this->categories = Category::all();
 
-        return view('livewire.store-products-component');
+        return view('livewire.store.products-component');
     }
 
     /*<──  ───────    TAXES   ───────  ──>*/

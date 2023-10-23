@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\App;
 
 use App\Events\CategoryEvent;
-use App\Events\NewEvent;
 use Livewire\Component;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Support\Facades\Auth;
 
 class CategoryComponent extends Component
 {
@@ -59,7 +57,7 @@ class CategoryComponent extends Component
 
     public function render()
     {
-        return view('livewire.category-component');
+        return view('livewire.app.category-component');
     }
 
     /*<──  ───────    UTILS   ───────  ──>*/

@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Store;
 
 use App\Models\Store;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class NewStoreComponent extends Component
+class NewComponent extends Component
 {
     public $store_name;
 
     public function render()
     {
-        return view('livewire.new-store-component');
+        return view('livewire.store.new-component');
     }
 
     public function register()

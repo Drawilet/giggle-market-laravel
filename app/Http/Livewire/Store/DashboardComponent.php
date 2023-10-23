@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Store;
 
 use App\Http\Controllers\TransactionController;
 use App\Models\SaleDescription;
@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Utils\ComponentWithTransactions;
 use Illuminate\Support\Facades\Auth;
 
-class StoreDashboard extends ComponentWithTransactions
+class DashboardComponent extends ComponentWithTransactions
 {
     public $type = Store::class;
 
@@ -20,7 +20,7 @@ class StoreDashboard extends ComponentWithTransactions
 
     public function render()
     {
-        return view('livewire.store-dashboard');
+        return view('livewire.store.dashboard');
     }
 
     public function mount()
@@ -30,8 +30,6 @@ class StoreDashboard extends ComponentWithTransactions
         $this->users = User::where("store_id", $this->store->id)->get();
         $this->getTransactions(Store::class,  $this->store->id);
     }
-
-
 
     public function cleanTransferModal()
     {

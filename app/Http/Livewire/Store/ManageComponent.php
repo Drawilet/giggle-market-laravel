@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Store;
 
 use App\Models\Store;
 use App\Models\User;
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
-class ManageStoreComponent extends Component
+class ManageComponent extends Component
 {
 
     public $users;
@@ -28,7 +28,7 @@ class ManageStoreComponent extends Component
             ->where("id", "!=", Auth::user()->id)
             ->get();
 
-        return view('livewire.manage-store-component');
+        return view('livewire.store.manage-component');
     }
     public function updateStoreInformation()
     {

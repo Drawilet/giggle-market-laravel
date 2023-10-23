@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\User;
 
 use App\Models\User;
 use App\Utils\ComponentWithTransactions;
@@ -24,7 +24,7 @@ class DashboardComponent extends ComponentWithTransactions
     }
     public function render()
     {
-        return view('livewire.dashboard-component');
+        return view('livewire.user.dashboard-component');
     }
 
     public function cleanWithdrawModal()

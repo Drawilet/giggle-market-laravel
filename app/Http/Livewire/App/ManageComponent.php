@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\App;
 
 use App\Models\User;
 use Livewire\Component;
 
-class ManageAppComponent extends Component
+class ManageComponent extends Component
 {
     public function mount()
     {
@@ -14,7 +14,6 @@ class ManageAppComponent extends Component
 
     public function render()
     {
-
-        return view('livewire.manage-app-component');
+        return view('livewire.app.manage-component');
     }
 }

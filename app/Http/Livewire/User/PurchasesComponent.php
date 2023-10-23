@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\User;
 
-use App\Http\Controllers\PayPalController;
 use App\Models\Sale;
 use App\Utils\PaymentMethods;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +24,7 @@ class PurchasesComponent extends Component
         $this->user = Auth::user();
         $this->purchases = Sale::where("user_id", $this->user->id)->get();
 
-        return view('livewire.purchases-component');
+        return view('livewire.user.purchases-component');
     }
 
 

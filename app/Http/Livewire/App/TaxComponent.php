@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\App;
 
 use App\Models\Product;
 use App\Models\ProductTax;
@@ -21,7 +21,7 @@ class TaxComponent extends Component
         $this->user = Auth::user();
         $this->taxes = Tax::all();
 
-        return view('livewire.tax-component');
+        return view('livewire.app.tax-component');
     }
 
     /*<──  ───────    UTILS   ───────  ──>*/

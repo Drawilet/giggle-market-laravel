@@ -1,22 +1,28 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\MercadoPagoController;
 use App\Http\Controllers\PayPalController;
-use App\Http\Livewire\BillingComponent;
+
+use App\Http\Livewire\HomeComponent;;
 use App\Http\Livewire\CatalogComponent;
-use App\Http\Livewire\CategoryComponent;
-use App\Http\Livewire\CheckoutComponent;
-use App\Http\Livewire\DashboardComponent;
-use App\Http\Livewire\HomeComponent;
-use App\Http\Livewire\ManageAppComponent;
-use App\Http\Livewire\ManageStoreComponent;
-use App\Http\Livewire\NewStoreComponent;
 use App\Http\Livewire\ProductComponent;
-use App\Http\Livewire\PurchasesComponent;
-use App\Http\Livewire\TaxComponent;
-use App\Http\Livewire\StoreDashboard;
-use App\Http\Livewire\StoreProductsComponent;
-use Illuminate\Support\Facades\Route;
+
+use App\Http\Livewire\CheckoutComponent;
+
+use App\Http\Livewire\User\BillingComponent;
+use App\Http\Livewire\User\DashboardComponent;
+use App\Http\Livewire\User\PurchasesComponent;
+
+use App\Http\Livewire\App\TaxComponent;
+use App\Http\Livewire\App\CategoryComponent;
+use App\Http\Livewire\App\ManageComponent;
+
+use App\Http\Livewire\Store\DashboardComponent as StoreDashboardComponent;
+use App\Http\Livewire\Store\ManageComponent as StoreManageComponent;
+use App\Http\Livewire\Store\ProductsComponent;
+use App\Http\Livewire\Store\NewComponent;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +74,7 @@ Route::middleware([
     'verified',
     "seller"
 ])->group(function () {
-    Route::get("/store/products", StoreProductsComponent::class)->name('store.products');
+    Route::get("/store/products", ProductsComponent::class)->name('store.products');
 });
 
 /*<──  ───────    NOT STORE   ───────  ──>*/
@@ -78,7 +84,7 @@ Route::middleware([
     'verified',
     "not.seller",
 ])->group(function () {
-    Route::get("/store/new", NewStoreComponent::class)->name('store.new');
+    Route::get("/store/new", NewComponent::class)->name('store.new');
 });
 
 /*<──  ───────    STORE ADMIN   ───────  ──>*/
@@ -89,8 +95,8 @@ Route::middleware([
     "seller",
     "store.admin"
 ])->group(function () {
-    Route::get("/store/manage", ManageStoreComponent::class)->name('store.manage');
-    Route::get("/store/dashboard", StoreDashboard::class)->name('store.dashboard');
+    Route::get("/store/manage", StoreManageComponent::class)->name('store.manage');
+    Route::get("/store/dashboard", StoreDashboardComponent::class)->name('store.dashboard');
 });
 
 /*<──  ───────    ADMIN   ───────  ──>*/
@@ -102,5 +108,5 @@ Route::middleware([
 ])->group(function () {
     Route::get("/app/categories", CategoryComponent::class)->name('app.categories');
     Route::get("/app/taxes", TaxComponent::class)->name('app.taxes');
-    Route::get("/app/manage", ManageAppComponent::class)->name('app.manage');
+    Route::get("/app/manage", ManageComponent::class)->name('app.manage');
 });
