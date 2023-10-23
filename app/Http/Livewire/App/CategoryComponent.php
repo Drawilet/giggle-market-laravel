@@ -9,9 +9,20 @@ use App\Models\Product;
 
 class CategoryComponent extends Component
 {
-    public $categories, $name, $category_id, $count = 0;
+    public $initialData = [
+        "id" => null,
+        "name" => null
+    ];
+    public $data;
 
-    public $saveModal = false, $deleteModal = false, $errorModal = false;
+    public $modals = [
+        "save" => false,
+        "delete" => false,
+        "error" => false
+    ];
+
+    public $categories, $count = 0;
+
 
     protected $listeners = ["CategoryEvent" => "eventHandler"];
 
@@ -66,6 +77,7 @@ class CategoryComponent extends Component
 
     public function mount()
     {
+        $this->data = $this->initialData;
         $this->categories = Category::all();
     }
 
@@ -77,89 +89,56 @@ class CategoryComponent extends Component
     /*<──  ───────    UTILS   ───────  ──>*/
     public function clean()
     {
-        $this->name = null;
-        $this->category_id = null;
+        $this->data = $this->initialData;
+    }
+
+    public function Modal($modal, $value, $id = null)
+    {
+        if ($value) {
+            $this->clean();
+            switch ($modal) {
+                case 'save':
+                    break;
+                case 'delete':
+                    $this->data = $this->categories->find($id);
+                    break;
+                case "update":
+                    $category = Category::findOrFail($id);
+                    $this->data = $category->toArray();
+                    break;
+
+                default:
+                    # code...
+                    break;
+            }
+        }
+        $this->modals[$modal] = $value;
     }
 
     /*<──  ───────    SAVE   ───────  ──>*/
     public function save()
     {
-        $category = Category::updateOrCreate(["id" => $this->category_id], [
-            "name" => $this->name,
-        ]);
+        $category = Category::updateOrCreate(["id" => $this->data["id"]], $this->data);
 
-        event(new CategoryEvent($this->category_id ? "update" : "create", $category));
+        event(new CategoryEvent($this->data["id"] ? "update" : "create", $category));
 
-        $this->closeSaveModal();
         $this->clean();
-    }
-    public function openCreateModal()
-    {
-        $this->clean();
-        $this->openSaveModal();
-    }
-    public function openSaveModal()
-    {
-        $this->saveModal = true;
-    }
-    public function closeSaveModal()
-    {
-        $this->saveModal = false;
-    }
-
-    /*<──  ───────    UPDATE   ───────  ──>*/
-    public function openUpdateModal($id)
-    {
-        $this->clean();
-
-        $category = Category::findOrFail($id);
-        $this->category_id = $id;
-        $this->name = $category->name;
-
-        $this->openSaveModal();
     }
 
     /*<──  ───────    DELETE   ───────  ──>*/
     public function delete()
     {
-        $this->closeDeleteModal();
+        $this->Modal("delete", false);
 
-        $products = Product::where("category_id", $this->category_id)->get();
+        $products = Product::where("category_id", $this->data["id"])->get();
         if (!$products->isEmpty()) {
             $this->count = $products->count();
-            return $this->openErrorModal();
+            return $this->Modal("error", true);
         }
 
-        $category = Category::find($this->category_id);
-        $id = $category->id;
-        $name = $category->name;
-
+        $category = Category::find($this->data["id"]);
         $category->delete();
 
-        event(new CategoryEvent("delete", ["id" => $id, "name" => $name]));
-    }
-
-    public function openDeleteModal($id, $name)
-    {
-        $this->clean();
-
-        $this->category_id = $id;
-        session()->flash("name", $name);
-
-        $this->deleteModal = true;
-    }
-    public function closeDeleteModal()
-    {
-        $this->deleteModal = false;
-    }
-
-    public function closeErrorModal()
-    {
-        $this->errorModal = false;
-    }
-
-    public function openErrorModal()
-    {
-        $this->errorModal = true;
+        event(new CategoryEvent("delete", $this->data));
     }
 }
