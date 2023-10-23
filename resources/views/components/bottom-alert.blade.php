@@ -7,7 +7,7 @@
         'warning' => '#dd6b20', // "bg-yellow-600
     'info' => '#3182ce', // "bg-blue-600
     ];
-    $color = $colors[$type];
+    $color = $colors[$type] ?? $colors['info'];
 @endphp
 
 <div x-data="{ shown: false, timeout: null }" x-init="@this.on('{{ $on }}', () => {
@@ -20,5 +20,5 @@
 
     <span class="text-gray-200 mb-2 px-2"> {{ $slot->isEmpty() ? 'Saved.' : $slot }}</span>
 
-    <span class="w-full rounded border-b" style="border-color: {{ $color }}"></span>
+    <span class="text-sm w-full rounded border-b" style="border-color: {{ $color }}"></span>
 </div>
