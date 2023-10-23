@@ -15,3 +15,15 @@
     @apply bg-slate-700 rounded;
 }
 
+@layer base {
+    thead tr {
+        @apply bg-slate-800 text-white;
+    }
+    thead th {
+        @apply px-4 py-2;
+    }
+
+    td {
+        @apply border border-slate-700 px-2 text-white;
+    }
+}
