@@ -8,6 +8,7 @@ use App\Http\Livewire\CategoryComponent;
 use App\Http\Livewire\CheckoutComponent;
 use App\Http\Livewire\DashboardComponent;
 use App\Http\Livewire\HomeComponent;
+use App\Http\Livewire\ManageAppComponent;
 use App\Http\Livewire\ManageStoreComponent;
 use App\Http\Livewire\NewStoreComponent;
 use App\Http\Livewire\ProductComponent;
@@ -99,6 +100,7 @@ Route::middleware([
     'verified',
     "admin"
 ])->group(function () {
-    Route::get("/categories", CategoryComponent::class)->name('categories');
-    Route::get("/taxes", TaxComponent::class)->name('taxes');
+    Route::get("/app/categories", CategoryComponent::class)->name('app.categories');
+    Route::get("/app/taxes", TaxComponent::class)->name('app.taxes');
+    Route::get("/app/manage", ManageAppComponent::class)->name('app.manage');
 });

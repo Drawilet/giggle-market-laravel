@@ -32,10 +32,11 @@
                 'store.products' => 'Products',
             ],
 
-            'Admin' => [
+            'App' => [
                 'middleware' => $user->role == 'admin',
-                'categories' => 'Categories',
-                'taxes' => 'Taxes',
+                'app.manage' => 'Manage',
+                'app.categories' => 'Categories',
+                'app.taxes' => 'Taxes',
             ],
         ];
 
