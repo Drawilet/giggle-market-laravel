@@ -40,7 +40,7 @@
                 <input wire:model="photo" type="file" id="photo" class="hidden">
             </div>
 
-            <x-text-input wire:model="title" id="title" label="Title" />
+            <x-text-input wire:model="name" id="name" label="Name" />
             <div class="mb-4">
                 <label for="description" class="block text-white text-sm font-bold mb-2">Description</label>
                 <textarea wire:model="description" name="description" id="description" rows="5"
@@ -193,7 +193,7 @@
                     <tr class="bg-slate-800 text-white">
                         <th class="px-4 py-2">ID</th>
                         <th class="px-4 py-2">Image</th>
-                        <th class="px-4 py-2  w-1/4">Title</th>
+                        <th class="px-4 py-2  w-1/4">Name</th>
                         <th class="px-4 py-2  w-1/4">Description</th>
                         <th class="px-4 py-2">Price</th>
                         <th class="px-4 py-2">Taxes</th>
@@ -214,7 +214,7 @@
                                         alt="{{ "$product->description photo" }}" class="block max-h-14 mx-auto">
                                 </td>
                                 <td class="border px-4 py-2 text-white">
-                                    <span class=""> {{ $product->title }}</span>
+                                    <span class=""> {{ $product->name }}</span>
                                     <div>
                                         <span class="text-gray-400 text-sm">{{ $product->user->name }}</span>
                                     </div>

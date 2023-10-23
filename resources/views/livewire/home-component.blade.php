@@ -10,8 +10,9 @@
                         <img src="{{ "/storage/products/{$product['id']}/{$product['photo']}" }}"
                             alt="{{ "{$product['photo']} photo" }}" class="w-full max-h-40 object-contain rounded-md">
 
-                        <div class="mt-2 text-white">{{ $product['title'] }}</div>
-                        <div class="text-gray-300 text-sm -mt-1"> {{ $stores->where('id', $product["store_id"])->first()->name }}</div>
+                        <div class="mt-2 text-white">{{ $product['name'] }}</div>
+                        <div class="text-gray-300 text-sm -mt-1">
+                            {{ $stores->where('id', $product['store_id'])->first()->name }}</div>
                         <div class="text-xl text-white">${{ $product['price'] }}</div>
                     </a>
                 @endforeach

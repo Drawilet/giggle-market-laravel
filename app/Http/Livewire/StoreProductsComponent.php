@@ -20,7 +20,7 @@ class StoreProductsComponent extends Component
     public $products, $categories, $taxes;
 
     public  $product_id, $tax_id;
-    public $photo, $description, $title, $tags, $price, $stock, $category_id, $taxes_id = [];
+    public $photo, $description, $name, $tags, $price, $stock, $category_id, $taxes_id = [];
 
     public $saveModal = false, $unpublishModal = false;
 
@@ -77,7 +77,7 @@ class StoreProductsComponent extends Component
     {
         $this->product_id = "";
         $this->description  = "";
-        $this->title = "";
+        $this->name = "";
         $this->tags = "";
         $this->price = 0;
         $this->stock = 0;
@@ -99,7 +99,7 @@ class StoreProductsComponent extends Component
     {
         $this->validate([
             "photo" => Rule::requiredIf(!$this->product_id),
-            "title" => "required|string|max:20",
+            "name" => "required|string|max:20",
             "description" => "required|string|max:600",
             "price" => "required",
             "taxes_id" => "required",
@@ -117,7 +117,7 @@ class StoreProductsComponent extends Component
         $data = [
             "store_id" => $user->store_id,
             "user_id" => $user->id,
-            "title" => $this->title,
+            "name" => $this->name,
             "description" => $this->description,
             "tags" => $this->tags,
             "price" => $this->price,
@@ -165,7 +165,7 @@ class StoreProductsComponent extends Component
         $product = Product::findOrFail($id);
         $this->photo = $product->photo;
         $this->product_id = $id;
-        $this->title = $product->title;
+        $this->name = $product->name;
         $this->description = $product->description;
         $this->tags = $product->tags;
         $this->price = $product->price;

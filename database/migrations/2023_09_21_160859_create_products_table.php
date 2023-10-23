@@ -24,7 +24,7 @@ return new class extends Migration
 
             $table->string("photo");
 
-            $table->string("title");
+            $table->string("name");
             $table->text("description");
             $table->string("tags")->nullable();
 

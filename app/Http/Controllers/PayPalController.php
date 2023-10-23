@@ -72,19 +72,19 @@ class PayPalController extends Controller
 
         $payerId = $request->input('PayerID');
         if (empty($payerId) || !is_string($payerId)) {
-            return redirect()->route("purchases")->with("error", "Invalid or missing PayerID");
+            return redirect()->route("user.purchases")->with("error", "Invalid or missing PayerID");
         }
 
         $paymentId = $request->input("paymentId");
         if (empty($paymentId) || !is_string($paymentId)) {
-            return redirect()->route("purchases")->with("error", " Invalid or missing PaymentID");
+            return redirect()->route("user.purchases")->with("error", " Invalid or missing PaymentID");
         }
 
         $payment = Payment::get($paymentId, $apiContext);
 
         $sale = Sale::where("payment_id", $paymentId)->first();
         if ($sale->payment_status == "approved")
-            return redirect()->route("purchases")->with("error", "Payment have already processed");
+            return redirect()->route("user.purchases")->with("error", "Payment have already processed");
 
 
         $execution = new PaymentExecution();
@@ -108,15 +108,15 @@ class PayPalController extends Controller
                 $transaction->execute();
             }
 
-            return redirect()->route("purchases")->with("success", "Purchase successful! Thank you for your order.");
+            return redirect()->route("user.purchases")->with("success", "Purchase successful! Thank you for your order.");
         } else {
-            return redirect()->route("purchases")->with("error", "Payment was not successful.");
+            return redirect()->route("user.purchases")->with("error", "Payment was not successful.");
         }
     }
 
     public function cancelPayment()
     {
-        return redirect()->route('purchases')->with('info', 'Payment was canceled.');
+        return redirect()->route('user.purchases')->with('info', 'Payment was canceled.');
     }
 
     public function payAgain($paymentId)

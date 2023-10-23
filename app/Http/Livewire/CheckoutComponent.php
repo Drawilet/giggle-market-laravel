@@ -104,7 +104,7 @@ class CheckoutComponent extends Component
                 "sale_id" => $sale->id,
                 "store_id" => $item->product->store->id,
 
-                "description" => $item->product->description,
+                "description" => $item->product->name,
                 "quantity" => $item->quantity,
                 "price" => $item->product->price + $this->getTaxes($item),
             ]);

@@ -8,7 +8,7 @@
         </div>
 
         <div class="mt-2 lg:w-1/2">
-            <h1 class="text-gray-200 text-2xl">{{ $product['title'] }}</h1>
+            <h1 class="text-gray-200 text-2xl">{{ $product['name'] }}</h1>
 
             @if ($stock > 0)
                 <div class="flex items-center">
