@@ -5,7 +5,6 @@ namespace App\Http\Livewire\App;
 use App\Events\CategoryEvent;
 use Livewire\Component;
 use App\Models\Category;
-use App\Models\Product;
 
 class CategoryComponent extends Component
 {
@@ -23,11 +22,11 @@ class CategoryComponent extends Component
 
     public $categories, $count = 0;
 
-
     protected $listeners = ["CategoryEvent" => "eventHandler"];
 
     public function eventHandler($e)
     {
+
         $action = $e["action"];
         $data = $e["data"];
 
@@ -37,42 +36,31 @@ class CategoryComponent extends Component
                 $category->id = $data["id"];
 
                 $this->categories->push($category);
-
-                $this->emit("notify", [
-                    "type" => "success",
-                    "message" =>  $data["name"] . " category created"
-                ]);
                 break;
 
             case "update":
                 $category = $this->categories->first(function ($category) use ($data) {
                     return $category->id === $data["id"];
                 });
-
                 if ($category) {
                     $category->fill($data);
                 }
-
-                $this->emit("notify", [
-                    "type" => "warning",
-                    "message" =>  $data["name"] . " category updated"
-                ]);
                 break;
 
             case "delete":
                 $this->categories = $this->categories->filter(function ($category) use ($data) {
                     return $category->id != $data["id"];
                 });
-
-                $this->emit("notify", [
-                    "type" => "error",
-                    "message" =>  $data["name"] . " category deleted"
-                ]);
                 break;
             default:
                 # code...
                 break;
         }
+
+        $this->emit("notify", [
+            "type" => "info",
+            "message" =>  $data["name"] . " category " . $action . "d"
+        ]);
     }
 
     public function mount()
@@ -94,17 +82,19 @@ class CategoryComponent extends Component
 
     public function Modal($modal, $value, $id = null)
     {
-        if ($value) {
+        if ($value == true) {
             $this->clean();
             switch ($modal) {
                 case 'save':
+                    if ($id) {
+                        $category = Category::find($id);
+                        $this->data = $category->toArray();
+                    }
                     break;
                 case 'delete':
-                    $this->data = $this->categories->find($id);
-                    break;
-                case "update":
-                    $category = Category::findOrFail($id);
+                    $category = $this->categories->find($id);
                     $this->data = $category->toArray();
+
                     break;
 
                 default:
@@ -115,28 +105,25 @@ class CategoryComponent extends Component
         $this->modals[$modal] = $value;
     }
 
-    /*<──  ───────    SAVE   ───────  ──>*/
     public function save()
     {
         $category = Category::updateOrCreate(["id" => $this->data["id"]], $this->data);
 
         event(new CategoryEvent($this->data["id"] ? "update" : "create", $category));
 
-        $this->clean();
+        $this->Modal("save", false);
     }
 
-    /*<──  ───────    DELETE   ───────  ──>*/
     public function delete()
     {
         $this->Modal("delete", false);
+        $category = Category::find($this->data["id"]);
 
-        $products = Product::where("category_id", $this->data["id"])->get();
-        if (!$products->isEmpty()) {
-            $this->count = $products->count();
+        $this->count = $category->products->count();
+        if ($this->count > 0) {
             return $this->Modal("error", true);
         }
 
-        $category = Category::find($this->data["id"]);
         $category->delete();
 
         event(new CategoryEvent("delete", $this->data));

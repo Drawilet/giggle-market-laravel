@@ -34,7 +34,7 @@
             <div class=" px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
                     <button wire:click.prevent="delete()" type="button"
-                        class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-500 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-600 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5">Delete</button>
+                        class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-500 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-600 focus:outline-none focus:border-red-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5">Delete</button>
                 </span>
 
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
@@ -84,6 +84,7 @@
 
 
             <table class="table-fixed w-full">
+
                 <thead>
                     <tr class="bg-slate-800 text-white">
                         <th class="px-4 py-2">ID</th>
@@ -98,11 +99,11 @@
                             <td class="border px-4 py-2 text-white">{{ $category->name }}</td>
 
                             <td class="border px-4 py-2 text-center">
-                                <button wire:click="Modal({{ $category->id }})"
+                                <button wire:click="Modal('save', true, '{{ $category->id }}')"
                                     class="bg-yellow-300  hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-sm ">
                                     <i class="fa-solid fa-pencil"></i>
                                 </button>
-                                <button wire:click="Modal('delete', true, {{ $category->id }})"
+                                <button wire:click="Modal('delete', true, '{{ $category->id }}')"
                                     class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4  rounded-sm">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </button>
@@ -118,6 +119,7 @@
 
     <script type="module">
         Echo.channel("global").listen("CategoryEvent", (e) => {
+        console.log("dasada")
             window.livewire.emit("CategoryEvent", e)
         })
     </script>
