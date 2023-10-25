@@ -14,7 +14,7 @@ class TaxComponent extends CrudComponent
     {
         $this->setup(Tax::class, TaxEvent::class, ["name", "percentage"], [
             "name" => "",
-            "percentage" => null,
+            "percentage" => 0,
         ]);
         $this->items = $this->Model::all();
     }

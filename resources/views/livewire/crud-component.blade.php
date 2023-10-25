@@ -5,7 +5,13 @@
         </x-slot>
         <x-slot name="content">
             <form wire:submit.prevent="save">
-                <x-text-input id="name" wire:model="data.name" label="Name" />
+                @foreach ($initialData as $key => $value)
+                    @if ($key != 'id')
+                        <x-text-input id="{{ $key }}" wire:model="data.{{ $key }}"
+                            label="{{ ucfirst($key) }}" type="{{ gettype($value) == 'integer' ? 'number' : 'string' }}" />
+                    @endif
+                @endforeach
+
 
                 <div class=" px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
