@@ -29,7 +29,7 @@
         </x-slot>
         <x-slot name="content">
 
-            <h2 class="text-white">¿Are you sure you want do delete "{{ $data['name'] }}" category?</h2>
+            <h2 class="text-white">¿Are you sure you want do delete "{{ $data['name'] }}" {{ $name }}?</h2>
 
             <div class=" px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
@@ -52,10 +52,10 @@
 
     <x-dialog-modal wire:model="modals.error">
         <x-slot name="title">
-            Unable to delete this category.
+            Unable to delete this {{ $name }}.
         </x-slot>
         <x-slot name="content">
-            <h2 class="text-white">There are {{ $count }} product(s) linked to this category.</h2>
+            <h2 class="text-white">There are {{ $count }} product(s) linked to this {{ $name }}.</h2>
         </x-slot>
         <x-slot name="footer">
             <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
@@ -121,9 +121,8 @@
     </div>
 
     <script type="module">
-        Echo.channel("global").listen("CategoryEvent", (e) => {
-            console.log("dasada")
-            window.livewire.emit("CategoryEvent", e)
+        Echo.channel("global").listen('{{ $Name }}Event', (e) => {
+            window.livewire.emit('socket', e)
         })
     </script>
 </div>
