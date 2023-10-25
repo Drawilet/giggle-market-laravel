@@ -24,7 +24,7 @@ class ProductsComponent extends Component
 
     public $saveModal = false, $unpublishModal = false;
 
-    public $filter_category, $filter_description = "", $filter_min_price, $filter_max_price;
+    public $filter_category, $filter_name = "", $filter_min_price, $filter_max_price;
 
     public function render()
     {
@@ -37,8 +37,8 @@ class ProductsComponent extends Component
             $query->where("store_id", $this->user->store_id);
             $query->where("category_id", "like", "%" . $this->filter_category . "%");
 
-            if (!empty($this->filter_description)) {
-                $query->where("description", "like", "%" . $this->filter_description . "%");
+            if (!empty($this->filter_name)) {
+                $query->where("name", "like", "%" . $this->filter_name . "%");
             }
 
             if (!empty($this->filter_min_price)) {
@@ -89,7 +89,7 @@ class ProductsComponent extends Component
     public function clearFilters()
     {
         $this->filter_category = null;
-        $this->filter_description = null;
+        $this->filter_name = null;
         $this->filter_min_price = null;
         $this->filter_max_price = null;
     }

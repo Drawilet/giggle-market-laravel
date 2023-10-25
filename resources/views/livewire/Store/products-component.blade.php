@@ -163,11 +163,11 @@
                             @endforeach
                         </select>
 
-                        <label for="filter_description" class="text-white text-sm font-bold">Description:</label>
-                        <input type="text" id="filter_description" wire:model="filter_description"
+                        <label for="filter_name" class="text-white text-sm font-bold">Name:</label>
+                        <input type="text" id="filter_name" wire:model="filter_name"
                             class="bg-gray-800 text-white border border-gray-700 rounded py-2 px-3 focus:outline-none focus:ring focus:border-blue-300 min-w-max">
 
-                        <label for="filter_description" class="text-white text-sm font-bold">Price:</label>
+                        <label for="filter_name" class="text-white text-sm font-bold">Price:</label>
                         <input type="number" wire:model="filter_min_price" placeholder="min"
                             class="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none bg-gray-800 text-white border border-gray-700 rounded w-14 py-2 px-3 focus:outline-none focus:ring focus:border-blue-300">
                         <p class="text-white text-sm font-bold">to</p>
