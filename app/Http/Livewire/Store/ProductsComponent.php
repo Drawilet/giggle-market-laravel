@@ -14,39 +14,64 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductsComponent extends Component
 {
+
     use WithFileUploads;
+
+    public $initialData = [
+        "id" => null,
+        "photo" => null,
+        "name" => null,
+        "description" => null,
+        "price" => null,
+        "category_id" => null,
+        "stock" => null,
+    ];
+    public $data;
 
     public $user;
     public $products, $categories, $taxes;
 
-    public  $product_id, $tax_id;
-    public $photo, $description, $name, $tags, $price, $stock, $category_id, $taxes_id = [];
+    public  $tax_id, $taxes_id = [];
 
-    public $saveModal = false, $unpublishModal = false;
+    public $modals = [
+        "save" =>  false,
+        "unpublish" =>  false,
+    ];
 
-    public $filter_category, $filter_name = "", $filter_min_price, $filter_max_price;
+    public $initialFilter = [
+        "category" => null,
+        "name" => null,
+        "min_price" => null,
+        "max_price" => null,
+    ];
+    public $filter;
+
+    public function mount()
+    {
+        $this->user = Auth::user();
+        $this->data = $this->initialData;
+        $this->filter = $this->initialFilter;
+    }
 
     public function render()
     {
-        $this->user = Auth::user();
-
         /*<──  ───────    PRODUCTS   ───────  ──>*/
         $this->products = Product::where(function ($query) {
             $query->where("unpublished", false);
 
             $query->where("store_id", $this->user->store_id);
-            $query->where("category_id", "like", "%" . $this->filter_category . "%");
+            $query->where("category_id", "like", "%" . $this->filter["category"] . "%");
 
-            if (!empty($this->filter_name)) {
-                $query->where("name", "like", "%" . $this->filter_name . "%");
+            if (!empty($this->filter["name"])) {
+                $query->where("name", "like", "%" . $this->filter["name"] . "%");
             }
 
-            if (!empty($this->filter_min_price)) {
-                $query->where("price", ">=", $this->filter_min_price);
+            if (!empty($this->filter["min_price"])) {
+                $query->where("price", ">=", $this->filter["min_price"]);
             }
 
-            if (!empty($this->filter_max_price)) {
-                $query->where("price", "<=", $this->filter_max_price);
+            if (!empty($this->filter["max_price"])) {
+                $query->where("price", "<=", $this->filter["max_price"]);
             }
         })->get();
 
@@ -73,63 +98,44 @@ class ProductsComponent extends Component
     }
 
     /*<──  ───────    UTILS   ───────  ──>*/
-    public function clear()
+    public function clean()
     {
-        $this->product_id = "";
-        $this->description  = "";
-        $this->name = "";
-        $this->tags = "";
-        $this->price = 0;
-        $this->stock = 0;
-        $this->category_id = "";
+        $this->data = $this->initialData;
         $this->taxes_id = [];
-        $this->photo = null;
     }
 
     public function clearFilters()
     {
-        $this->filter_category = null;
-        $this->filter_name = null;
-        $this->filter_min_price = null;
-        $this->filter_max_price = null;
+        $this->filter = $this->initialFilter;
     }
 
     /*<──  ───────    SAVE   ───────  ──>*/
     public function save()
     {
         $this->validate([
-            "photo" => Rule::requiredIf(!$this->product_id),
-            "name" => "required|string|max:20",
-            "description" => "required|string|max:600",
-            "price" => "required",
+            "data.photo" => Rule::requiredIf(!$this->data["id"]),
+            "data.name" => "required|string|max:20",
+            "data.description" => "required|string|max:600",
+            "data.price" => "required",
             "taxes_id" => "required",
-            "category_id" => "required",
-            "stock" => "required|integer",
+            "data.category_id" => "required",
+            "data.stock" => "required|integer",
         ]);
-        if (gettype($this->photo) == "string") {
-            $this->photo = null;
+        $photo = $this->data["photo"];
+        if(gettype($this->data["photo"]) == "string") {
+            $photo = null;
         } else {
-            $filename = "photo" . "." . $this->photo->extension();
+            $filename = "photo" . "." . $this->data["photo"]->extension();
+            $this->data["photo"] = $filename;
         }
 
-        $user = Auth::user();
+        $this->data["store_id"] = $this->user->store_id;
+        $this->data["user_id"] = $this->user->id;
 
-        $data = [
-            "store_id" => $user->store_id,
-            "user_id" => $user->id,
-            "name" => $this->name,
-            "description" => $this->description,
-            "tags" => $this->tags,
-            "price" => $this->price,
-            "stock" => $this->stock,
-            "category_id" => $this->category_id,
-        ];
-        if ($this->photo) $data["photo"] = $filename;
-
-        $product = Product::updateOrCreate(["id" => $this->product_id], $data);
+        $product = Product::updateOrCreate(["id" => $this->data["id"]], $this->data);
 
         /*<──  ───────    DELETE OLD TAXES   ───────  ──>*/
-        if ($this->product_id)
+        if ($this->data["id"])
             foreach ($product->product_taxes as $product_tax) {
                 if (!in_array($product_tax->tax->id, $this->taxes_id)) {
                     ProductTax::find($product_tax->id)->delete();
@@ -143,63 +149,52 @@ class ProductsComponent extends Component
             ]);
         }
 
-        if ($this->photo)
-            $this->photo->storeAs("public/products/" . $product->id . "/" . $filename);
+        if ($photo)
+            $photo->storeAs("public/products/" . $product->id . "/" . $filename);
 
-        session()->flash("message", $this->product_id ? "Product updated successfully" : "Product added succesfully");
+        session()->flash("message", $this->data["id"] ? "Product updated successfully" : "Product added succesfully");
 
-        $this->closeSaveModal();
-    }
-    public function openSaveModal()
-    {
-        $this->saveModal = true;
-    }
-    public function closeSaveModal()
-    {
-        $this->saveModal = false;
-        $this->clear();
-    }
-    /*<──  ───────    UPDATE   ───────  ──>*/
-    public function openUpdateModal($id)
-    {
-        $product = Product::findOrFail($id);
-        $this->photo = $product->photo;
-        $this->product_id = $id;
-        $this->name = $product->name;
-        $this->description = $product->description;
-        $this->tags = $product->tags;
-        $this->price = $product->price;
-        $this->stock = $product->stock;
-        $this->category_id = $product->category_id;
-        $this->taxes_id = $product->product_taxes->map(function ($product_tax) {
-            return $product_tax->tax->id;
-        })->toArray();
-
-        $this->openSaveModal();
+        $this->Modal("save", false);
     }
 
     /*<──  ───────    UNPUBLISH   ───────  ──>*/
     public function unpublish()
     {
-        $product = Product::find($this->product_id);
+        $product = Product::find($this->data["id"]);
         $product->unpublished = TRUE;
         $product->save();
 
         session()->flash("message", "Product unpublished succesfully");
 
-        $this->closeUnpublishModal();
+        $this->Modal("unpublish", false);
     }
 
-    public function openUnpublishModal($id, $description)
+    public function Modal($modal, $value, $id = null)
     {
-        $this->product_id = $id;
-        session()->flash("description", $description);
+        if ($value == true) {
+            $this->clean();
+            switch ($modal) {
+                case 'save':
+                    if ($id) {
+                        $product = Product::find($id);
+                        $this->data = $product->toArray();
 
-        $this->unpublishModal = true;
-    }
-    public function closeUnpublishModal()
-    {
-        $this->unpublishModal = false;
-        $this->clear();
+                        $this->taxes_id = $product->product_taxes->map(function ($product_tax) {
+                            return $product_tax->tax->id;
+                        })->toArray();
+                    }
+                    break;
+                case 'unpublish':
+                    $product = $this->products->find($id);
+                    $this->data = $product->toArray();
+
+                    break;
+
+                default:
+                    # code...
+                    break;
+            }
+        }
+        $this->modals[$modal] = $value;
     }
 }
