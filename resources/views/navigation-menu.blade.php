@@ -46,10 +46,38 @@
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-            <div class="flex">
+            <div class="flex ">
+                <div class="drawer">
+                    <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+                    <div class="drawer-content flex items-center justify-center">
+                        <label for="my-drawer" class="drawer-button"><i class="fa-solid fa-bars text-xl"></i></label>
+                    </div>
+                    <div class="drawer-side">
+                        <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+                        <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+
+                            @foreach ($menu as $key => $links)
+                                @if (!isset($links['middleware']) || (isset($links['middleware']) && $links['middleware'] !== false))
+                                    <div class="block px-4 py-2 text-xs text-gray-400">
+                                        {{ $key }}
+                                    </div>
+                                    @foreach ($links as $link => $label)
+                                        @if ($link != 'middleware')
+                                            <x-dropdown-link href="{{ route($link) }}">
+                                                {{ $label }}
+                                            </x-dropdown-link>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            @endforeach
+
+                        </ul>
+                    </div>
+                </div>
+
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('home') }}">
+                    <a href="{{ route('home') }}" class="mx-auto">
                         <x-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
@@ -160,21 +188,6 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            @foreach ($menu as $key => $links)
-                                @if (!isset($links['middleware']) || (isset($links['middleware']) && $links['middleware'] !== false))
-                                    <div class="block px-4 py-2 text-xs text-gray-400">
-                                        {{ $key }}
-                                    </div>
-                                    @foreach ($links as $link => $label)
-                                        @if ($link != 'middleware')
-                                            <x-dropdown-link href="{{ route($link) }}">
-                                                {{ $label }}
-                                            </x-dropdown-link>
-                                        @endif
-                                    @endforeach
-                                @endif
-                            @endforeach
-
                             <div class="border-t border-gray-200 dark:border-gray-600"></div>
 
                             <!-- Authentication -->
@@ -188,118 +201,6 @@
                         </x-slot>
                     </x-dropdown>
                 </div>
-            </div>
-
-
-            <!-- Hamburger -->
-            <div class="-mr-2 flex items-center sm:hidden">
-                <button @click="open = ! open"
-                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Responsive Navigation Menu -->
-    <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            @foreach ($navigation as $key => $link)
-                @if (!isset($link['middleware']) || (isset($link['middleware']) && $link['middleware'] !== false))
-                    <x-responsive-nav-link href="{{ route($key) }}" :active="request()->routeIs($key)">
-                        {{ $link['label'] }}
-                    </x-responsive-nav-link>
-                @endif
-            @endforeach
-        </div>
-
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
-            <div class="flex items-center px-4">
-                @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                    <div class="shrink-0 mr-3">
-                        <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}"
-                            alt="{{ Auth::user()->name }}" />
-                    </div>
-                @endif
-
-                <div>
-                    <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-                </div>
-            </div>
-
-            <div class="mt-3 space-y-1">
-                @foreach ($menu as $key => $links)
-                    @if (!isset($links['middleware']) || (isset($links['middleware']) && $links['middleware'] !== false))
-                        <div class="border-t border-gray-200 dark:border-gray-600"></div>
-                        <div class="block px-4 py-2 text-xs text-gray-400">
-                            {{ $key }}
-                        </div>
-                        @foreach ($links as $link => $label)
-                            @if ($link != 'middleware')
-                                <x-responsive-nav-link href="{{ route($link) }}">
-                                    {{ $label }}
-                                </x-responsive-nav-link>
-                            @endif
-                        @endforeach
-                    @endif
-                @endforeach
-
-                <div class="border-t border-gray-200 dark:border-gray-600"></div>
-
-                @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                    <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
-                        {{ __('API Tokens') }}
-                    </x-responsive-nav-link>
-                @endif
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}" x-data>
-                    @csrf
-
-                    <x-responsive-nav-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
-
-                <!-- Team Management -->
-                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
-                    <div class="border-t border-gray-200 dark:border-gray-600"></div>
-
-                    <div class="block px-4 py-2 text-xs text-gray-400">
-                        {{ __('Manage Team') }}
-                    </div>
-
-                    <!-- Team Settings -->
-                    <x-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
-                        :active="request()->routeIs('teams.show')">
-                        {{ __('Team Settings') }}
-                    </x-responsive-nav-link>
-
-                    @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                        <x-responsive-nav-link href="{{ route('teams.create') }}" :active="request()->routeIs('teams.create')">
-                            {{ __('Create New Team') }}
-                        </x-responsive-nav-link>
-                    @endcan
-
-                    <div class="border-t border-gray-200 dark:border-gray-600"></div>
-
-                    <!-- Team Switcher -->
-                    <div class="block px-4 py-2 text-xs text-gray-400">
-                        {{ __('Switch Teams') }}
-                    </div>
-
-                    @foreach (Auth::user()->allTeams() as $team)
-                        <x-switchable-team :team="$team" component="responsive-nav-link" />
-                    @endforeach
-                @endif
             </div>
         </div>
     </div>
