@@ -37,6 +37,7 @@
                 'app.manage' => 'Manage',
                 'app.categories' => 'Categories',
                 'app.taxes' => 'Taxes',
+                'moderator.dashboard' => 'Moderator',
             ],
         ];
 

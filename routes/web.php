@@ -6,6 +6,7 @@ use App\Http\Controllers\MercadoPagoController;
 use App\Http\Controllers\PayPalController;
 
 use App\Http\Livewire\HomeComponent;;
+
 use App\Http\Livewire\CatalogComponent;
 use App\Http\Livewire\ProductComponent;
 
@@ -18,7 +19,7 @@ use App\Http\Livewire\User\PurchasesComponent;
 use App\Http\Livewire\App\TaxComponent;
 use App\Http\Livewire\App\CategoryComponent;
 use App\Http\Livewire\App\ManageComponent;
-
+use App\Http\Livewire\Moderator\DashboardComponent as ModeratorDashboardComponent;
 use App\Http\Livewire\Store\DashboardComponent as StoreDashboardComponent;
 use App\Http\Livewire\Store\ManageComponent as StoreManageComponent;
 use App\Http\Livewire\Store\ProductsComponent;
@@ -109,4 +110,6 @@ Route::middleware([
     Route::get("/app/categories", CategoryComponent::class)->name('app.categories');
     Route::get("/app/taxes", TaxComponent::class)->name('app.taxes');
     Route::get("/app/manage", ManageComponent::class)->name('app.manage');
+
+    Route::get("/moderator/dashboard", ModeratorDashboardComponent::class)->name('moderator.dashboard');
 });
