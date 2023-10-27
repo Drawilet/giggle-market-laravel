@@ -43,8 +43,27 @@ class ProductsComponent extends Component
         "name" => null,
         "min_price" => null,
         "max_price" => null,
+        "status" => "available"
     ];
     public $filter;
+
+    public $statusType = [
+        "available" => [
+            "label" => "Available",
+            "icon" => "fas fa-check-circle",
+            "color" => "#28a745",
+        ],
+        "waiting" => [
+            "label" => "Waiting",
+            "icon" => "fas fa-clock",
+            "color" => "#ffc107",
+        ],
+        "unavailable" => [
+            "label" => "Unavailable",
+            "icon" => "fas fa-times-circle",
+            "color" => "#dc3545",
+        ],
+    ];
 
     public function mount()
     {
@@ -57,7 +76,7 @@ class ProductsComponent extends Component
     {
         /*<──  ───────    PRODUCTS   ───────  ──>*/
         $this->products = Product::where(function ($query) {
-            $query->where("unpublished", false);
+            $query->where("status", $this->filter["status"]);
 
             $query->where("store_id", $this->user->store_id);
             $query->where("category_id", "like", "%" . $this->filter["category"] . "%");
@@ -109,6 +128,11 @@ class ProductsComponent extends Component
         $this->filter = $this->initialFilter;
     }
 
+    public function changeStatus($status)
+    {
+        $this->filter["status"] = $status;
+    }
+
     /*<──  ───────    SAVE   ───────  ──>*/
     public function save()
     {
@@ -122,7 +146,7 @@ class ProductsComponent extends Component
             "data.stock" => "required|integer",
         ]);
         $photo = $this->data["photo"];
-        if(gettype($this->data["photo"]) == "string") {
+        if (gettype($this->data["photo"]) == "string") {
             $photo = null;
         } else {
             $filename = "photo" . "." . $this->data["photo"]->extension();

@@ -140,11 +140,11 @@
                 </div>
             @endif
 
-            <div class="bg-gray-900 p-4">
-                <h2 class="text-white text-xl font-bold">Filters:</h2>
+            <div>
+                <h2 class="text-white text-xl ">Filters:</h2>
                 <div class="flex items-center flex-wrap">
                     <div class="flex items-center mb-2 mr-4 lg:mb-0">
-                        <label for="filter.category" class="text-white text-sm font-bold mr-4">Category:</label>
+                        <label for="filter.category" class="text-white text-sm  mr-4">Category:</label>
                         <select id="filter.category" wire:model="filter.category"
                             class="bg-gray-800 text-white border border-gray-700 rounded py-2 px-3 focus:outline-none focus:ring focus:border-blue-300">
                             <option value="{{ null }}">Select a category</option>
@@ -154,28 +154,39 @@
                         </select>
                     </div>
                     <div class="flex items-center mb-2 mr-4 lg:mb-0">
-                        <label for="filter.name" class="text-white text-sm font-bold  mr-4">Name:</label>
+                        <label for="filter.name" class="text-white text-sm   mr-4">Name:</label>
                         <input type="text" id="filter.name" wire:model="filter.name"
                             class="bg-gray-800 text-white border border-gray-700 rounded py-2 px-3 focus:outline-none focus:ring focus:border-blue-300 min-w-max">
                     </div>
                     <div class="flex items-center mr-4">
-                        <label for="filter.min_price" class="text-white text-sm font-bold  mr-4">Price:</label>
+                        <label for="filter.min_price" class="text-white text-sm   mr-4">Price:</label>
                         <input type="number" id="filter.min_price" wire:model="filter.min_price" placeholder="min"
                             class="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none bg-gray-800 text-white border border-gray-700 rounded w-14 py-2 px-3 focus:outline-none focus:ring focus:border-blue-300">
-                        <p class="text-white text-sm font-bold mx-1">to</p>
+                        <p class="text-white text-sm  mx-1">to</p>
                         <input type="number" wire:model="filter.max_price" placeholder="max"
                             class="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none bg-gray-800 text-white border border-gray-700 rounded w-14 py-2 px-3 focus:outline-none focus:ring focus:border-blue-300">
                     </div>
 
                     <div class="flex w-full mt-2 lg:w-1/3 lg:mt-0">
                         <button wire:click="clearFilters()"
-                            class="w-2/3 bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-sm">
+                            class="w-2/3 bg-sky-500 hover:bg-sky-600 text-white  py-2 px-4 rounded-sm">
                             <i class="fa-solid fa-broom mr-1"></i> Clear</button>
                         <x-store-admin>
                             <button wire:click="Modal('save', true)"
-                                class="w-2/3 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-sm">
+                                class="w-2/3 bg-green-500 hover:bg-green-600 text-white  py-2 px-4 rounded-sm">
                                 <i class="fa-solid fa-plus mr-1"></i> Add</button>
                         </x-store-admin>
+                    </div>
+
+                    <div class="flex w-full mt-2 lg:w-1/3 border-b border-slate-900">
+                        @foreach ($statusType as $key => $data)
+                            <button wire:click="changeStatus('{{ $key }}')"
+                                class="w-2/3 {{ $filter['status'] == $key ? 'bg-slate-900' : 'bg-slate-800' }} hover:bg-slate-950 text-gray-100 p-1 text-center">
+                                <i class="{{ $data['icon'] }} text-sm" style="color: {{ $data['color'] }}"></i>
+                                {{ $data['label'] }}
+
+                            </button>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -206,7 +217,10 @@
                                         <img src="{{ "/storage/products/$product->id/$product->photo" }}"
                                             alt="{{ "$product->description photo" }}" class="max-h-14 mx-auto">
                                     </td>
-                                    <td class="border px-4 py-2">{{ $product->name }}</td>
+                                    <td class="border px-4 py-2"><a
+                                            href="/products/{{ $product->id }}">{{ $product->name }}</a>
+                                        <span class="text-sm text-gray-200 block">{{ $product->user->name }}</span>
+                                    </td>
                                     <td class="border px-4 py-2 truncate">{{ $product->description }}</td>
                                     <td class="border px-4 py-2">${{ $product->price }}</td>
                                     <td class="border px-4 py-2">

@@ -28,7 +28,7 @@ return new class extends Migration
             $table->text("description");
             $table->string("tags")->nullable();
 
-            // Types: waiting, available, unavailable
+            // Types: waiting, available, unpublished
             $table->string("status")->default("waiting");
 
             $table->decimal("price");
