@@ -203,9 +203,12 @@
                             <th class="px-4 py-2">Taxes</th>
                             <th class="px-4 py-2">Stock</th>
                             <th class="px-4 py-2">Category</th>
-                            <x-store-admin>
-                                <th class="px-4 py-2">Actions</th>
-                            </x-store-admin>
+                            @if ($filter['status'] == 'available')
+                                <x-store-admin>
+                                    <th class="px-4 py-2">Actions</th>
+                                </x-store-admin>
+                            @endif
+
                         </tr>
                     </thead>
                     <tbody>
@@ -231,22 +234,25 @@
                                     <td class="border px-4 py-2">{{ $product->stock }}</td>
                                     <td class="border px-4 py-2">
                                         {{ $product->category ? $product->category->name : 'N/A' }}</td>
-                                    <x-store-admin>
-                                        <td class="border  py-2">
-                                            <div class="flex justify-evenly">
-                                                <button title="Update"
-                                                    wire:click="Modal('save', true, '{{ $product->id }}')"
-                                                    class="bg-yellow-300  hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-sm">
-                                                    <i class="fa-solid fa-pencil"></i>
-                                                </button>
-                                                <button title="Unpublish"
-                                                    wire:click="Modal('unpublish', true, '{{ $product->id }}')"
-                                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-sm">
-                                                    <i class="fa-solid fa-trash-can"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </x-store-admin>
+
+                                    @if ($product->status == 'available')
+                                        <x-store-admin>
+                                            <td class="border  py-2">
+                                                <div class="flex justify-evenly">
+                                                    <button title="Update"
+                                                        wire:click="Modal('save', true, '{{ $product->id }}')"
+                                                        class="bg-yellow-300  hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-sm">
+                                                        <i class="fa-solid fa-pencil"></i>
+                                                    </button>
+                                                    <button title="Unpublish"
+                                                        wire:click="Modal('unpublish', true, '{{ $product->id }}')"
+                                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-sm">
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </x-store-admin>
+                                    @endif
                                 </tr>
                             @endforeach
                         @endif
