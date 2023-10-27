@@ -8,7 +8,6 @@ class SaleDescription extends Base
 {
     protected $fillable = [
         "store_id",
-        "store_name",
         "description",
         "quantity",
         "price",
