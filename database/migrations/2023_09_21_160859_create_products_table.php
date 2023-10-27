@@ -28,13 +28,15 @@ return new class extends Migration
             $table->text("description");
             $table->string("tags")->nullable();
 
+            // Types: waiting, available, unavailable
+            $table->string("status")->default("waiting");
+
             $table->decimal("price");
             $table->integer("stock");
 
             $table->unsignedBigInteger("category_id");
             $table->foreign("category_id")->references("id")->on("categories");
 
-            $table->boolean("unpublished")->default(false);
             $table->timestamps();
         });
     }

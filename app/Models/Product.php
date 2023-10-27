@@ -11,6 +11,7 @@ class Product extends Model
     protected $fillable = [
         "store_id",
         "user_id",
+        "status",
         "name",
         "description",
         "tags",
@@ -18,7 +19,6 @@ class Product extends Model
         "stock",
         "category_id",
         "photo",
-        "unpublished"
     ];
 
     public function category()

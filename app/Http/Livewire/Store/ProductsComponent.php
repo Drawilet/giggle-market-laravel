@@ -161,7 +161,7 @@ class ProductsComponent extends Component
     public function unpublish()
     {
         $product = Product::find($this->data["id"]);
-        $product->unpublished = TRUE;
+        $product->status = "unavailable";
         $product->save();
 
         session()->flash("message", "Product unpublished succesfully");
