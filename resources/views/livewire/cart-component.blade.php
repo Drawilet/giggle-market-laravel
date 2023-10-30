@@ -3,9 +3,9 @@
         <x-dropdown align="right" width="w-80">
             <x-slot name="trigger">
                 <div class="relative p-3 cursor-pointer">
-                    <i class="fa-solid fa-cart-shopping text-slate-600 hover:text-slate-500 text-xl"></i>
+                    <i class="fa-solid fa-cart-shopping text-xl"></i>
                     <span
-                        class="absolute bottom-0 right-0 py-1 px-2 text-white text-xs bg-slate-900 rounded-full">{{ $totalQuantity }}</span>
+                        class="absolute bottom-0 right-0 py-1 px-2 bg-base-300 text-xs rounded-full">{{ $totalQuantity }}</span>
                 </div>
             </x-slot>
             <x-slot name="content">
@@ -22,18 +22,18 @@
 
                                     <div class="p-2 flex items-center flex-col">
                                         <div>
-                                            <p class="text-slate-800 text-xl leading-none">{{ $item->product->title }}</p>
-                                            <p class="text-slate-500 ">{{ $item->product->store->name }} /
+                                            <p class="text-xl leading-none">{{ $item->product->title }}</p>
+                                            <p class="">{{ $item->product->store->name }} /
                                                 {{ $item->product->category->name }}</p>
                                         </div>
 
                                         <div class="flex mt-2">
                                             <button wire:click.stop="handleItem({{ $item }}, 'decrease')"
-                                                class="text-slate-800 border border-slate-700 bg-slate-600 px-4">-</button>
+                                                class="border px-4">-</button>
                                             <span
-                                                class="text-slate-800 border border-slate-700 bg-slate-600 px-4">{{ $item['quantity'] }}</span>
+                                                class="border px-4">{{ $item['quantity'] }}</span>
                                             <button wire:click.stop="handleItem({{ $item }}, 'increase')"
-                                                class="text-slate-800 border border-slate-700 bg-slate-600 px-4 {{ $item->product->stock == $item->quantity ? 'opacity-50 cursor-not-allowed' : '' }}">+</button>
+                                                class="border px-4 {{ $item->product->stock == $item->quantity ? 'opacity-50 cursor-not-allowed' : '' }}">+</button>
                                         </div>
                                     </div>
                                 </section>

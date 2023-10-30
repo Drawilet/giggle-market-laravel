@@ -11,22 +11,12 @@
                             label="{{ ucfirst($key) }}" type="{{ gettype($value) == 'integer' ? 'number' : 'string' }}" />
                     @endif
                 @endforeach
-
-
-                <div class=" px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                        <button
-                            class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-purple-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-purple-800 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5">Save</button>
-                    </span>
-
-                    <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                        <button wire:click="Modal('save', false)" type="button"
-                            class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-gray-200 text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">Cancel</button>
-                    </span>
-                </div>
             </form>
         </x-slot>
-        <x-slot name="footer"></x-slot>
+        <x-slot name="footer">
+            <button wire:click="Modal('save', false)" type="button" class="btn btn-neutral w-28 mr-2">Cancel</button>
+            <button class=" btn btn-accent w-28">Save</button>
+        </x-slot>
     </x-dialog-modal>
 
     <x-dialog-modal wire:model="modals.delete">
@@ -35,23 +25,11 @@
         </x-slot>
         <x-slot name="content">
 
-            <h2 class="text-white">¿Are you sure you want do delete "{{ $data['name'] }}" {{ $name }}?</h2>
-
-            <div class=" px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                    <button wire:click.prevent="delete()" type="button"
-                        class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-500 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-600 focus:outline-none focus:border-red-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5">Delete</button>
-                </span>
-
-                <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                    <button wire:click="Modal('delete', false)" type="button"
-                        class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-gray-200 text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">Cancel</button>
-                </span>
-            </div>
-
-
+            <h2>¿Are you sure you want do delete "{{ $data['name'] }}" {{ $name }}?</h2>
         </x-slot>
         <x-slot name="footer">
+            <button wire:click="Modal('delete', false)" type="button" class="btn btn-neutral w-28">Cancel</button>
+            <button wire:click.prevent="delete()" type="button" class="btn btn-warning w-28 mr-2">Delete</button>
 
         </x-slot>
     </x-dialog-modal>
@@ -61,13 +39,11 @@
             Unable to delete this {{ $name }}.
         </x-slot>
         <x-slot name="content">
-            <h2 class="text-white">There are {{ $count }} product(s) linked to this {{ $name }}.</h2>
+            <h2>There are {{ $count }} product(s) linked to this {{ $name }}.</h2>
         </x-slot>
         <x-slot name="footer">
-            <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                <button wire:click="Modal('error', false)" type="button"
-                    class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-gray-200 text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">Close</button>
-            </span>
+            <button wire:click="Modal('error', false)" type="button" class="btn btn-accent w-28">Close</button>
+
 
         </x-slot>
     </x-dialog-modal>
@@ -75,7 +51,7 @@
     <div class="max-w-7xl mx-auto sm:px6 lg:px-8">
         <div class=" overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
             @if (session()->has('message'))
-                <div class="bg-indigo-950 rounded-b text-white px-4 py-4 shadow-md my-3" role="alert">
+                <div class="bg-base-200 rounded-b  px-4 py-4 shadow-md my-3" role="alert">
                     <div class="flex">
                         <div>
                             <h4>{{ session('message') }}</h4>
@@ -84,37 +60,36 @@
                 </div>
             @endif
 
-            <button wire:click="Modal('save', true)"
-                class="rounded-sm bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 my-3">
+            <button wire:click="Modal('save', true)" class="rounded-sm bg-primary font-bold py-2 px-4 my-3">
                 <i class="fa-solid fa-plus mr-1"></i> Add</button>
 
 
             <table class="table-fixed w-full">
 
                 <thead>
-                    <tr class="bg-slate-800 text-white">
-                        <th class="px-4 py-2">ID</th>
+                    <tr>
+                        <th>ID</th>
                         @foreach ($keys as $key)
-                            <th class="px-4 py-2 capitalize">{{ $key }}</th>
+                            <th class="capitalize">{{ $key }}</th>
                         @endforeach
-                        <th class="px-4 py-2">Actions</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($items as $item)
                         <tr>
-                            <td class="border px-4 py-2 text-white">{{ $item->id }}</td>
+                            <td class="  ">{{ $item->id }}</td>
                             @foreach ($keys as $key)
-                                <td class="border px-4 py-2 text-white">{{ $item[$key] }}</td>
+                                <td class="  ">{{ $item[$key] }}</td>
                             @endforeach
 
-                            <td class="border px-4 py-2 text-center">
+                            <td>
                                 <button wire:click="Modal('save', true, '{{ $item->id }}')"
-                                    class="bg-yellow-300  hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-sm ">
+                                    class="bg-warning  font-bold py-2 px-4 rounded-sm ">
                                     <i class="fa-solid fa-pencil"></i>
                                 </button>
                                 <button wire:click="Modal('delete', true, '{{ $item->id }}')"
-                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4  rounded-sm">
+                                    class="bg-error  font-bold py-2 px-4  rounded-sm">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </button>
                             </td>

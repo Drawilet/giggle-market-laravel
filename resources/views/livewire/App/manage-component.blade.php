@@ -1,6 +1,6 @@
 <div class="p-4 flex flex-col lg:flex-row">
     <section class="w-full mb-4 lg:w-1/2">
-        <h3 class="text-lg w-full py-1 bg-slate-700 rounded-t text-gray-300 text-center">Users</h3>
+        <h3 class="text-lg w-full py-1 bg-base-300 rounded-t text-center">Users</h3>
         <table class="table-fixed w-full">
             <thead>
                 <tr>
@@ -18,7 +18,7 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->role }}</td>
                         <td>{{ $user->email }}</td>
-                        <td>{{ $user->store->name }} <span class="text-gray-300">({{ $user->store_role }})</span></td>
+                        <td>{{ $user->store->name }} <span class="opacity-75">({{ $user->store_role }})</span></td>
                     </tr>
                 @endforeach
             </tbody>

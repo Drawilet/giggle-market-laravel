@@ -20,8 +20,8 @@
     </x-dialog-modal>
 
     @foreach ($orderedProducts as $store)
-        <details class="mb-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-md" open>
-            <summary class="text-white text-lg font-semibold">
+        <details class="mb-4 p-4 rounded-md border-b border-b-gray-200" open>
+            <summary class="text-lg font-semibold">
                 {{ $stores->where('id', $store[0]['store_id'])->first()->name }}
             </summary>
 
@@ -31,18 +31,18 @@
                         $stock = $this->getStock($product);
                     @endphp
                     <a href="/products/{{ $product['id'] }}"
-                        class="bg-white dark:bg-gray-800 shadow-md rounded-md w-56 p-2">
+                        class="bg-base-200 shadow-md rounded-md w-56 p-2">
                         <img src="{{ "/storage/products/{$product['id']}/{$product['photo']}" }}"
                             alt="{{ "{$product['photo']} photo" }}" class="w-full max-h-40 object-contain rounded-md">
 
-                        <div class="mt-2 text-white">{{ $product['name'] }}</div>
-                        <div class="text-xl text-white">${{ $product['price'] }}</div>
-                        <div class="text-gray-600">Stock: {{ $stock }} <span
-                                class="text-gray-700">({{ $product['stock'] }})</span>
+                        <div class="mt-2">{{ $product['name'] }}</div>
+                        <div class="text-xl">${{ $product['price'] }}</div>
+                        <div class="">Stock: {{ $stock }} <span
+                                class="opacity-80">({{ $product['stock'] }})</span>
                         </div>
 
                         <button wire:click.stop="addProduct({{ $product['id'] }})"
-                            class="block ml-auto mb-1 mr-1 {{ $stock == 0 ? 'bg-slate-500 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600' }} text-white font-bold py-2 px-4 rounded-sm mt-2">
+                            class="block ml-auto mb-1 mr-1 {{ $stock == 0 ? 'bg-slate-500 cursor-not-allowed' : 'bg-primary' }} text-white font-bold py-2 px-4 rounded-sm mt-2">
                             <i class="fa-solid fa-plus mr-1"></i>Add</button>
                     </a>
                 @endforeach

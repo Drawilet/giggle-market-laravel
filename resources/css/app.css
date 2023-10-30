@@ -8,22 +8,30 @@
 }
 
 ::-webkit-scrollbar-track {
-    @apply bg-slate-800;
+    @apply bg-base-200;
 }
 
 ::-webkit-scrollbar-thumb {
-    @apply bg-slate-700 rounded;
+    @apply bg-base-100 rounded;
 }
 
 @layer base {
+    * {
+        @apply border-none m-0 p-0 outline-none box-border;
+    }
+
     thead tr {
-        @apply bg-slate-800 text-white;
+        @apply bg-base-200;
     }
     thead th {
-        @apply px-4 py-2;
+        @apply px-4 py-2 text-left;
+    }
+
+    tr {
+        @apply pb-2;
     }
 
     td {
-        @apply border border-slate-700 px-2 text-white;
+        @apply border border-base-200 px-2 text-left;
     }
 }

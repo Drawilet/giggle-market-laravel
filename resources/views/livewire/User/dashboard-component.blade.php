@@ -7,7 +7,7 @@
             <div class="mb-4">
                 <label for="method" class="block text-white text-sm font-bold mb-2">Method</label>
                 <select id="method" wire:model="method"
-                    class="block w-full mt-1 p-2 border border-gray-300 bg-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white focus:outline-none">
+                    class="block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white focus:outline-none">
                     <option value="{{ null }}">Select a method</option>
                     @foreach ($methods as $key => $method)
                         @if ($method['allowWithdraw'])
@@ -37,9 +37,9 @@
     </x-dialog-modal>
 
     <div class="w-full mr-5 mb-4 lg:w-4/6">
-        <div class="bg-slate-700 py-3 px-5 flex flex-col w-full rounded shadow-lg ">
-            <span class="text-gray-300">Balance</span>
-            <span class="text-gray-100 text-3xl">${{ $user->balance }}</span>
+        <div class="bg-base-200 py-3 px-5 flex flex-col w-full rounded shadow-lg ">
+            <span class="">Balance</span>
+            <span class=" text-3xl">${{ $user->balance }}</span>
         </div>
 
         <button class="w-full bg-green-400 hover:bg-green-500 mt-1 py-2 rounded text-slate-50"
@@ -49,7 +49,7 @@
     </div>
 
     <section class="w-full mb-4 ">
-        <h3 class="text-lg w-full py-1 bg-slate-700 rounded text-gray-300 text-center mb-2">Transactions</h3>
+        <h3 class="text-lg w-full py-1 bg-base-300 rounded text-center mb-2">Transactions</h3>
         <div class="flex flex-col-reverse">
             @foreach ($transactions as $transaction)
                 @php
@@ -58,20 +58,20 @@
 
                 @endphp
 
-                <div class="flex bg-slate-800 p-2 mb-2 rounded flex-col">
+                <div class="flex bg-base-200 p-2 mb-2 rounded flex-col">
                     <div class="flex justify-between">
                         <div class="flex items-center mb-3">
                             <div class="flex flex-col items-center">
-                                <span class="text-base text-gray-300">{{ $payer['name'] }} </span>
-                                <span class="text-base text-gray-400 -mt-2 capitalize">
+                                <span class="text-base ">{{ $payer['name'] }} </span>
+                                <span class="text-base opacity-80 -mt-2 capitalize">
                                     {{ $payer['type'] }}
                                 </span>
                             </div>
-                            <i class="fa-solid fa-arrow-right mx-3 text-gray-300"></i>
+                            <i class="fa-solid fa-arrow-right mx-3 "></i>
 
                             <div class="flex flex-col items-center">
-                                <span class="text-base text-gray-300">{{ $recipient['name'] }} </span>
-                                <span class="text-base text-gray-400 -mt-2 capitalize">
+                                <span class="text-base">{{ $recipient['name'] }} </span>
+                                <span class="text-base opacity-80 -mt-2 capitalize">
                                     {{ $recipient['type'] }}
                                 </span>
                             </div>
@@ -79,11 +79,11 @@
                         </div>
 
                         <span
-                            class="mr-1 text-gray-200 text-lg {{ $payer['is_mine'] ? 'text-red-500' : 'text-green-400' }}">{{ $payer['is_mine'] ? '-' : '+' }}
+                            class="mr-1  text-lg {{ $payer['is_mine'] ? 'text-red-500' : 'text-green-400' }}">{{ $payer['is_mine'] ? '-' : '+' }}
                             ${{ $transaction->amount }}</span>
 
                     </div>
-                    <span class="text-gray-500 text-sm  text-right block">
+                    <span class="opacity-80 text-sm  text-right block">
                         {{ $transaction->description }} | {{ $transaction->created_at->format('d M Y, H:i') }}
                     </span>
 

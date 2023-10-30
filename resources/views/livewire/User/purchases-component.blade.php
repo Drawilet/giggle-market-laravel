@@ -1,6 +1,6 @@
 <div class="py-2">
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl leading-tight">
             Purchases
         </h2>
 
@@ -19,15 +19,15 @@
 
     <div class="w-4/5 lg:w-1/2 mx-auto py-5 flex flex-col-reverse">
         @foreach ($purchases as $purchase)
-            <div class="bg-slate-800 p-2 mb-2 rounded">
+            <div class="bg-base-200 p-2 mb-2 rounded">
                 <div class="flex items-center">
-                    <h4 class="text-gray-300 text-xl ml-2 flex">
+                    <h4 class="text-xl ml-2 flex">
                         #{{ $purchase->id }}
-                        <span class="ml-2 text-slate-300"></span>
+                        <span class="ml-2 "></span>
                     </h4>
 
                     <span
-                        class="block w-full text-gray-500 text-sm text-right">{{ $purchase->created_at->format('d M Y, H:i') }}</span>
+                        class="block w-full  text-sm text-right">{{ $purchase->created_at->format('d M Y, H:i') }}</span>
 
                 </div>
                 @foreach ($purchase->descriptions as $item)
@@ -35,32 +35,31 @@
                         <div class="flex w-full">
                             <div class="p-2 items-center flex-col w-full">
                                 <div>
-                                    <p class="text-slate-600 text-xl"> {{ $item->description }}</p>
-                                    <p class="text-slate-500 -mt-2">{{ $item->store_name }}</p>
+                                    <p class=" text-xl"> {{ $item->description }}</p>
+                                    <p class="opacity-80 -mt-2">{{ $item->store->name }}</p>
                                 </div>
                             </div>
                         </div>
 
                         <div class="flex text-right flex-col w-full">
-                            <span class="text-lg text-slate-500">{{ $item->quantity }} X ${{ $item->price }} =
+                            <span class="text-lg ">{{ $item->quantity }} X ${{ $item->price }} =
                                 ${{ $item->quantity * $item->price }}</span>
                         </div>
 
                     </div>
 
-                    <div class="mb-2 border-t border-gray-200 dark:border-gray-600"></div>
+                    <div class="mb-2 border-t border-content"></div>
                 @endforeach
 
                 <div class="flex flex-col pl-3 mb-3 relative">
-                    <span
-                        class="top-0 right-0 absolute text-gray-400 text-right block text-lg">${{ $purchase->amount }}</span>
+                    <span class="top-0 right-0 absolute text-right block text-lg">${{ $purchase->amount }}</span>
 
-                    <h3 class="text-xl text-slate-500">Payment</h3>
+                    <h3 class="text-xl">Payment</h3>
 
-                    <span class="text-sm text-slate-400">
+                    <span class="text-sm">
                         Method: {{ $purchase->payment_method }}
                     </span>
-                    <span class="text-sm -mt-1 text-slate-400">
+                    <span class="text-sm -mt-1">
                         Status: {{ $purchase->payment_status }}
                     </span>
                 </div>
@@ -73,7 +72,7 @@
                     <button wire:click="payAgain('{{ $purchase->payment_method }}', '{{ $purchase->payment_id }}')"
                         style="background-color: {{ $method['button']['bg'] }}"
                         class="w-full p-2 rounded-sm flex items-center justify-center mb-2 ">
-                        <img src="{{ $method['button']['logo'] }}" alt="{{ $purchase->payment_method }} checkout"
+                        <img src="/{{ $method['button']['logo'] }}" alt="{{ $purchase->payment_method }} checkout"
                             class="w-32 ">
                     </button>
                 @endif
