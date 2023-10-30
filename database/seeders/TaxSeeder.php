@@ -16,7 +16,7 @@ class TaxSeeder extends Seeder
     {
         $taxes = [
             ["name" => "IVA (16)", "percentage" => 16],
-            ["name" => "Capital Gains Tax", "percentage" => 15],
+      /*       ["name" => "Capital Gains Tax", "percentage" => 15],
             ["name" => "Property Tax", "percentage" => 2.5],
             ["name" => "Personal Property Tax (Luxury Cars)", "percentage" => 5],
             ["name" => "Inheritance Tax", "percentage" => 10],
@@ -27,7 +27,7 @@ class TaxSeeder extends Seeder
             ["name" => "Local Sales Tax", "percentage" => 7],
             ["name" => "Import Duty", "percentage" => 10],
             ["name" => "Luxury Tax", "percentage" => 4],
-            ["name" => "Entertainment Tax", "percentage" => 12],
+            ["name" => "Entertainment Tax", "percentage" => 12], */
         ];
 
         foreach ($taxes as $tax) {
