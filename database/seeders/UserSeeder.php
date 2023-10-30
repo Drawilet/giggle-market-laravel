@@ -19,11 +19,10 @@ class UserSeeder extends Seeder
             "name" => "Giggle Market",
         ]);
 
-
         DB::table("users")->insert([
             "name" => "John Doe",
             "email" => "johhdoe@walmart.com",
-            "password" => Hash::make("123"),
+            "password" => "$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi", // password
             "role" => "admin",
             "store_id" => $store,
             "store_role" => "admin"
