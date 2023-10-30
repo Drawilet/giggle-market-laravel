@@ -77,12 +77,12 @@ class StoreSeeder extends Seeder
 
         $this->cleanPhotosDir();
         $APIS = $this->getAPIS();
-    
+
         foreach ($APIS as $API => $callback) {
             $stores = Store::factory()->count(1)->create();
             foreach ($stores as $store) {
                 $users = User::factory()
-                    ->count(5)
+                    ->count(3)
                     ->state(['store_id' => $store->id, 'store_role' => 'seller'])
                     ->create();
 
@@ -114,7 +114,8 @@ class StoreSeeder extends Seeder
 
                             "user_id" => $users->random()->id,
                             'store_id' => $store->id,
-                            'category_id' => $category->id
+                            'category_id' => $category->id,
+                            "status" => "available"
                         ]);
 
                     $path = 'storage/products/' . $dataInDB[0]->id;
