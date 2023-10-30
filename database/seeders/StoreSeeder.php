@@ -81,10 +81,15 @@ class StoreSeeder extends Seeder
         foreach ($APIS as $API => $callback) {
             $stores = Store::factory()->count(1)->create();
             foreach ($stores as $store) {
+                // Create 3 users, one must be the owner of the store
                 $users = User::factory()
                     ->count(3)
                     ->state(['store_id' => $store->id, 'store_role' => 'seller'])
                     ->create();
+
+                $admin = $users->first();
+                $admin->store_role = 'admin';
+                $admin->save();
 
                 //Fetch to api
                 $products = json_decode(file_get_contents($API));
