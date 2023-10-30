@@ -15,11 +15,18 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $store = DB::table("stores")->insert([
+            "name" => "Giggle Market",
+        ]);
+
+
         DB::table("users")->insert([
             "name" => "John Doe",
-            "email"=> "johhdoe@walmart.com",
-            "password"=> Hash::make("123"),
-            "role"=> "admin"
+            "email" => "johhdoe@walmart.com",
+            "password" => Hash::make("123"),
+            "role" => "admin",
+            "store_id" => $store,
+            "store_role" => "admin"
         ]);
     }
 }
