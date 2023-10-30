@@ -219,6 +219,8 @@ class ProductsComponent extends Component
                     break;
             }
         }
+        if ($modal == "save") $this->emit("modals:save", $value);
+
         $this->modals[$modal] = $value;
     }
 }

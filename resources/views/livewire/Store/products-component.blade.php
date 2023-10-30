@@ -1,115 +1,6 @@
 <div class="py-5">
     @section('title', 'Products')
 
-    <x-dialog-modal wire:model="modals.save">
-        <x-slot name="title">
-            <h1 class="text-center text-2xl">
-                @if ($data['id'])
-                    Update product
-                @else
-                    Add product
-                @endif
-            </h1>
-
-        </x-slot>
-        <x-slot name="content">
-            <div class="mx-auto h-72 w-72 bg-base-200 rounded-full overflow-hidden relative">
-                <img src="{{ gettype($data['photo']) == 'string' ? '/storage/products/' . $data['id'] . '/' . $data['photo'] : $data['photo']?->temporaryUrl() }}"
-                    alt="" class="mx-auto overflow-hidden rounded-full max-h-72">
-
-                <label for="data.photo"
-                    class="w-72 h-36 bottom-0  bg-base-300 absolute flex items-center justify-center opacity-0 hover:opacity-75 transition duration-150 ease-in-out">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-1/2">
-                        <g data-name="data.Layer 2">
-                            <g data-name="data.upload">
-                                <rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"
-                                    fill="#303243" />
-                                <rect x="4" y="4" width="16" height="2" rx="1" ry="1"
-                                    transform="rotate(180 12 5)" fill="#303243" />
-                                <rect x="17" y="5" width="4" height="2" rx="1" ry="1"
-                                    transform="rotate(90 19 6)" fill="#303243" />
-                                <rect x="3" y="5" width="4" height="2" rx="1" ry="1"
-                                    transform="rotate(90 5 6)" fill="#303243" />
-                                <path
-                                    d="M8 14a1 1 0 0 1-.8-.4 1 1 0 0 1 .2-1.4l4-3a1 1 0 0 1 1.18 0l4 2.82a1 1 0 0 1 .24 1.39 1 1 0 0 1-1.4.24L12 11.24 8.6 13.8a1 1 0 0 1-.6.2z"
-                                    fill="#303243" />
-                                <path d="M12 21a1 1 0 0 1-1-1v-8a1 1 0 0 1 2 0v8a1 1 0 0 1-1 1z" fill="#303243" />
-                            </g>
-                        </g>
-                    </svg>
-                </label>
-
-                <input wire:model="data.photo" type="file" id="data.photo" class="hidden">
-            </div>
-
-            <x-text-input wire:model="data.name" id="data.name" label="Name" />
-            <div class="mb-4">
-                <label for="description" class="block  text-sm font-bold mb-2">Description</label>
-                <textarea wire:model="data.description" name="data.description" id="data.description" rows="5"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-base-200"></textarea>
-
-                @error('description')
-                    <p class="text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <x-text-input wire:model="data.price" id="data.price" type="number" label="Price ($)" />
-
-            <div class="mb-4">
-                <label for="tax_id" class="flex  text-sm font-bold mb-2">
-                    <p class="mr-1">Taxes:</p>
-                    @foreach ($taxes->whereIn('id', $taxes_id) as $tax)
-                        <p class="mr-1">
-                            {{ $tax->name }}
-                            <sup wire:click="removeTax({{ $tax->id }})"
-                                class="ml-1 text-sm text-red-500 hover:text-red-700">
-                                X
-                            </sup>
-                        </p>
-                    @endforeach
-                </label>
-
-                <select id="data.tax_id" wire:model="tax_id" wire:change="addTax"
-                    class="block w-full mt-1 p-2 border border-gray-300 bg-base-200 rounded-md shadow-sm ">
-                    <option value="{{ null }}">Select a tax</option>
-                    @foreach ($taxes as $tax)
-                        @if (!in_array($tax->id, $taxes_id))
-                            <option value="{{ $tax->id }}">{{ $tax->name }}</option>
-                        @endif
-                    @endforeach
-                </select>
-
-                @error('taxes_id')
-                    <p class="text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div class="mb-4">
-                <label for="category_id" class="block  text-sm font-bold mb-2">Category:</label>
-                <select id="data.category_id" wire:model="data.category_id" required
-                    class="block w-full mt-1 p-2 border border-gray-300 bg-base-200 rounded-md shadow-sm ">
-                    <option value="{{ null }}">Select a category</option>
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
-                </select>
-                @error('category_id')
-                    <p class="text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <x-text-input wire:model="data.stock" id="data.stock" type="number" label="Stock" />
-        </x-slot>
-        <x-slot name="footer">
-
-            <button wire:click="Modal('save',false)" type="button"
-                class="btn btn-neutral  w-28 mr-2">Cancel</button>
-
-            <button wire:click="save()" type="button"
-                class="btn btn-accent w-28">Save</button>
-        </x-slot>
-    </x-dialog-modal>
-
     <x-dialog-modal wire:model="modals.unpublish">
         <x-slot name="title">
 
@@ -145,8 +36,7 @@
                 <div class="flex items-center flex-wrap">
                     <div class="flex items-center mb-2 mr-4 lg:mb-0">
                         <label for="filter.category" class=" text-sm  mr-4">Category:</label>
-                        <select id="filter.category" wire:model="filter.category"
-                            class="bg-base-200 rounded py-2 px-3">
+                        <select id="filter.category" wire:model="filter.category" class="bg-base-200 rounded py-2 px-3">
                             <option value="{{ null }}">Select a category</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -170,9 +60,139 @@
                     <div class="flex w-full mt-2 lg:w-1/3 lg:mt-0">
                         <button wire:click="clearFilters()" class="w-2/3 bg-secondary py-2 px-4 rounded-sm">
                             <i class="fa-solid fa-broom mr-1"></i> Clear</button>
+
+                        {{-- Create product drawer --}}
                         <x-store-admin>
-                            <button wire:click="Modal('save', true)" class="w-2/3 bg-primary py-2 px-4 rounded-sm">
-                                <i class="fa-solid fa-plus mr-1"></i> Add</button>
+                            <div class="drawer drawer-end ">
+                                <input id="save-drawer" type="checkbox" class="drawer-toggle" />
+                                <div class="drawer-content">
+                                    <button wire:click="Modal('save', true)"
+                                        class="w-2/3 bg-primary py-2 px-4 rounded-sm">
+                                        <i class="fa-solid fa-plus mr-1"></i> Add</button>
+                                </div>
+                                <div class="drawer-side">
+
+
+                                    <label for="save-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+                                    <ul class="menu p-4 w-96 min-h-full bg-base-200 text-base-content">
+                                        <h1 class="text-center text-2xl mb-2">
+                                            @if ($data['id'])
+                                                Update product
+                                            @else
+                                                Add product
+                                            @endif
+                                        </h1>
+
+                                        <div
+                                            class="mx-auto h-72 w-72 bg-base-300 rounded-full overflow-hidden relative">
+                                            <img src="{{ gettype($data['photo']) == 'string' ? '/storage/products/' . $data['id'] . '/' . $data['photo'] : $data['photo']?->temporaryUrl() }}"
+                                                alt="" class="mx-auto overflow-hidden rounded-full max-h-72">
+
+                                            <label for="data.photo"
+                                                class="w-72 h-36 bottom-0  bg-base-100 absolute flex items-center justify-center opacity-0 hover:opacity-75 transition duration-150 ease-in-out">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                    class="w-1/2">
+                                                    <g data-name="data.Layer 2">
+                                                        <g data-name="data.upload">
+                                                            <rect width="24" height="24"
+                                                                transform="rotate(180 12 12)" opacity="0"
+                                                                fill="#303243" />
+                                                            <rect x="4" y="4" width="16" height="2"
+                                                                rx="1" ry="1"
+                                                                transform="rotate(180 12 5)" fill="#303243" />
+                                                            <rect x="17" y="5" width="4" height="2"
+                                                                rx="1" ry="1"
+                                                                transform="rotate(90 19 6)" fill="#303243" />
+                                                            <rect x="3" y="5" width="4" height="2"
+                                                                rx="1" ry="1" transform="rotate(90 5 6)"
+                                                                fill="#303243" />
+                                                            <path
+                                                                d="M8 14a1 1 0 0 1-.8-.4 1 1 0 0 1 .2-1.4l4-3a1 1 0 0 1 1.18 0l4 2.82a1 1 0 0 1 .24 1.39 1 1 0 0 1-1.4.24L12 11.24 8.6 13.8a1 1 0 0 1-.6.2z"
+                                                                fill="#303243" />
+                                                            <path
+                                                                d="M12 21a1 1 0 0 1-1-1v-8a1 1 0 0 1 2 0v8a1 1 0 0 1-1 1z"
+                                                                fill="#303243" />
+                                                        </g>
+                                                    </g>
+                                                </svg>
+                                            </label>
+
+                                            <input wire:model="data.photo" type="file" id="data.photo"
+                                                class="hidden">
+                                        </div>
+
+                                        <x-text-input wire:model="data.name" id="data.name" label="Name" />
+                                        <div class="mb-4">
+                                            <label for="description"
+                                                class="block  text-sm font-bold mb-2">Description</label>
+                                            <textarea wire:model="data.description" name="data.description" id="data.description" rows="5"
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-base-200"></textarea>
+
+                                            @error('data.description')
+                                                <p class="text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+
+                                        <x-text-input wire:model="data.price" id="data.price" type="number"
+                                            label="Price ($)" />
+
+                                        <div class="mb-4">
+                                            <label for="tax_id" class="flex  text-sm font-bold mb-2">
+                                                <p class="mr-1">Taxes:</p>
+                                                @foreach ($taxes->whereIn('id', $taxes_id) as $tax)
+                                                    <p class="mr-1">
+                                                        {{ $tax->name }}
+                                                        <sup wire:click="removeTax({{ $tax->id }})"
+                                                            class="ml-1 text-sm text-red-500 hover:text-red-700">
+                                                            X
+                                                        </sup>
+                                                    </p>
+                                                @endforeach
+                                            </label>
+
+                                            <select id="data.tax_id" wire:model="tax_id" wire:change="addTax"
+                                                class="block w-full mt-1 p-2 border border-gray-300 bg-base-200 rounded-md shadow-sm ">
+                                                <option value="{{ null }}">Select a tax</option>
+                                                @foreach ($taxes as $tax)
+                                                    @if (!in_array($tax->id, $taxes_id))
+                                                        <option value="{{ $tax->id }}">{{ $tax->name }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+
+                                            @error('taxes_id')
+                                                <p class="text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label for="category_id"
+                                                class="block  text-sm font-bold mb-2">Category:</label>
+                                            <select id="data.category_id" wire:model="data.category_id" required
+                                                class="block w-full mt-1 p-2 border border-gray-300 bg-base-200 rounded-md shadow-sm ">
+                                                <option value="{{ null }}">Select a category</option>
+                                                @foreach ($categories as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('data.category_id')
+                                                <p class="text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+
+                                        <x-text-input wire:model="data.stock" id="data.stock" type="number"
+                                            label="Stock" />
+
+                                        <div class="flex justify-end">
+                                            <button wire:click='Modal("save", false)' class="btn btn-neutral mr-5">Cancel</button>
+                                            <button wire:click="save()" type="button"
+                                                class="btn btn-primary">Save</button>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
                         </x-store-admin>
                     </div>
 
@@ -258,4 +278,13 @@
             </div>
         </div>
     </div>
+
+
+    <script type="module">
+        const drawer = document.getElementById('save-drawer');
+
+        Livewire.on("modals:save", (value) => {
+            drawer.checked = value;
+        })
+    </script>
 </div>
