@@ -1,5 +1,5 @@
 <div class="px-10 py-5 lg:px-24">
-    <h2 class="text-base text-gray-400 mb-2">{{ $product->store->name }} / {{ $product->category->name }}</h2>
+    <h2 class="text-base mb-2 opacity-80">{{ $product->store->name }} / {{ $product->category->name }}</h2>
 
     <div class="lg:flex">
         <div class="lg:w-1/2 lg:mr-16">
@@ -8,13 +8,13 @@
         </div>
 
         <div class="mt-2 lg:w-1/2">
-            <h1 class="text-gray-200 text-2xl">{{ $product['name'] }}</h1>
+            <h1 class="text-2xl">{{ $product['name'] }}</h1>
 
             @if ($stock > 0)
                 <div class="flex items-center">
-                    <label class="text-gray-200 text-base" for="quantity">Quantity</label>
+                    <label class="text-base mr-2" for="quantity">Quantity</label>
                     <select wire:model="value" name="quantity" id="quantity"
-                        class="bg-slate-900 border-transparent text-gray-200">
+                        class="select border-transparent">
                         @php
                             $limit = $stock < 10 ? $stock : 10;
                         @endphp
@@ -32,7 +32,7 @@
                     </select>
                     @if ($value == 'custom')
                         <input wire:model="quantity" type="number" placeholder="{{ $stock }}"
-                            class="bg-transparent border-slate-700 border-0 border-b text-gray-200"
+                            class="bg-transparent border-slate-700 border-0 border-b "
                             max="{{ $stock }}">
                     @endif
                 </div>
@@ -46,7 +46,7 @@
     </div>
 
     <div class="mt-5">
-        <p class="text-gray-300">{{ $product->description }}</p>
+        <p class="">{{ $product->description }}</p>
     </div>
 
 

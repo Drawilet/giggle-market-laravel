@@ -186,7 +186,8 @@
                                             label="Stock" />
 
                                         <div class="flex justify-end">
-                                            <button wire:click='Modal("save", false)' class="btn btn-neutral mr-5">Cancel</button>
+                                            <button wire:click='Modal("save", false)'
+                                                class="btn btn-neutral mr-5">Cancel</button>
                                             <button wire:click="save()" type="button"
                                                 class="btn btn-primary">Save</button>
                                         </div>
@@ -215,8 +216,8 @@
                         <tr class="bg-base-100 ">
                             <th>ID</th>
                             <th>Image</th>
-                            <th class=" w-1/4">Name</th>
-                            <th>Description</th>
+                            <th class="w-1/4">Name</th>
+                            <th class="w-1/6">Description</th>
                             <th>Price</th>
                             <th>Taxes</th>
                             <th>Stock</th>
