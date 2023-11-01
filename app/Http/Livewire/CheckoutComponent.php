@@ -103,8 +103,8 @@ class CheckoutComponent extends Component
             SaleDescription::create([
                 "sale_id" => $sale->id,
                 "store_id" => $item->product->store->id,
+                "product_id" => $item->product->id,
 
-                "description" => $item->product->name,
                 "quantity" => $item->quantity,
                 "price" => $item->product->price + $this->getTaxes($item),
             ]);

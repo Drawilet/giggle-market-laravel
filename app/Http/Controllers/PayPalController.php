@@ -99,10 +99,12 @@ class PayPalController extends Controller
             foreach ($sale->descriptions as $description) {
                 $transaction = new TransactionController();
 
+                $name = $description->product->name;
+
                 $transaction->setPayer("Giggle Market", "system");
                 $transaction->setRecepient($description->store, "store");
 
-                $transaction->setDescription("Sale of $description->description");
+                $transaction->setDescription("Sale of $name");
                 $transaction->setAmount($description->quantity * $description->price);
 
                 $transaction->execute();
