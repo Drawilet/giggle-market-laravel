@@ -56,7 +56,7 @@
                         Continue shopping
                     </button>
                 @else
-                    <p class="text-slate-200 text-lg text-center">Your cart is empty.</p>
+                    <p class="text-lg text-center">Your cart is empty.</p>
                 @endif
             </x-slot>
         </x-dropdown>
