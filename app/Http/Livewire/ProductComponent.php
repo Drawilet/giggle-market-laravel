@@ -18,7 +18,7 @@ class ProductComponent extends Component
 
     public function mount($id)
     {
-        $this->product = Product::where("id", $id)->first();
+        $this->product = Product::where("id", $id)->where("status", "available")->first();
         $this->getStock();
     }
 

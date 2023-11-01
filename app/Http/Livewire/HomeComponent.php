@@ -13,7 +13,7 @@ class HomeComponent extends Component
 
     public function mount()
     {
-        $this->products = Product::all()->groupBy("category_id")->toArray();
+        $this->products = Product::where("status", "available")->get()->groupBy("category_id")->toArray();
         $this->categories = Category::all();
         $this->stores = Store::all();
     }
