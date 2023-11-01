@@ -8,15 +8,21 @@ class SaleDescription extends Base
 {
     protected $fillable = [
         "store_id",
-        "description",
+        "product_id",
         "quantity",
         "price",
-        "sale_id"
+        "sale_id",
+        "is_reviewed",
     ];
     use HasFactory;
 
     public function sale()
     {
         return $this->belongsTo(Sale::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }

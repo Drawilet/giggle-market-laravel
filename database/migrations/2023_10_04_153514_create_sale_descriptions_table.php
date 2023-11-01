@@ -22,9 +22,13 @@ return new class extends Migration
             $table->unsignedBigInteger("store_id");
             $table->foreign("store_id")->references("id")->on("stores");
 
-            $table->string("description");
+            $table->unsignedBigInteger("product_id");
+            $table->foreign("product_id")->references("id")->on("products");
+
             $table->integer("quantity");
             $table->decimal("price");
+
+            $table->boolean("is_reviewed")->default(false);
 
             $table->timestamps();
         });
