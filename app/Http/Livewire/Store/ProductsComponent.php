@@ -43,7 +43,7 @@ class ProductsComponent extends Component
         "name" => null,
         "min_price" => null,
         "max_price" => null,
-        "status" => "waiting"
+        "status" => "available"
     ];
     public $filter;
 
