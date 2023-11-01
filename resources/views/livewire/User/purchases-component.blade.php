@@ -35,7 +35,7 @@
                         <div class="flex w-full">
                             <div class="p-2 items-center flex-col w-full">
                                 <div>
-                                    <p class=" text-xl"> {{ $item->description }}</p>
+                                    <p class=" text-xl"> {{ $item->product->name }}</p>
                                     <p class="opacity-80 -mt-2">{{ $item->store->name }}</p>
                                 </div>
                             </div>
