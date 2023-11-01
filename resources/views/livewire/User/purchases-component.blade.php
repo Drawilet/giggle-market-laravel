@@ -17,6 +17,31 @@
         @endif
     </x-slot>
 
+
+    <x-dialog-modal wire:model="modals.review">
+        <x-slot name="title">
+            <h3 class="font-bold text-lg">Write a review for {{ $data['name'] }}</h3>
+        </x-slot>
+        <x-slot name="content">
+            <label for="" class="block text-sm font-bold mb-2">Rating</label>
+            <div class="rating rating-lg rating-half mb-2">
+                <input type="radio" name="rating" class="rating-hidden" />
+
+                @for ($i = 1; $i <= 10; $i++)
+                    <input type="radio" name="rating" wire:change='$set("data.rating", {{ $i * 0.5 }})'
+                        class="bg-yellow-500 mask mask-star-2 {{ $i % 2 == 0 ? 'mask-half-2' : 'mask-half-1' }}"
+                        @checked($data['rating'] == $i * 0.5) />
+                @endfor
+            </div>
+
+            <x-text-input wire:model="data.comment" id="data.comment" label="Comment" />
+        </x-slot>
+        <x-slot name="footer">
+            <button class="btn mr-2" wire:click='Modal("review", false)'>Close</button>
+            <button class="btn btn-primary" wire:click='review()'>Review</button>
+        </x-slot>
+    </x-dialog-modal>
+
     <div class="w-4/5 lg:w-1/2 mx-auto py-5 flex flex-col-reverse">
         @foreach ($purchases as $purchase)
             <div class="bg-base-200 p-2 mb-2 rounded">
@@ -44,6 +69,12 @@
                         <div class="flex text-right flex-col w-full">
                             <span class="text-lg ">{{ $item->quantity }} X ${{ $item->price }} =
                                 ${{ $item->quantity * $item->price }}</span>
+
+                            @if (!$item->is_reviewed)
+                                <button wire:click='Modal("review", true, "{{ $item->product->id }}")'
+                                    class="ml-auto bg-yellow-300 hover:bg-yellow-400 w-min flex justify-center items-center py-1 px-5 rounded text-gray-100"><i
+                                        class="fa-regular fa-star mr-2"></i>Review</button>
+                            @endif
                         </div>
 
                     </div>
@@ -82,5 +113,28 @@
     </div>
 
 
+
+    {{-- RATING --}}
+    <script type="module">
+        const updateRating = (element) => {
+            console.log(element)
+        }
+
+        /*
+
+
+                // Get all rating radio buttons
+                const ratingRadios = document.querySelectorAll('input[name="rating" ]');
+
+                // Add a change event listener to each radio button
+                ratingRadios.forEach((radio) => {
+                    radio.addEventListener('change', function() {
+                        // Update data.rating on livewire
+                        @this.set('data.rating', this.value);
+
+                    });
+
+                }); */
+    </script>
 
 </div>
