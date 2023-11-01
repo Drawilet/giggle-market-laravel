@@ -60,6 +60,7 @@ class ProductsComponent extends Component
 
     public $modals = [
         "approve" =>  false,
+        "decline" => false,
     ];
 
     public function mount()
@@ -119,17 +120,9 @@ class ProductsComponent extends Component
     {
         if ($value == true) {
             $this->clean();
-            switch ($modal) {
-                case 'approve':
-                    $product = $this->products->find($id);
-                    $this->data = $product->toArray();
 
-                    break;
-
-                default:
-                    # code...
-                    break;
-            }
+            $product = $this->products->find($id);
+            $this->data = $product->toArray();
         }
         $this->modals[$modal] = $value;
     }
@@ -141,5 +134,13 @@ class ProductsComponent extends Component
         $product->save();
 
         $this->Modal("approve", false);
+    }
+    public function decline()
+    {
+        $product = Product::find($this->data["id"]);
+        $product->status = "unavailable";
+        $product->save();
+
+        $this->Modal("decline", false);
     }
 }

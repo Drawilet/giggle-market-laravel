@@ -6,11 +6,24 @@
             <h3 class="font-bold text-lg">Approve product</h3>
         </x-slot>
         <x-slot name="content">
-            <p class="py-4">Are you sure you want to approve {{ $data["name"] }}?</p>
+            <p class="py-4">Are you sure you want to approve {{ $data['name'] }}?</p>
         </x-slot>
         <x-slot name="footer">
             <button class="btn mr-2" wire:click='Modal("approve", false)'>Close</button>
             <button class="btn btn-primary" wire:click='approve()'>Approve</button>
+        </x-slot>
+    </x-dialog-modal>
+
+    <x-dialog-modal wire:model="modals.decline">
+        <x-slot name="title">
+            <h3 class="font-bold text-lg">Decline product</h3>
+        </x-slot>
+        <x-slot name="content">
+            <p class="py-4">Are you sure you want to decline {{ $data['name'] }}?</p>
+        </x-slot>
+        <x-slot name="footer">
+            <button class="btn mr-2" wire:click='Modal("decline", false)'>Close</button>
+            <button class="btn btn-primary" wire:click='decline()'>Decline</button>
         </x-slot>
     </x-dialog-modal>
 
@@ -116,6 +129,12 @@
                                                 wire:click='Modal("approve",true, "{{ $product->id }}")'
                                                 class="bg-green-300  hover:bg-green-400  text-white font-bold py-2 px-4 rounded-sm">
                                                 <i class="fa-solid fa-check"></i>
+                                            </button>
+
+                                            <button title="Decline"
+                                                wire:click='Modal("decline",true, "{{ $product->id }}")'
+                                                class="bg-red-300  hover:bg-red-400  text-white font-bold py-2 px-4 rounded-sm">
+                                                <i class="fa-solid fa-xmark"></i>
                                             </button>
 
                                         </div>
