@@ -125,17 +125,21 @@
 
                                     <td class="border  py-2">
                                         <div class="flex justify-evenly">
-                                            <button title="Approve"
-                                                wire:click='Modal("approve",true, "{{ $product->id }}")'
-                                                class="bg-green-300  hover:bg-green-400  text-white font-bold py-2 px-4 rounded-sm">
-                                                <i class="fa-solid fa-check"></i>
-                                            </button>
+                                            @if ($filter['status'] == 'waiting')
+                                                <button title="Approve"
+                                                    wire:click='Modal("approve",true, "{{ $product->id }}")'
+                                                    class="bg-green-300  hover:bg-green-400  text-white font-bold py-2 px-4 rounded-sm">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </button>
+                                            @endif
 
-                                            <button title="Decline"
-                                                wire:click='Modal("decline",true, "{{ $product->id }}")'
-                                                class="bg-red-300  hover:bg-red-400  text-white font-bold py-2 px-4 rounded-sm">
-                                                <i class="fa-solid fa-xmark"></i>
-                                            </button>
+                                            @if ($filter['status'] != 'unavailable')
+                                                <button title="Decline"
+                                                    wire:click='Modal("decline",true, "{{ $product->id }}")'
+                                                    class="bg-red-300  hover:bg-red-400  text-white font-bold py-2 px-4 rounded-sm">
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                </button>
+                                            @endif
 
                                         </div>
                                     </td>
