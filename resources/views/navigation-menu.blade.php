@@ -37,7 +37,12 @@
                 'app.manage' => 'Manage',
                 'app.categories' => 'Categories',
                 'app.taxes' => 'Taxes',
-                'moderator.dashboard' => 'Moderator',
+            ],
+
+            'Moderator' => [
+                'middleware' => $user->role == 'admin',
+                'moderator.dashboard' => 'Dashboard',
+                'moderator.products' => 'Products',
             ],
         ];
 

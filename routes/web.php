@@ -20,6 +20,7 @@ use App\Http\Livewire\App\TaxComponent;
 use App\Http\Livewire\App\CategoryComponent;
 use App\Http\Livewire\App\ManageComponent;
 use App\Http\Livewire\Moderator\DashboardComponent as ModeratorDashboardComponent;
+use App\Http\Livewire\Moderator\ProductsComponent as ModeratorProductsComponent;
 use App\Http\Livewire\Store\DashboardComponent as StoreDashboardComponent;
 use App\Http\Livewire\Store\ManageComponent as StoreManageComponent;
 use App\Http\Livewire\Store\ProductsComponent;
@@ -110,6 +111,15 @@ Route::middleware([
     Route::get("/app/categories", CategoryComponent::class)->name('app.categories');
     Route::get("/app/taxes", TaxComponent::class)->name('app.taxes');
     Route::get("/app/manage", ManageComponent::class)->name('app.manage');
+});
 
+/*<──  ───────    MODERATOR   ───────  ──>*/
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+    "admin"
+])->group(function () {
     Route::get("/moderator/dashboard", ModeratorDashboardComponent::class)->name('moderator.dashboard');
+    Route::get("/moderator/products", ModeratorProductsComponent::class)->name('moderator.products');
 });
