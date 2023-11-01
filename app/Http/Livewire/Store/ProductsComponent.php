@@ -176,7 +176,10 @@ class ProductsComponent extends Component
         if ($photo)
             $photo->storeAs("public/products/" . $product->id . "/" . $filename);
 
-        session()->flash("message", $this->data["id"] ? "Product updated successfully" : "Product added succesfully");
+        $this->emit("notify", [
+            "type" => "success",
+            "message" =>  $this->data["id"] ? "Product updated successfully" : "Product added succesfully"
+        ]);
 
         $this->Modal("save", false);
     }
@@ -188,7 +191,10 @@ class ProductsComponent extends Component
         $product->status = "unavailable";
         $product->save();
 
-        session()->flash("message", "Product unpublished succesfully");
+        $this->emit("notify", [
+            "type" => "success",
+            "message" =>  "Product unpublished succesfully"
+        ]);
 
         $this->Modal("unpublish", false);
     }
